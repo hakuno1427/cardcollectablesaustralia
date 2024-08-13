@@ -71,6 +71,8 @@ public class PersonServices {
 			
 		} else {
 			HttpSession session = request.getSession();
+
+			session.setAttribute("isLoggedIn", 1);
 			
 			Object objRedirectURL = session.getAttribute("redirectURL");
 			

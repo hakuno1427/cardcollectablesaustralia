@@ -19,16 +19,16 @@
 				class="btn btn-outline-success mt-1" />
 		</form>
 		<ul class="navbar-nav">
-			<c:if test="${loggedCustomer == null}">
+			<c:if test="${isLoggedIn == null}">
 				<li class="nav-item"><a href="login" class="nav-link">Sign
 						In</a></li>
 				<li class="nav-item"><a href="register" class="nav-link">Register</a>
 				</li>
 			</c:if>
 
-			<c:if test="${loggedCustomer != null}">
+			<c:if test="${isLoggedIn !=null}">
 				<li class="nav-item"><a href="view_profile" class="nav-link">Welcome,
-						${loggedCustomer.fullname}</a></li>
+						Person</a></li>
 
 				<li class="nav-item"><a href="view_orders" class="nav-link">My
 						Orders</a></li>
