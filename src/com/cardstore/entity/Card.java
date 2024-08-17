@@ -35,7 +35,7 @@ public class Card implements Serializable{
 		this.imageUrl = imageUrl;
 	}
 
-	@Column(name="cardName", nullable=false, length=50)
+	@Column(name="cardName", nullable=false, length=200)
 	public String getCardName() {
 		return cardName;
 	}
@@ -63,7 +63,7 @@ public class Card implements Serializable{
 		this.serialNumber = serialNumber;
 	}
 
-	@Column(name="description", nullable=false, length=300)
+	@Column(name="description", nullable=false, columnDefinition = "TEXT")
 	public String getDescription() {
 		return description;
 	}
