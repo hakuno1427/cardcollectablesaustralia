@@ -6,10 +6,17 @@ import java.util.Objects;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="card")
+@NamedQueries({
+	@NamedQuery(name = "Card.findAll", query = "SELECT c from Card c ORDER BY c.serialNumber"),	
+	@NamedQuery(name = "Card.coundAll", query = "SELECT Count(*) FROM Card c")	
+})
+
 public class Card implements Serializable{
 	private static final long serialVersionUID = 1L;
 	

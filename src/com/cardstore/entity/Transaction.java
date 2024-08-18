@@ -9,10 +9,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="transaction")
+@NamedQueries({
+	@NamedQuery(name = "Transaction.findAll", query = "SELECT t from Transaction t ORDER BY t.transactionId"),	
+	@NamedQuery(name = "Transaction.coundAll", query = "SELECT Count(*) FROM Transaction t")	
+})
 
 public class Transaction implements Serializable{
 	private static final long serialVersionUID = 1L;
