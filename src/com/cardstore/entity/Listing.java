@@ -13,13 +13,11 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="listing")
-@NamedQueries({
-	@NamedQuery(name = "Listing.findAll", query = "SELECT l from Listing l ORDER BY l.listingId"),	
-	@NamedQuery(name = "Listing.coundAll", query = "SELECT Count(*) FROM Listing l")	
-})
+@Table(name = "listing")
+@NamedQueries({ @NamedQuery(name = "Listing.findAll", query = "SELECT l from Listing l ORDER BY l.listingId"),
+		@NamedQuery(name = "Listing.coundAll", query = "SELECT Count(*) FROM Listing l") })
 
-public class Listing implements Serializable{
+public class Listing implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer listingId;
@@ -28,9 +26,9 @@ public class Listing implements Serializable{
 	private String condition;
 	private double price;
 	private Integer quantity;
-	
+
 	public Listing() {
-		
+
 	}
 
 	public Listing(Integer listingId, Integer sellerId, String serialNumber, String condition, double price,
@@ -46,7 +44,7 @@ public class Listing implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="listingId", unique=true, nullable=false)
+	@Column(name = "listingId", unique = true, nullable = false)
 	public Integer getListingId() {
 		return listingId;
 	}
@@ -55,7 +53,7 @@ public class Listing implements Serializable{
 		this.listingId = listingId;
 	}
 
-	@Column(name="sellerId", nullable=false)
+	@Column(name = "sellerId", nullable = false)
 	public Integer getSellerId() {
 		return sellerId;
 	}
@@ -64,7 +62,7 @@ public class Listing implements Serializable{
 		this.sellerId = sellerId;
 	}
 
-	@Column(name="serialNumber", nullable=false, length=50)
+	@Column(name = "serialNumber", nullable = false, length = 50)
 	public String getSerialNumber() {
 		return serialNumber;
 	}
@@ -73,7 +71,7 @@ public class Listing implements Serializable{
 		this.serialNumber = serialNumber;
 	}
 
-	@Column(name="condition", nullable=false, length=50)
+	@Column(name = "condition", nullable = false, length = 50)
 	public String getCondition() {
 		return condition;
 	}
@@ -82,7 +80,7 @@ public class Listing implements Serializable{
 		this.condition = condition;
 	}
 
-	@Column(name="price", nullable=false)
+	@Column(name = "price", nullable = false)
 	public double getPrice() {
 		return price;
 	}
@@ -91,7 +89,7 @@ public class Listing implements Serializable{
 		this.price = price;
 	}
 
-	@Column(name="quantity", nullable=false)
+	@Column(name = "quantity", nullable = false)
 	public Integer getQuantity() {
 		return quantity;
 	}

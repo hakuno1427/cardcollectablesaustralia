@@ -7,16 +7,16 @@ import com.cardstore.entity.Listing;
 public class ListingDAO extends JpaDAO<Listing> implements GenericDAO<Listing> {
 	public ListingDAO() {
 	}
-	
+
 	public Listing create(Listing listing) {
 		return super.create(listing);
 	}
-	
+
 	@Override
 	public Listing update(Listing listing) {
 		return super.update(listing);
 	}
-	
+
 	@Override
 	public Listing get(Object listingId) {
 		return super.find(Listing.class, listingId);
@@ -24,7 +24,7 @@ public class ListingDAO extends JpaDAO<Listing> implements GenericDAO<Listing> {
 
 	@Override
 	public void delete(Object listingId) {
-		super.delete(Listing.class, listingId);	
+		super.delete(Listing.class, listingId);
 	}
 
 	@Override

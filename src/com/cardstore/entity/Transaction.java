@@ -14,15 +14,14 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="transaction")
+@Table(name = "transaction")
 @NamedQueries({
-	@NamedQuery(name = "Transaction.findAll", query = "SELECT t from Transaction t ORDER BY t.transactionId"),	
-	@NamedQuery(name = "Transaction.coundAll", query = "SELECT Count(*) FROM Transaction t")	
-})
+		@NamedQuery(name = "Transaction.findAll", query = "SELECT t from Transaction t ORDER BY t.transactionId"),
+		@NamedQuery(name = "Transaction.coundAll", query = "SELECT Count(*) FROM Transaction t") })
 
-public class Transaction implements Serializable{
+public class Transaction implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer transactionId;
 	private Integer orderId;
 	private Integer buyerId;
@@ -33,9 +32,9 @@ public class Transaction implements Serializable{
 	private String status;
 
 	public Transaction() {
-		
+
 	}
-	
+
 	public Transaction(Integer transactionId, Integer orderId, Integer buyerId, Integer sellerId,
 			Integer paymentServiceId, Integer paymentAccountId, LocalDate transactionDate, String status) {
 		super();
@@ -51,7 +50,7 @@ public class Transaction implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="transactionId", unique=true, nullable=false)
+	@Column(name = "transactionId", unique = true, nullable = false)
 	public Integer getTransactionId() {
 		return transactionId;
 	}
@@ -60,7 +59,7 @@ public class Transaction implements Serializable{
 		this.transactionId = transactionId;
 	}
 
-	@Column(name="orderId", nullable=false)
+	@Column(name = "orderId", nullable = false)
 	public Integer getOrderId() {
 		return orderId;
 	}
@@ -69,7 +68,7 @@ public class Transaction implements Serializable{
 		this.orderId = orderId;
 	}
 
-	@Column(name="buyerId", nullable=false)
+	@Column(name = "buyerId", nullable = false)
 	public Integer getBuyerId() {
 		return buyerId;
 	}
@@ -78,7 +77,7 @@ public class Transaction implements Serializable{
 		this.buyerId = buyerId;
 	}
 
-	@Column(name="sellerId", nullable=false)
+	@Column(name = "sellerId", nullable = false)
 	public Integer getSellerId() {
 		return sellerId;
 	}
@@ -87,7 +86,7 @@ public class Transaction implements Serializable{
 		this.sellerId = sellerId;
 	}
 
-	@Column(name="paymentServiceId", nullable=false)
+	@Column(name = "paymentServiceId", nullable = false)
 	public Integer getPaymentServiceId() {
 		return paymentServiceId;
 	}
@@ -95,8 +94,8 @@ public class Transaction implements Serializable{
 	public void setPaymentServiceId(Integer paymentServiceId) {
 		this.paymentServiceId = paymentServiceId;
 	}
-	
-	@Column(name="paymentAccountId", nullable=false)
+
+	@Column(name = "paymentAccountId", nullable = false)
 	public Integer getPaymentAccountId() {
 		return paymentAccountId;
 	}
@@ -105,7 +104,7 @@ public class Transaction implements Serializable{
 		this.paymentAccountId = paymentAccountId;
 	}
 
-	@Column(name="transactionDate", nullable=false)
+	@Column(name = "transactionDate", nullable = false)
 	public LocalDate getTransactionDate() {
 		return transactionDate;
 	}
@@ -114,7 +113,7 @@ public class Transaction implements Serializable{
 		this.transactionDate = transactionDate;
 	}
 
-	@Column(name="status", nullable=false, length=50)
+	@Column(name = "status", nullable = false, length = 50)
 	public String getStatus() {
 		return status;
 	}

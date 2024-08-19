@@ -11,19 +11,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="orderItem")
-public class OrderItem implements Serializable{
+@Table(name = "orderItem")
+public class OrderItem implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer orderItemId;
 	private Integer listingId;
 	private Integer orderId;
 	private Integer quantity;
 
 	public OrderItem() {
-		
+
 	}
-	
+
 	public OrderItem(Integer orderItemId, Integer listingId, Integer orderId, Integer quantity) {
 		super();
 		this.orderItemId = orderItemId;
@@ -34,7 +34,7 @@ public class OrderItem implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="orderItemId", unique=true, nullable=false)
+	@Column(name = "orderItemId", unique = true, nullable = false)
 	public Integer getOrderItemId() {
 		return orderItemId;
 	}
@@ -43,7 +43,7 @@ public class OrderItem implements Serializable{
 		this.orderItemId = orderItemId;
 	}
 
-	@Column(name="listingId", nullable=false)
+	@Column(name = "listingId", nullable = false)
 	public Integer getListingId() {
 		return listingId;
 	}
@@ -52,7 +52,7 @@ public class OrderItem implements Serializable{
 		this.listingId = listingId;
 	}
 
-	@Column(name="orderId", nullable=false)
+	@Column(name = "orderId", nullable = false)
 	public Integer getOrderId() {
 		return orderId;
 	}
@@ -61,7 +61,7 @@ public class OrderItem implements Serializable{
 		this.orderId = orderId;
 	}
 
-	@Column(name="quantity", nullable=false)
+	@Column(name = "quantity", nullable = false)
 	public Integer getQuantity() {
 		return quantity;
 	}

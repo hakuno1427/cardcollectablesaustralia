@@ -11,17 +11,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="buyer")
-public class Buyer implements Serializable{
+@Table(name = "buyer")
+public class Buyer implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer buyerId;
 	private String buyerEmail;
 
 	public Buyer() {
-		
+
 	}
-	
+
 	public Buyer(Integer buyerId, String buyerEmail) {
 		super();
 		this.buyerId = buyerId;
@@ -30,7 +30,7 @@ public class Buyer implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="buyerId", unique=true, nullable=false)
+	@Column(name = "buyerId", unique = true, nullable = false)
 	public Integer getBuyerId() {
 		return buyerId;
 	}
@@ -39,7 +39,7 @@ public class Buyer implements Serializable{
 		this.buyerId = buyerId;
 	}
 
-	@Column(name="buyerEmail", nullable=false, length=320)
+	@Column(name = "buyerEmail", nullable = false, length = 320)
 	public String getBuyerEmail() {
 		return buyerEmail;
 	}

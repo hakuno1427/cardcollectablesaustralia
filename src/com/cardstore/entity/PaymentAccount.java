@@ -11,19 +11,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="paymentAccount")
-public class PaymentAccount implements Serializable{
+@Table(name = "paymentAccount")
+public class PaymentAccount implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer paymentAccountId;
 	private Integer paymentServiceId;
 	private Integer sellerId;
 	private String accountDetails;
 
 	public PaymentAccount() {
-		
+
 	}
-	
+
 	public PaymentAccount(Integer paymentAccountId, Integer paymentServiceId, Integer sellerId, String accountDetails) {
 		super();
 		this.paymentAccountId = paymentAccountId;
@@ -34,7 +34,7 @@ public class PaymentAccount implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="paymentAccountId", unique=true, nullable=false)
+	@Column(name = "paymentAccountId", unique = true, nullable = false)
 	public Integer getPaymentAccountId() {
 		return paymentAccountId;
 	}
@@ -43,7 +43,7 @@ public class PaymentAccount implements Serializable{
 		this.paymentAccountId = paymentAccountId;
 	}
 
-	@Column(name="paymentServiceId", nullable=false)
+	@Column(name = "paymentServiceId", nullable = false)
 	public Integer getPaymentServiceId() {
 		return paymentServiceId;
 	}
@@ -52,7 +52,7 @@ public class PaymentAccount implements Serializable{
 		this.paymentServiceId = paymentServiceId;
 	}
 
-	@Column(name="sellerId", nullable=false)
+	@Column(name = "sellerId", nullable = false)
 	public Integer getSellerId() {
 		return sellerId;
 	}
@@ -61,7 +61,7 @@ public class PaymentAccount implements Serializable{
 		this.sellerId = sellerId;
 	}
 
-	@Column(name="accountDetails", nullable=false, length=50)
+	@Column(name = "accountDetails", nullable = false, length = 50)
 	public String getAccountDetails() {
 		return accountDetails;
 	}
