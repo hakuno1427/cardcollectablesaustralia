@@ -8,10 +8,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "orderItem")
+@NamedQueries({
+	@NamedQuery(name = "OrderItem.findAll", query = "SELECT oi from OrderItem oi ORDER BY oi.orderItemId"),	
+	@NamedQuery(name = "OrderItem.countAll", query = "SELECT Count(*) FROM OrderItem oi")	
+})
+
 public class OrderItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 

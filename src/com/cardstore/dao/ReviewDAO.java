@@ -2,7 +2,6 @@ package com.cardstore.dao;
 
 import java.util.List;
 
-import com.cardstore.entity.Card;
 import com.cardstore.entity.Review;
 
 public class ReviewDAO extends JpaDAO<Review> implements GenericDAO<Review> {
