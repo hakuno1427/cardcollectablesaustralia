@@ -28,7 +28,7 @@
 
 			<c:if test="${loggedInPerson !=null}">
 				<li class="nav-item"><a href="view_profile" class="nav-link">Welcome,
-						 ${loggedInPerson.firstName}</a></li>
+						${loggedInPerson.firstName}</a></li>
 
 				<li class="nav-item"><a href="view_orders" class="nav-link">My
 						Orders</a></li>

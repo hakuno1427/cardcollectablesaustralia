@@ -18,8 +18,8 @@ public class PersonLogoutServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getSession().removeAttribute("loggedInUser");
+		request.getSession().removeAttribute("loggedInPerson");
 
-		response.sendRedirect(request.getContextPath());
+		response.sendRedirect("/");
 	}
 }
