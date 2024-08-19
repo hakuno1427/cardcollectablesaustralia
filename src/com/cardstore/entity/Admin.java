@@ -21,12 +21,12 @@ import jakarta.persistence.Table;
 
 public class Admin implements Serializable{
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer adminId;
 	private String adminEmail;
-	
+
 	public Admin() {
-		
+
 	}
 
 	public Admin(Integer adminId, String adminEmail) {
@@ -35,10 +35,9 @@ public class Admin implements Serializable{
 		this.adminEmail = adminEmail;
 	}
 
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="adminId", unique=true, nullable=false)
+	@Column(name = "adminId", unique = true, nullable = false)
 	public Integer getAdminId() {
 		return adminId;
 	}
@@ -47,7 +46,7 @@ public class Admin implements Serializable{
 		this.adminId = adminId;
 	}
 
-	@Column(name="adminEmail", nullable=false, length=320)
+	@Column(name = "adminEmail", nullable = false, length = 320)
 	public String getAdminEmail() {
 		return adminEmail;
 	}
@@ -55,7 +54,7 @@ public class Admin implements Serializable{
 	public void setAdminEmail(String adminEmail) {
 		this.adminEmail = adminEmail;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Admin [adminId=" + adminId + ", adminEmail=" + adminEmail + "]";
@@ -77,5 +76,5 @@ public class Admin implements Serializable{
 		Admin other = (Admin) obj;
 		return Objects.equals(adminEmail, other.adminEmail) && Objects.equals(adminId, other.adminId);
 	}
-	
+
 }

@@ -20,9 +20,9 @@ import jakarta.persistence.Table;
 	@NamedQuery(name = "Order.countAll", query = "SELECT Count(*) FROM Order o")	
 })
 
-public class Order implements Serializable{
+public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer orderId;
 	private Integer buyerId;
 	private String orderItems;
@@ -34,9 +34,9 @@ public class Order implements Serializable{
 	private String trackingNumber;
 
 	public Order() {
-		
+
 	}
-	
+
 	public Order(Integer orderId, Integer buyerId, String orderItems, double totalPrice, String status,
 			LocalDate orderDate, String shippingAddress, String billingAddress, String trackingNumber) {
 		super();
@@ -50,10 +50,10 @@ public class Order implements Serializable{
 		this.billingAddress = billingAddress;
 		this.trackingNumber = trackingNumber;
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="orderId", unique=true, nullable=false)
+	@Column(name = "orderId", unique = true, nullable = false)
 	public Integer getOrderId() {
 		return orderId;
 	}
@@ -62,7 +62,7 @@ public class Order implements Serializable{
 		this.orderId = orderId;
 	}
 
-	@Column(name="buyerId", nullable=false)
+	@Column(name = "buyerId", nullable = false)
 	public Integer getBuyerId() {
 		return buyerId;
 	}
@@ -71,7 +71,7 @@ public class Order implements Serializable{
 		this.buyerId = buyerId;
 	}
 
-	@Column(name="orderItems", nullable=false)
+	@Column(name = "orderItems", nullable = false)
 	public String getOrderItems() {
 		return orderItems;
 	}
@@ -80,7 +80,7 @@ public class Order implements Serializable{
 		this.orderItems = orderItems;
 	}
 
-	@Column(name="totalPrice", nullable=false)
+	@Column(name = "totalPrice", nullable = false)
 	public double getTotalPrice() {
 		return totalPrice;
 	}
@@ -89,7 +89,7 @@ public class Order implements Serializable{
 		this.totalPrice = totalPrice;
 	}
 
-	@Column(name="status", nullable=false, length=50)
+	@Column(name = "status", nullable = false, length = 50)
 	public String getStatus() {
 		return status;
 	}
@@ -98,7 +98,7 @@ public class Order implements Serializable{
 		this.status = status;
 	}
 
-	@Column(name="orderDate", nullable=false)
+	@Column(name = "orderDate", nullable = false)
 	public LocalDate getOrderDate() {
 		return orderDate;
 	}
@@ -107,7 +107,7 @@ public class Order implements Serializable{
 		this.orderDate = orderDate;
 	}
 
-	@Column(name="shippingAddress", nullable=false, length=500)
+	@Column(name = "shippingAddress", nullable = false, length = 500)
 	public String getShippingAddress() {
 		return shippingAddress;
 	}
@@ -116,7 +116,7 @@ public class Order implements Serializable{
 		this.shippingAddress = shippingAddress;
 	}
 
-	@Column(name="billingAddress", length=500)
+	@Column(name = "billingAddress", length = 500)
 	public String getBillingAddress() {
 		return billingAddress;
 	}
@@ -125,7 +125,7 @@ public class Order implements Serializable{
 		this.billingAddress = billingAddress;
 	}
 
-	@Column(name="trackingNumber", length=50)
+	@Column(name = "trackingNumber", length = 50)
 	public String getTrackingNumber() {
 		return trackingNumber;
 	}

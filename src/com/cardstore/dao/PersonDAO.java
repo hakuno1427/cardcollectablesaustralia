@@ -12,7 +12,7 @@ public class PersonDAO extends JpaDAO<Person> implements GenericDAO<Person> {
 	public Person create(Person person) {
 		return super.create(person);
 	}
-	
+
 	@Override
 	public Person update(Person person) {
 		return super.update(person);

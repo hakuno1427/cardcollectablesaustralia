@@ -22,18 +22,18 @@ import jakarta.persistence.Table;
 
 public class Review implements Serializable{
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer reviewId;
 	private Integer buyerId;
 	private Integer sellerId;
 	private double rating;
 	private String comment;
 	private LocalDate reviewDate;
-	
+
 	public Review() {
-		
+
 	}
-	
+
 	public Review(Integer reviewId, Integer buyerId, Integer sellerId, double rating, String comment,
 			LocalDate reviewDate) {
 		super();
@@ -47,7 +47,7 @@ public class Review implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="reviewId", unique=true, nullable=false)
+	@Column(name = "reviewId", unique = true, nullable = false)
 	public Integer getReviewId() {
 		return reviewId;
 	}
@@ -56,7 +56,7 @@ public class Review implements Serializable{
 		this.reviewId = reviewId;
 	}
 
-	@Column(name="buyerId", nullable=false)
+	@Column(name = "buyerId", nullable = false)
 	public Integer getBuyerId() {
 		return buyerId;
 	}
@@ -65,7 +65,7 @@ public class Review implements Serializable{
 		this.buyerId = buyerId;
 	}
 
-	@Column(name="sellerId", nullable=false)
+	@Column(name = "sellerId", nullable = false)
 	public Integer getSellerId() {
 		return sellerId;
 	}
@@ -74,7 +74,7 @@ public class Review implements Serializable{
 		this.sellerId = sellerId;
 	}
 
-	@Column(name="rating", nullable=false)
+	@Column(name = "rating", nullable = false)
 	public double getRating() {
 		return rating;
 	}
@@ -83,7 +83,7 @@ public class Review implements Serializable{
 		this.rating = rating;
 	}
 
-	@Column(name="comment", nullable=false, length=300)
+	@Column(name = "comment", nullable = false, length = 300)
 	public String getComment() {
 		return comment;
 	}
@@ -92,7 +92,7 @@ public class Review implements Serializable{
 		this.comment = comment;
 	}
 
-	@Column(name="reviewDate", nullable=false)
+	@Column(name = "reviewDate", nullable = false)
 	public LocalDate getReviewDate() {
 		return reviewDate;
 	}
@@ -126,6 +126,5 @@ public class Review implements Serializable{
 				&& Objects.equals(reviewDate, other.reviewDate) && Objects.equals(reviewId, other.reviewId)
 				&& Objects.equals(sellerId, other.sellerId);
 	}
-	
-}
 
+}

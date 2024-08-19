@@ -25,9 +25,9 @@ public class Seller implements Serializable{
 	private String sellerEmail;
 
 	public Seller() {
-		
+
 	}
-	
+
 	public Seller(Integer sellerId, String sellerEmail) {
 		super();
 		this.sellerId = sellerId;
@@ -36,7 +36,7 @@ public class Seller implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="sellerId", unique=true, nullable=false)
+	@Column(name = "sellerId", unique = true, nullable = false)
 	public Integer getSellerId() {
 		return sellerId;
 	}
@@ -45,7 +45,7 @@ public class Seller implements Serializable{
 		this.sellerId = sellerId;
 	}
 
-	@Column(name="sellerEmail", nullable=false, length=320)
+	@Column(name = "sellerEmail", nullable = false, length = 320)
 	public String getSellerEmail() {
 		return sellerEmail;
 	}

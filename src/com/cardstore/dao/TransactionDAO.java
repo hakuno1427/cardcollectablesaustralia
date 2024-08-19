@@ -7,15 +7,16 @@ import com.cardstore.entity.Transaction;
 public class TransactionDAO extends JpaDAO<Transaction> implements GenericDAO<Transaction> {
 	public TransactionDAO() {
 	}
-	
+
 	public Transaction create(Transaction transaction) {
 		return super.create(transaction);
 	}
-	
+
 	@Override
 	public Transaction update(Transaction transaction) {
 		return super.update(transaction);
 	}
+
 	@Override
 	public Transaction get(Object transactionId) {
 		return super.find(Transaction.class, transactionId);
@@ -23,7 +24,7 @@ public class TransactionDAO extends JpaDAO<Transaction> implements GenericDAO<Tr
 
 	@Override
 	public void delete(Object transactionId) {
-		super.delete(Transaction.class, transactionId);	
+		super.delete(Transaction.class, transactionId);
 	}
 
 	@Override

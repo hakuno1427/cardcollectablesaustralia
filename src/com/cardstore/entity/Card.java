@@ -11,15 +11,16 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
+
 @Table(name="card")
 @NamedQueries({
 	@NamedQuery(name = "Card.findAll", query = "SELECT c from Card c ORDER BY c.serialNumber"),	
 	@NamedQuery(name = "Card.countAll", query = "SELECT Count(*) FROM Card c")	
 })
 
-public class Card implements Serializable{
+public class Card implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private String cardName;
 	private String game;
 	private String serialNumber;
@@ -28,9 +29,9 @@ public class Card implements Serializable{
 	private String imageUrl;
 
 	public Card() {
-		
+
 	}
-	
+
 	public Card(String cardName, String game, String serialNumber, String description, double marketprice,
 			String imageUrl) {
 		super();
@@ -42,7 +43,7 @@ public class Card implements Serializable{
 		this.imageUrl = imageUrl;
 	}
 
-	@Column(name="cardName", nullable=false, length=200)
+	@Column(name = "cardName", nullable = false, length = 200)
 	public String getCardName() {
 		return cardName;
 	}
@@ -51,7 +52,7 @@ public class Card implements Serializable{
 		this.cardName = cardName;
 	}
 
-	@Column(name="game", nullable=false, length=50)
+	@Column(name = "game", nullable = false, length = 50)
 	public String getGame() {
 		return game;
 	}
@@ -61,7 +62,7 @@ public class Card implements Serializable{
 	}
 
 	@Id
-	@Column(name="serialNumber", unique=true, nullable=false, length=50)
+	@Column(name = "serialNumber", unique = true, nullable = false, length = 50)
 	public String getSerialNumber() {
 		return serialNumber;
 	}
@@ -70,7 +71,7 @@ public class Card implements Serializable{
 		this.serialNumber = serialNumber;
 	}
 
-	@Column(name="description", nullable=false, columnDefinition = "TEXT")
+	@Column(name = "description", nullable = false, columnDefinition = "TEXT")
 	public String getDescription() {
 		return description;
 	}
@@ -79,7 +80,7 @@ public class Card implements Serializable{
 		this.description = description;
 	}
 
-	@Column(name="marketprice", nullable=false)
+	@Column(name = "marketprice", nullable = false)
 	public double getMarketprice() {
 		return marketprice;
 	}

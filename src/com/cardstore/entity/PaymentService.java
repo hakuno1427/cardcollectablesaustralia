@@ -11,17 +11,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="paymentService")
-public class PaymentService implements Serializable{
+@Table(name = "paymentService")
+public class PaymentService implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer paymentServiceId;
 	private String serviceName;
 
 	public PaymentService() {
-		
+
 	}
-	
+
 	public PaymentService(Integer paymentServiceId, String serviceName) {
 		super();
 		this.paymentServiceId = paymentServiceId;
@@ -30,7 +30,7 @@ public class PaymentService implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="paymentServiceId", unique=true, nullable=false)
+	@Column(name = "paymentServiceId", unique = true, nullable = false)
 	public Integer getPaymentServiceId() {
 		return paymentServiceId;
 	}
@@ -39,7 +39,7 @@ public class PaymentService implements Serializable{
 		this.paymentServiceId = paymentServiceId;
 	}
 
-	@Column(name="serviceName", nullable=false, length=50)
+	@Column(name = "serviceName", nullable = false, length = 50)
 	public String getServiceName() {
 		return serviceName;
 	}

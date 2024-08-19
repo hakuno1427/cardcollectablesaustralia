@@ -17,9 +17,9 @@ import jakarta.persistence.Table;
 	@NamedQuery(name = "Person.countAll", query = "SELECT Count(*) FROM Person p")	
 })
 
-public class Person implements Serializable{
+public class Person implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private String firstName;
 	private String lastName;
 	private Integer phone;
@@ -27,9 +27,9 @@ public class Person implements Serializable{
 	private String password;
 
 	public Person() {
-		
+
 	}
-	
+
 	public Person(String firstName, String lastName, Integer phone, String email, String password) {
 		super();
 		this.firstName = firstName;
@@ -39,7 +39,7 @@ public class Person implements Serializable{
 		this.password = password;
 	}
 
-	@Column(name="firstName", nullable=false, length=50)
+	@Column(name = "firstName", nullable = false, length = 50)
 	public String getFirstName() {
 		return firstName;
 	}
@@ -48,7 +48,7 @@ public class Person implements Serializable{
 		this.firstName = firstName;
 	}
 
-	@Column(name="lastName", nullable=false, length=50)
+	@Column(name = "lastName", nullable = false, length = 50)
 	public String getLastName() {
 		return lastName;
 	}
@@ -57,7 +57,7 @@ public class Person implements Serializable{
 		this.lastName = lastName;
 	}
 
-	@Column(name="phone", nullable=false)
+	@Column(name = "phone", nullable = false)
 	public Integer getPhone() {
 		return phone;
 	}
@@ -67,7 +67,7 @@ public class Person implements Serializable{
 	}
 
 	@Id
-	@Column(name="email", nullable=false, length=320)
+	@Column(name = "email", nullable = false, length = 320)
 	public String getEmail() {
 		return email;
 	}
@@ -76,7 +76,7 @@ public class Person implements Serializable{
 		this.email = email;
 	}
 
-	@Column(name="password", nullable=false, length=45)
+	@Column(name = "password", nullable = false, length = 45)
 	public String getPassword() {
 		return password;
 	}

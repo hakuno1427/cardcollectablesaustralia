@@ -7,16 +7,16 @@ import com.cardstore.entity.Order;
 public class OrderDAO extends JpaDAO<Order> implements GenericDAO<Order> {
 	public OrderDAO() {
 	}
-	
+
 	public Order create(Order order) {
 		return super.create(order);
 	}
-	
+
 	@Override
 	public Order update(Order order) {
 		return super.update(order);
 	}
-	
+
 	@Override
 	public Order get(Object orderId) {
 		return super.find(Order.class, orderId);
@@ -24,7 +24,7 @@ public class OrderDAO extends JpaDAO<Order> implements GenericDAO<Order> {
 
 	@Override
 	public void delete(Object orderId) {
-		super.delete(Order.class, orderId);	
+		super.delete(Order.class, orderId);
 	}
 
 	@Override
