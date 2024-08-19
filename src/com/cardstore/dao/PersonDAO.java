@@ -39,14 +39,14 @@ public class PersonDAO extends JpaDAO<Person> implements GenericDAO<Person> {
 	public long count() {
 		return super.countWithNamedQuery("Person.countAll");
 	}
-	
+
 	public Person findByEmail(String email) {
 		List<Person> result = super.findWithNamedQuery("Person.findByEmail", "email", email);
-		
+
 		if (!result.isEmpty()) {
 			return result.get(0);
 		}
-		
+
 		return null;
 	}
 
@@ -54,13 +54,13 @@ public class PersonDAO extends JpaDAO<Person> implements GenericDAO<Person> {
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("email", email);
 		parameters.put("pass", password);
-		
+
 		List<Person> result = super.findWithNamedQuery("Person.checkLogin", parameters);
-		
+
 		if (!result.isEmpty()) {
 			return result.get(0);
 		}
-		
+
 		return null;
 	}
 

@@ -69,5 +69,5 @@ public class Buyer implements Serializable {
 		Buyer other = (Buyer) obj;
 		return Objects.equals(buyerEmail, other.buyerEmail) && Objects.equals(buyerId, other.buyerId);
 	}
-	
+
 }

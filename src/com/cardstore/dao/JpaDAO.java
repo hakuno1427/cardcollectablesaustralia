@@ -83,20 +83,19 @@ public class JpaDAO<E> {
 		entityManager.close();
 		return result;
 	}
-	
+
 	public List<E> findWithNamedQuery(String queryName, String paramName, Object paramValue) {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		Query query = entityManager.createNamedQuery(queryName);
-		
+
 		query.setParameter(paramName, paramValue);
-		
+
 		List<E> result = query.getResultList();
-		
+
 		entityManager.close();
-		
+
 		return result;
 	}
-	
 
 	public long countWithNamedQuery(String queryName) {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -111,17 +110,17 @@ public class JpaDAO<E> {
 	public List<E> findWithNamedQuery(String queryName, Map<String, Object> parameters) {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		Query query = entityManager.createNamedQuery(queryName);
-		
+
 		Set<Entry<String, Object>> setParameters = parameters.entrySet();
-		
+
 		for (Entry<String, Object> entry : setParameters) {
 			query.setParameter(entry.getKey(), entry.getValue());
 		}
-		
+
 		List<E> result = query.getResultList();
-		
+
 		entityManager.close();
-		
+
 		return result;
 	}
 }

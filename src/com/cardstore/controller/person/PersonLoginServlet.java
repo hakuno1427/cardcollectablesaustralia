@@ -27,6 +27,6 @@ public class PersonLoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		PersonServices personServices = new PersonServices(request, response);
-		personServices.doLogin();		
+		personServices.doLogin();
 	}
 }
