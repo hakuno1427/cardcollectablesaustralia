@@ -13,9 +13,11 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "listing")
-@NamedQueries({ @NamedQuery(name = "Listing.findAll", query = "SELECT l from Listing l ORDER BY l.listingId"),
-		@NamedQuery(name = "Listing.coundAll", query = "SELECT Count(*) FROM Listing l") })
+@Table(name="listing")
+@NamedQueries({
+	@NamedQuery(name = "Listing.findAll", query = "SELECT l from Listing l ORDER BY l.listingId"),	
+	@NamedQuery(name = "Listing.countAll", query = "SELECT Count(*) FROM Listing l")	
+})
 
 public class Listing implements Serializable {
 	private static final long serialVersionUID = 1L;
