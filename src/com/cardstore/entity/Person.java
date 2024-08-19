@@ -11,10 +11,11 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="person")
-@NamedQueries({
-	@NamedQuery(name = "Person.findAll", query = "SELECT p from Person p ORDER BY p.firstName"),	
-	@NamedQuery(name = "Person.countAll", query = "SELECT Count(*) FROM Person p")	
+@Table(name = "person")
+@NamedQueries({ @NamedQuery(name = "Person.findAll", query = "SELECT p from Person p ORDER BY p.firstName"),
+		@NamedQuery(name = "Person.coundAll", query = "SELECT Count(*) FROM Person p"),
+		@NamedQuery(name = "Person.findByEmail", query = "SELECT p FROM Person p WHERE p.email = :email"),
+		@NamedQuery(name = "Person.checkLogin", query = "SELECT p FROM Person p WHERE p.email = :email AND p.password = :pass")
 })
 
 public class Person implements Serializable {
