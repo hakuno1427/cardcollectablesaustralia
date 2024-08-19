@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 @Table(name="card")
 @NamedQueries({
 	@NamedQuery(name = "Card.findAll", query = "SELECT c from Card c ORDER BY c.serialNumber"),	
-	@NamedQuery(name = "Card.coundAll", query = "SELECT Count(*) FROM Card c")	
+	@NamedQuery(name = "Card.countAll", query = "SELECT Count(*) FROM Card c")	
 })
 
 public class Card implements Serializable{
