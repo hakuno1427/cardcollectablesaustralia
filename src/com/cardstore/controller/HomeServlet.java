@@ -1,6 +1,10 @@
 package com.cardstore.controller;
 
 import java.io.IOException;
+import java.util.List;
+
+import com.cardstore.dao.ListingDAO;
+import com.cardstore.entity.Listing;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -19,7 +23,12 @@ public class HomeServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		ListingDAO listingDAO = new ListingDAO();
+		
+		List<Listing> listNewListings = listingDAO.listNewListings();
 
+		request.setAttribute("listNewListings", listNewListings);
+		
 		String homepage = "frontend/index.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(homepage);
 		dispatcher.forward(request, response);
