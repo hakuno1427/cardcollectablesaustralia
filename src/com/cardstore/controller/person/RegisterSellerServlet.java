@@ -10,17 +10,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/register_user")
-public class RegisterPersonServlet extends HttpServlet {
+@WebServlet("/register_seller")
+public class RegisterSellerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public RegisterPersonServlet() {
+	public RegisterSellerServlet() {
 		super();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		PersonServices personServices = new PersonServices(request, response);
-		personServices.registerPerson();
+		personServices.registerSeller();
 	}
 }

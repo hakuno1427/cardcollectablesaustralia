@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <jsp:include page="page_head.jsp">
-	<jsp:param name="pageTitle" value="Customer Login" />
+	<jsp:param name="pageTitle" value="Login" />
 </jsp:include>
 <body>
 	<div class="container">
@@ -14,7 +14,7 @@
 
 		<div class="row">
 			<div class="col text-center">
-				<h2>Customer Login</h2>
+				<h2>Buyer Login</h2>
 			</div>
 		</div>
 

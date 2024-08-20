@@ -6,11 +6,14 @@ import java.util.Objects;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "person")
 @NamedQueries({ @NamedQuery(name = "Person.findAll", query = "SELECT p from Person p ORDER BY p.firstName"),
 		@NamedQuery(name = "Person.coundAll", query = "SELECT Count(*) FROM Person p"),
@@ -110,5 +113,4 @@ public class Person implements Serializable {
 				&& Objects.equals(lastName, other.lastName) && Objects.equals(password, other.password)
 				&& Objects.equals(phone, other.phone);
 	}
-
 }

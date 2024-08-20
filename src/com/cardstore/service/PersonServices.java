@@ -2,8 +2,12 @@ package com.cardstore.service;
 
 import java.io.IOException;
 
+import com.cardstore.dao.BuyerDAO;
 import com.cardstore.dao.PersonDAO;
+import com.cardstore.dao.SellerDAO;
+import com.cardstore.entity.Buyer;
 import com.cardstore.entity.Person;
+import com.cardstore.entity.Seller;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -13,6 +17,8 @@ import jakarta.servlet.http.HttpSession;
 
 public class PersonServices {
 	private PersonDAO personDAO;
+	private BuyerDAO buyerDAO;
+	private SellerDAO sellerDAO;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 
@@ -21,22 +27,46 @@ public class PersonServices {
 		this.request = request;
 		this.response = response;
 		this.personDAO = new PersonDAO();
+		this.buyerDAO = new BuyerDAO();
+		this.sellerDAO = new SellerDAO();
 	}
-
-	public void registerPerson() throws ServletException, IOException {
+	
+	public void registerBuyer() throws ServletException, IOException {
 		String email = request.getParameter("email");
 		Person existPerson = personDAO.findByEmail(email);
 		String message = "";
 
 		if (existPerson != null) {
-			message = "Could not register. The email " + email + " is already registered by another customer.";
+			message = "Could not register. The email " + email + " is already registered by another person.";
 		} else {
 
-			Person newPerson = new Person();
-			updatePersonFieldsFromForm(newPerson);
-			personDAO.create(newPerson);
+			Buyer newBuyer = new Buyer();
+			updatePersonFieldsFromForm(newBuyer);
+			buyerDAO.create(newBuyer);
 
-			message = "You have registered successfully! Thank you.<br/>" + "<a href='login'>Click here</a> to login";
+			message = "You have registered as a buyer successfully! Thank you.<br/>" + "<a href='login'>Click here</a> to login";
+		}
+
+		String messagePage = "frontend/message.jsp";
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(messagePage);
+		request.setAttribute("message", message);
+		requestDispatcher.forward(request, response);
+	}
+	
+	public void registerSeller() throws ServletException, IOException {
+		String email = request.getParameter("email");
+		Person existPerson = personDAO.findByEmail(email);
+		String message = "";
+
+		if (existPerson != null) {
+			message = "Could not register. The email " + email + " is already registered by another person.";
+		} else {
+
+			Seller newSeller = new Seller();
+			updatePersonFieldsFromForm(newSeller);
+			sellerDAO.create(newSeller);
+
+			message = "You have registered as a seller successfully! Thank you.<br/>" + "<a href='login'>Click here</a> to login";
 		}
 
 		String messagePage = "frontend/message.jsp";
@@ -79,6 +109,7 @@ public class PersonServices {
 		} else {
 			HttpSession session = request.getSession();
 			session.setAttribute("loggedInPerson", person);
+			session.setAttribute("personRole", person instanceof Buyer ? "BUYER" : "SELLER");
 
 			Object objRedirectURL = session.getAttribute("redirectURL");
 

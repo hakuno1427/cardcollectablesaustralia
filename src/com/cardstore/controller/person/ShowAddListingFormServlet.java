@@ -9,17 +9,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/register")
-public class ShowCustomerRegisterFormServlet extends HttpServlet {
+@WebServlet("/add_listing")
+public class ShowAddListingFormServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public ShowCustomerRegisterFormServlet() {
+	public ShowAddListingFormServlet() {
 		super();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String registerForm = "frontend/buyer_register_form.jsp";
+		String registerForm = "frontend/add_listing_form.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(registerForm);
 		dispatcher.forward(request, response);
 	}
