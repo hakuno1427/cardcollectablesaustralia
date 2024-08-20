@@ -15,66 +15,19 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="buyer")
 @NamedQueries({
-	@NamedQuery(name = "Buyer.findAll", query = "SELECT b from Buyer b ORDER BY b.buyerId"),	
-	@NamedQuery(name = "Buyer.countAll", query = "SELECT Count(*) FROM Buyer b")	
+	@NamedQuery(name = "Buyer.findAll", query = "SELECT b from Buyer b ORDER BY b.email"),	
+	@NamedQuery(name = "Buyer.countAll", query = "SELECT Count(*) FROM Buyer b"),
+	@NamedQuery(name = "Buyer.findByEmail", query = "SELECT b FROM Buyer b WHERE b.email = :email")
 })
 
-public class Buyer implements Serializable{
+public class Buyer extends Person implements Serializable{
 	private static final long serialVersionUID = 1L;
-
-	private Integer buyerId;
-	private String buyerEmail;
 
 	public Buyer() {
 
 	}
 
-	public Buyer(Integer buyerId, String buyerEmail) {
-		super();
-		this.buyerId = buyerId;
-		this.buyerEmail = buyerEmail;
+	public Buyer(String firstName, String lastName, Integer phone, String email, String password) {
+		super(firstName, lastName, phone, email, password);
 	}
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "buyerId", unique = true, nullable = false)
-	public Integer getBuyerId() {
-		return buyerId;
-	}
-
-	public void setBuyerId(Integer buyerId) {
-		this.buyerId = buyerId;
-	}
-
-	@Column(name = "buyerEmail", nullable = false, length = 320)
-	public String getBuyerEmail() {
-		return buyerEmail;
-	}
-
-	public void setBuyerEmail(String buyerEmail) {
-		this.buyerEmail = buyerEmail;
-	}
-
-	@Override
-	public String toString() {
-		return "Buyer [buyerId=" + buyerId + ", buyerEmail=" + buyerEmail + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(buyerEmail, buyerId);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Buyer other = (Buyer) obj;
-		return Objects.equals(buyerEmail, other.buyerEmail) && Objects.equals(buyerId, other.buyerId);
-	}
-
 }

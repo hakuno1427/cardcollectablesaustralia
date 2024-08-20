@@ -25,20 +25,26 @@
 				<li class="nav-item"><a href="register" class="nav-link">Register</a>
 				</li>
 			</c:if>
-
+			
 			<c:if test="${loggedInPerson !=null}">
 				<li class="nav-item"><a href="view_profile" class="nav-link">Welcome,
 						${loggedInPerson.firstName}</a></li>
-
-				<li class="nav-item"><a href="view_orders" class="nav-link">My
+				
+				<c:if test="${personRole == 'BUYER'}">
+					<li class="nav-item"><a href="view_orders" class="nav-link">My
 						Orders</a></li>
-
+					<li class="nav-item"><a href="view_cart" class="nav-link">Cart</a>
+					</li>
+						
+				</c:if>
+				<c:if test="${personRole == 'SELLER'}">
+					<li class="nav-item"><a href="add_listing" class="nav-link">Add new Listing</a></li>
+					<li class="nav-item"><a href="view_seller_orders" class="nav-link">My Orders</a></li>
+				</c:if>
+				
 				<li class="nav-item"><a href="logout" class="nav-link">Logout</a>
 				</li>
 			</c:if>
-
-			<li class="nav-item"><a href="view_cart" class="nav-link">Cart</a>
-			</li>
 		</ul>
 	</div>
 </nav>

@@ -73,7 +73,7 @@ public class Listing implements Serializable {
 		this.serialNumber = serialNumber;
 	}
 
-	@Column(name = "condition", nullable = false, length = 50)
+	@Column(name = "listingCondition", nullable = false, length = 50)
 	public String getCondition() {
 		return condition;
 	}
