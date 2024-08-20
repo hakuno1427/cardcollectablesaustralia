@@ -14,10 +14,16 @@
 			<div class="col text-center">
 				<h2>About Our Company</h2>
 				<p>Welcome to Card Collectables Australia! We are committed to providing the best services as iconic online trading card game marketplace tailored specifically for the Australian market. Our goal is to provide a centralised, user-friendly, and secure platform for Australian trading card lovers.</p>
+                
+                <h3>Our Mission</h3>
+                <p>Our mission is to deliver a seamless and enjoyable trading card experience, bringing together enthusiasts and collectors through innovation and dedication.</p>
                 <p>We strive to create a positive and engaging atmosphere through our platform and customer support. By promoting collaboration and respect, we aim to build a stronger, more connected community of trading card enthusiasts across Australia.</p>
                 
                 <h3>Our Community</h3>
                 <p>At Card Collectables Australia, we embrace inclusivity and diversity. Our community is a vibrant space where everyone is welcome. We believe in fostering a supportive environment where enthusiasts can connect, share their passion, and grow together. Whether you are a seasoned collector or just starting out, you will find a place here to engage with like-minded individuals and enrich your experience.</p>
+            	
+            	<h3>Contact Us</h3>
+                <p>For more information, please reach out to us at <a href="mailto:coit13230.2024.team2@gmail.com">coit13230.2024.team2@gmail.com</a> or visit our <a href="contact">Contact Us</a> page.</p>
             </div>
 		</div>
 		<div class="row">&nbsp;</div>
