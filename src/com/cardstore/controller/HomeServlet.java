@@ -1,6 +1,7 @@
 package com.cardstore.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.cardstore.dao.ListingDAO;
@@ -24,8 +25,8 @@ public class HomeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		ListingDAO listingDAO = new ListingDAO();
-		
-		List<Listing> listNewListings = listingDAO.listNewListings();
+			
+		List<Listing> listNewListings = listingDAO.listNewListingsWithCardDetails();
 
 		request.setAttribute("listNewListings", listNewListings);
 		

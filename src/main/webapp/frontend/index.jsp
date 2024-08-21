@@ -17,17 +17,22 @@
                     <c:forEach items="${listNewListings}" var="listing">
                         <div class="col-md-3 col-sm-6 listing-item" style="margin-bottom: 15px;">
                             <div class="card">
-                            
-                           		<!-- Card Image Section -->
-                            	 <img class="card-img-top img-fluid" src="https://cards.scryfall.io/large/front/7/a/7a5cd03c-4227-4551-aa4b-7d119f0468b5.jpg?1562550217" alt="Listing Image" style="max-width: 100%; height: auto;">
+                                <!-- Card Image Section -->
+                                <img class="card-img-top img-fluid" src="${listing.imageUrl}" alt="${listing.cardName}" style="max-width: 100%; height: auto;">
+                                
                                 <div class="card-body">
                                     <a href="view_listing?id=${listing.listingId}" title="View Listing ${listing.listingId}">
                                         <b>Listing ID: ${listing.listingId}</b>
                                     </a>
                                     <div>
+                                        <b>Card Name: ${listing.cardName}</b>
+                                    </div>
+                                    <div>
+                                        <b>Market Price: $${listing.marketPrice}</b>
+                                    </div>
+                                    <div>
                                         <b>Price: $${listing.price}</b>
                                     </div>
-                                    <!-- Additional fields can be added here -->
                                 </div>
                             </div>
                         </div>

@@ -1,5 +1,6 @@
 package com.cardstore.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,16 +44,32 @@ public class ListingDAO extends JpaDAO<Listing> implements GenericDAO<Listing> {
 		return super.countWithNamedQuery("Listing.countAll");
 	}
 	
-	/*Retrieves the latest 4 listings from the database */
-	public List<Listing> listNewListings(){
+	/*Retrieves the latest 4 listings with card details from the database */
+	public List<Listing> listNewListingsWithCardDetails(){
 		EntityManager entityManager = getEntityManager();
-		List<Listing> listings = null;
+		List<Listing> listNewListings = new ArrayList<>();
 		
 		try {
-			Query query = entityManager.createNamedQuery("Listing.listNew");
-			query.setFirstResult(0);
+			Query query = entityManager.createNamedQuery("Listing.listNewWithCardDetails");
 			query.setMaxResults(4);
-			listings = query.getResultList();
+			
+			List<Object[]> results = query.getResultList();
+			
+			for (Object[] row : results) {
+				Listing listing = new Listing();
+	            listing.setListingId((Integer) row[0]);
+	            listing.setSerialNumber((String) row[1]);
+	            listing.setCondition((String) row[2]);
+	            listing.setPrice((Double) row[3]);
+	            listing.setQuantity((Integer) row[4]);
+	            listing.setSellerId((Integer) row[5]);
+	            
+	            listing.setCardName((String) row[6]);
+	            listing.setMarketPrice((Double) row[7]);
+	            listing.setImageUrl((String) row[8]);
+	            
+	            listNewListings.add(listing);
+	        }
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Failed to retrieve the latest listings.", e);
             throw new RuntimeException("Unable to retrieve latest listings", e);
@@ -61,7 +78,7 @@ public class ListingDAO extends JpaDAO<Listing> implements GenericDAO<Listing> {
 				entityManager.close();
 			}
 		}
-		return listings;
+		return listNewListings;
 	}
 
 }
