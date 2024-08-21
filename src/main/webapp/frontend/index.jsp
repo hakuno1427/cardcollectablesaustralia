@@ -13,18 +13,23 @@
         <div class="row text-center">
             <div class="col">
                 <h2>New Listings:</h2>
-                <div class="listings-container" style="width: 80%; margin: 0 auto;">
+                <div class="row justify-content-center">
                     <c:forEach items="${listNewListings}" var="listing">
-                        <div class="listing-item" style="border-bottom: 1px solid #ddd; padding: 10px;">
-                            <div>
-                                <a href="view_listing?id=${listing.listingId}" title="View Listing ${listing.listingId}">
-                                    <b>Listing ID: ${listing.listingId}</b>
-                                </a>
+                        <div class="col-md-3 col-sm-6 listing-item" style="margin-bottom: 15px;">
+                            <div class="card">
+                            
+                           		<!-- Card Image Section -->
+                            	 <img class="card-img-top img-fluid" src="https://cards.scryfall.io/large/front/7/a/7a5cd03c-4227-4551-aa4b-7d119f0468b5.jpg?1562550217" alt="Listing Image" style="max-width: 100%; height: auto;">
+                                <div class="card-body">
+                                    <a href="view_listing?id=${listing.listingId}" title="View Listing ${listing.listingId}">
+                                        <b>Listing ID: ${listing.listingId}</b>
+                                    </a>
+                                    <div>
+                                        <b>Price: $${listing.price}</b>
+                                    </div>
+                                    <!-- Additional fields can be added here -->
+                                </div>
                             </div>
-                            <div>
-                                <b>Price: $${listing.price}</b>
-                            </div>
-                            <!-- Additional fields can be added here -->
                         </div>
                     </c:forEach>
                 </div>
