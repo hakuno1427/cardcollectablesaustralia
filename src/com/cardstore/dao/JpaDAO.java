@@ -123,4 +123,8 @@ public class JpaDAO<E> {
 
 		return result;
 	}
+	
+	protected EntityManager getEntityManager() {
+		return entityManagerFactory.createEntityManager();
+	}
 }

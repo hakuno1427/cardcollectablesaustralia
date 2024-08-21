@@ -11,12 +11,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name="listing")
 @NamedQueries({
 	@NamedQuery(name = "Listing.findAll", query = "SELECT l from Listing l ORDER BY l.listingId"),
-	@NamedQuery(name = "Listing.countAll", query = "SELECT Count(*) FROM Listing l")
+	@NamedQuery(name = "Listing.countAll", query = "SELECT Count(*) FROM Listing l"),
+	@NamedQuery(name = "Listing.listNewWithCardDetails", query = "SELECT l.listingId, l.serialNumber, l.condition, l.price, l.quantity, l.sellerId, c.cardName, c.marketprice, c.imageUrl FROM Listing l JOIN Card c ON l.serialNumber = c.serialNumber ORDER BY l.listingId DESC")
 })
 
 public class Listing implements Serializable {
@@ -28,6 +30,13 @@ public class Listing implements Serializable {
 	private String condition;
 	private double price;
 	private Integer quantity;
+	
+	@Transient
+	private String cardName;
+	@Transient
+	private double marketPrice;
+	@Transient
+	private String imageUrl;
 
 	public Listing() {
 
@@ -124,6 +133,30 @@ public class Listing implements Serializable {
 				&& Double.doubleToLongBits(price) == Double.doubleToLongBits(other.price)
 				&& Objects.equals(quantity, other.quantity) && Objects.equals(sellerId, other.sellerId)
 				&& Objects.equals(serialNumber, other.serialNumber);
+	}
+
+	public String getCardName() {
+		return cardName;
+	}
+
+	public void setCardName(String cardName) {
+		this.cardName = cardName;
+	}
+
+	public double getMarketPrice() {
+		return marketPrice;
+	}
+
+	public void setMarketPrice(double marketPrice) {
+		this.marketPrice = marketPrice;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 }
