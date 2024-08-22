@@ -1,3 +1,8 @@
+<!--
+	@author Sera Jeong 12211242
+	Created Date: 21/08/2024
+-->
+
 <div class="form-group row">
 	<label class="col-sm-4 col-form-label">Card Name :</label>
 	<div class="col-sm-8">
@@ -9,7 +14,10 @@
 	<label class="col-sm-4 col-form-label">Game :</label>
     <div class="col-sm-8">
         <select id="game" name="game" class="form-control">
-            <option value="mtg">Magic The Gathering</option>
+        	<option value="" disabled selected>Select here...</option>
+			<c:forEach var="game" items="${games}">
+                <option value="${game}" ${card.game == game ? 'selected' : ''}>${game}</option>
+            </c:forEach>
         </select>
     </div>
 </div>

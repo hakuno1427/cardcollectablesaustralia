@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.cardstore.entity.OrderItem;
 
+/**
+ * @author Sera Jeong 12211242
+ * Created Date: 18/08/2024
+ */
+
 public class OrderItemDAO extends JpaDAO<OrderItem> implements GenericDAO<OrderItem> {
 	public OrderItemDAO() {
 	}

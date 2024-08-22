@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.cardstore.entity.PaymentAccount;
 
+/**
+ * @author Sera Jeong 12211242
+ * Created Date: 18/08/2024
+ */
+
 public class PaymentAccountDAO extends JpaDAO<PaymentAccount> implements GenericDAO<PaymentAccount> {
 
 	public PaymentAccountDAO() {
