@@ -1,19 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>About Us</title>
-</head>
+<jsp:include page="page_head.jsp">
+	<jsp:param name="pageTitle" value="About Us" />
+</jsp:include>
 <body>
 	<div class="container">
 		<jsp:directive.include file="header.jsp" />
 
 		<div class="row">&nbsp;</div>
 		<div class="row">
-			<div class="col text-center">
-				<h2>About Our Company</h2>
-				<p>Welcome to Card Collectables Australia! We are committed to providing the best services as iconic online trading card game marketplace tailored specifically for the Australian market. Our goal is to provide a centralised, user-friendly, and secure platform for Australian trading card lovers.</p>
+			<div class="col text-left">
+				<h2 style="text-align: center;">Welcome to Card Collectables Australia!</h2>
+				<h3>Our Company</h3>
+				<p>We are committed to providing the best services as iconic online trading card game marketplace tailored specifically for the Australian market. We are dedicated to providing a centralised, user-friendly, and secure platform for Australian trading card lovers.</p>
                 
                 <h3>Our Mission</h3>
                 <p>Our mission is to deliver a seamless and enjoyable trading card experience, bringing together enthusiasts and collectors through innovation and dedication.</p>

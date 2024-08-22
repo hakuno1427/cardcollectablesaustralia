@@ -1,20 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>Privacy Policy</title>
-    <!-- Optional: Add your own styles here -->
-    <link rel="stylesheet" href="styles.css" />
-</head>
+<jsp:include page="page_head.jsp">
+	<jsp:param name="pageTitle" value="Privacy Policy" />
+</jsp:include>
 <body>
     <div class="container">
         <jsp:directive.include file="header.jsp" />
 
         <div class="row">&nbsp;</div>
         <div class="row">
-            <div class="col text-center">
-                <h2>Privacy Policy</h2>
+            <div class="col text-left">
+                <h2 style="text-align: center;">Privacy Policy</h2>
                 
                 <h3>Introduction</h3>
                 <p>At Card Collectables Australia, we are committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website and use our services.</p>

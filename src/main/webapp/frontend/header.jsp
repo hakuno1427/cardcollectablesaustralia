@@ -24,6 +24,7 @@
 						In</a></li>
 				<li class="nav-item"><a href="register" class="nav-link">Register</a>
 				</li>
+				<li class="nav-item"><a href="catalogue" class="nav-link">Catalogue</a></li>
 			</c:if>
 			
 			<c:if test="${loggedInPerson !=null}">

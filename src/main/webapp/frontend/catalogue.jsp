@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <jsp:include page="page_head.jsp">
-	<jsp:param name="pageTitle" value="Add Listing" />
+	<jsp:param name="pageTitle" value="Card Catalogue" />
 </jsp:include>
 <body>
 	<div class="container">
@@ -13,15 +13,16 @@
 		<div class="row">&nbsp;</div>
 		<div class="row">
 			<div class="col text-center">
-				<h2>Add New Listing</h2>
+				<h2>Card Catalogue</h2>
+				<p>You can manage the card catalogue here.</p>
+                <div>
+                    <a href="card_add" class="btn btn-primary">Add Card</a>
+                    <a href="card_update" class="btn btn-warning">Update Card</a>
+                    <a href="card_delete" class="btn btn-danger">Delete Card</a>
+                </div>
 			</div>
 		</div>
 		<div class="row">&nbsp;</div>
-
-		<form action="register_buyer" method="post"
-			style="max-width: 800px; margin: 0 auto;">
-			<jsp:directive.include file="../common/listing_form.jsp" />
-		</form>
 
 		<jsp:directive.include file="footer.jsp" />
 	</div>
