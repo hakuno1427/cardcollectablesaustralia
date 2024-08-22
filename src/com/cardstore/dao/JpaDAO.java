@@ -12,6 +12,11 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
 
+/**
+ * @author Sera Jeong 12211242
+ * Created Date: 17/08/2024
+ */
+
 //provide common operations that are shared among subclasses
 public class JpaDAO<E> {
 	private static EntityManagerFactory entityManagerFactory;

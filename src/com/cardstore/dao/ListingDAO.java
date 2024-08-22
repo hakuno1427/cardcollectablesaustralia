@@ -10,6 +10,11 @@ import com.cardstore.entity.Listing;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 
+/**
+ * @author Sera Jeong 12211242
+ * Created Date: 18/08/2024
+ */
+
 public class ListingDAO extends JpaDAO<Listing> implements GenericDAO<Listing> {
 	private static final Logger logger = Logger.getLogger(ListingDAO.class.getName());
 	public ListingDAO() {

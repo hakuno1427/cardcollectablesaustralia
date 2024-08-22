@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.cardstore.entity.Seller;
 
+/**
+ * @author Sera Jeong 12211242
+ * Created Date: 18/08/2024
+ */
+
 public class SellerDAO extends JpaDAO<Seller> implements GenericDAO<Seller> {
 	public SellerDAO() {
 	}

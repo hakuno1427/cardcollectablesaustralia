@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.cardstore.entity.Review;
 
+/**
+ * @author Sera Jeong 12211242
+ * Created Date: 18/08/2024
+ */
+
 public class ReviewDAO extends JpaDAO<Review> implements GenericDAO<Review> {
 	public ReviewDAO() {
 	}

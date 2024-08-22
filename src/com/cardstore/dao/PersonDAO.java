@@ -6,6 +6,11 @@ import java.util.Map;
 
 import com.cardstore.entity.Person;
 
+/**
+ * @author Sera Jeong 12211242
+ * Created Date: 17/08/2024
+ */
+
 public class PersonDAO extends JpaDAO<Person> implements GenericDAO<Person> {
 
 	public PersonDAO() {
