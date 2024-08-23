@@ -12,9 +12,8 @@
 			<property name="javax.persistence.jdbc.password"
 				value="nXLF7Fkf" />
 			<property name="javax.persistence.jdbc.driver"
-				value="com.mysql.cj.jdbc.Driver" />
+				value="com.mysql.cj.jdbc.Driver" /> 
 
-				
 			<!-- Hibernate Properties -->
 			<property name="hibernate.dialect"
 				value="org.hibernate.dialect.MySQL8Dialect" />
