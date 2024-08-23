@@ -1,8 +1,10 @@
-package com.cardstore.controller.person;
+package com.cardstore.controller.user;
 
 import java.io.IOException;
 
-import com.cardstore.service.PersonServices;
+import com.cardstore.dao.RoleDAO;
+import com.cardstore.entity.Role;
+import com.cardstore.service.UserServices;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,13 +16,16 @@ import jakarta.servlet.http.HttpServletResponse;
 public class RegisterSellerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	private RoleDAO roleDAO;
+
 	public RegisterSellerServlet() {
 		super();
+		this.roleDAO = new RoleDAO();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		PersonServices personServices = new PersonServices(request, response);
-		personServices.registerSeller();
+		UserServices userServices = new UserServices(request, response);
+		userServices.register(roleDAO.findByName(Role.SELLER_ROLE));
 	}
 }

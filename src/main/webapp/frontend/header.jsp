@@ -1,4 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="auth" uri="/WEB-INF/tld/permission.tld" %>
 
 <div class="row">
 	<a href="${pageContext.request.contextPath}/"> <img
@@ -19,29 +20,37 @@
 				class="btn btn-outline-success mt-1" />
 		</form>
 		<ul class="navbar-nav">
-			<c:if test="${loggedInPerson == null}">
+			<c:if test="${user == null}">
 				<li class="nav-item"><a href="login" class="nav-link">Sign
 						In</a></li>
 				<li class="nav-item"><a href="register" class="nav-link">Register</a>
 				</li>
-				<li class="nav-item"><a href="catalogue" class="nav-link">Catalogue</a></li>
 			</c:if>
 			
-			<c:if test="${loggedInPerson !=null}">
+			<c:if test="${user !=null}">
 				<li class="nav-item"><a href="view_profile" class="nav-link">Welcome,
-						${loggedInPerson.firstName}</a></li>
+						${user.firstName}</a></li>
 				
-				<c:if test="${personRole == 'BUYER'}">
-					<li class="nav-item"><a href="view_orders" class="nav-link">My
+                <c:if test="${auth:hasPermission(role, 'VIEW_MY_ORDERS')}">
+                	<li class="nav-item"><a href="view_orders" class="nav-link">My
 						Orders</a></li>
-					<li class="nav-item"><a href="view_cart" class="nav-link">Cart</a>
-					</li>
-						
-				</c:if>
-				<c:if test="${personRole == 'SELLER'}">
-					<li class="nav-item"><a href="add_listing" class="nav-link">Add new Listing</a></li>
-					<li class="nav-item"><a href="view_seller_orders" class="nav-link">My Orders</a></li>
-				</c:if>
+                </c:if>
+                
+                <c:if test="${auth:hasPermission(role, 'MANAGE_MY_ORDERS')}">
+                	<li class="nav-item"><a href="cart" class="nav-link">Cart</a></li>
+                </c:if>
+                
+                <c:if test="${auth:hasPermission(role, 'MANAGE_MY_LISTING')}">
+					<li class="nav-item"><a href="my_listings" class="nav-link">My Listing</a></li>
+                </c:if>
+                
+                <c:if test="${auth:hasPermission(role, 'PROCEED_ORDER')}">
+                	<li class="nav-item"><a href="proceed_orders" class="nav-link">Pending Orders</a></li>
+                </c:if>
+                
+                <c:if test="${auth:hasPermission(role, 'MANAGE_CATALOGUE')}">
+                	<li class="nav-item"><a href="catalogue" class="nav-link">Catalogue</a></li>
+                </c:if>
 				
 				<li class="nav-item"><a href="logout" class="nav-link">Logout</a>
 				</li>

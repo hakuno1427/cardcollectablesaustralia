@@ -5,8 +5,7 @@ import java.util.List;
 import com.cardstore.entity.PaymentService;
 
 /**
- * @author Sera Jeong 12211242
- * Created Date: 18/08/2024
+ * @author Sera Jeong 12211242 Created Date: 18/08/2024
  */
 
 public class PaymentServiceDAO extends JpaDAO<PaymentService> implements GenericDAO<PaymentService> {

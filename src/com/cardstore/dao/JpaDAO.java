@@ -5,16 +5,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import com.cardstore.entity.Person;
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
 
 /**
- * @author Sera Jeong 12211242
- * Created Date: 17/08/2024
+ * @author Sera Jeong 12211242 Created Date: 17/08/2024
  */
 
 //provide common operations that are shared among subclasses
@@ -128,7 +125,7 @@ public class JpaDAO<E> {
 
 		return result;
 	}
-	
+
 	protected EntityManager getEntityManager() {
 		return entityManagerFactory.createEntityManager();
 	}

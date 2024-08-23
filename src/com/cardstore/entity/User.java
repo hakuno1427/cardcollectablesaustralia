@@ -1,46 +1,67 @@
 package com.cardstore.entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "person")
-@NamedQueries({ @NamedQuery(name = "Person.findAll", query = "SELECT p from Person p ORDER BY p.firstName"),
-		@NamedQuery(name = "Person.coundAll", query = "SELECT Count(*) FROM Person p"),
-		@NamedQuery(name = "Person.findByEmail", query = "SELECT p FROM Person p WHERE p.email = :email"),
-		@NamedQuery(name = "Person.checkLogin", query = "SELECT p FROM Person p WHERE p.email = :email AND p.password = :pass")
-})
+@Table(name = "user")
+@NamedQueries({ @NamedQuery(name = "User.findAll", query = "SELECT u from User u ORDER BY u.firstName"),
+		@NamedQuery(name = "User.coundAll", query = "SELECT Count(*) FROM User u"),
+		@NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
+		@NamedQuery(name = "User.checkLogin", query = "SELECT u FROM User u WHERE u.email = :email AND u.password = :pass") })
 
-public class Person implements Serializable {
+public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	private Integer userId;
 	private String firstName;
 	private String lastName;
 	private Integer phone;
 	private String email;
 	private String password;
+	private Role role;
 
-	public Person() {
+	public User() {
 
 	}
 
-	public Person(String firstName, String lastName, Integer phone, String email, String password) {
+	public User(String firstName, String lastName, Integer phone, String email, String password) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phone = phone;
 		this.email = email;
 		this.password = password;
+	}
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "userId", unique = true, nullable = false)
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	@Column(name = "firstName", nullable = false, length = 50)
@@ -89,10 +110,20 @@ public class Person implements Serializable {
 		this.password = password;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "role_id", nullable = false)
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
 	@Override
 	public String toString() {
 		return "Person [firstName=" + firstName + ", lastName=" + lastName + ", phone=" + phone + ", email=" + email
-				+ ", password=" + password + "]";
+				+ ", password=" + password + ", role=" + role + "]";
 	}
 
 	@Override
@@ -108,7 +139,7 @@ public class Person implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Person other = (Person) obj;
+		User other = (User) obj;
 		return Objects.equals(email, other.email) && Objects.equals(firstName, other.firstName)
 				&& Objects.equals(lastName, other.lastName) && Objects.equals(password, other.password)
 				&& Objects.equals(phone, other.phone);

@@ -1,25 +1,26 @@
-package com.cardstore.controller.person;
+package com.cardstore.controller.user;
 
 import java.io.IOException;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/logout")
-public class PersonLogoutServlet extends HttpServlet {
+@WebServlet("/register")
+public class ShowCustomerRegisterFormServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public PersonLogoutServlet() {
+	public ShowCustomerRegisterFormServlet() {
 		super();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getSession().removeAttribute("loggedInPerson");
-
-		response.sendRedirect("/");
+		String registerForm = "frontend/buyer_register_form.jsp";
+		RequestDispatcher dispatcher = request.getRequestDispatcher(registerForm);
+		dispatcher.forward(request, response);
 	}
 }

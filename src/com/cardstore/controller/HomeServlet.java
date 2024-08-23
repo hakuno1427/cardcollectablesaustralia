@@ -25,11 +25,11 @@ public class HomeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		ListingDAO listingDAO = new ListingDAO();
-			
+
 		List<Listing> listNewListings = listingDAO.listNewListingsWithCardDetails();
 
 		request.setAttribute("listNewListings", listNewListings);
-		
+
 		String homepage = "frontend/index.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(homepage);
 		dispatcher.forward(request, response);
