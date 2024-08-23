@@ -66,16 +66,26 @@
         <!-- Pagination Links -->
         <div class="row">
             <div class="col text-center">
-                <c:forEach begin="1" end="${totalPages}" var="i">
+                <c:if test="${currentPage > 1}">
+                    <a href="?page=1">&laquo; First</a>
+                    <a href="?page=${currentPage - 1}">&lt; Previous</a>
+                </c:if>
+                
+                <c:forEach begin="${startPage}" end="${endPage}" var="i">
                     <c:choose>
                         <c:when test="${i == currentPage}">
                             <span>${i}</span>
                         </c:when>
                         <c:otherwise>
-                            <a href="catalogue?page=${i}">${i}</a>
+                            <a href="?page=${i}">${i}</a>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>
+
+                <c:if test="${currentPage < totalPages}">
+                    <a href="?page=${currentPage + 1}">Next &gt;</a>
+                    <a href="?page=${totalPages}">Last &raquo;</a>
+                </c:if>
             </div>
         </div>
 

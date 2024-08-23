@@ -10,10 +10,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/register")
-public class ShowCustomerRegisterFormServlet extends HttpServlet {
+public class ShowBuyerRegisterFormServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public ShowCustomerRegisterFormServlet() {
+	public ShowBuyerRegisterFormServlet() {
 		super();
 	}
 
