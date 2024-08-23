@@ -22,7 +22,7 @@
         <div class="row">&nbsp;</div>
 
         <!-- Card Update Form -->
-        <form action="card_update_process" method="post" style="max-width: 800px; margin: 0 auto;">
+       <form action="card_update_save" method="post" style="max-width: 800px; margin: 0 auto;">
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Card Name :</label>
                 <div class="col-sm-8">
@@ -57,8 +57,15 @@
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Market Price :</label>
                 <div class="col-sm-8">
-                    <input type="number" name="marketprice" class="form-control" step="0.01" min="0"
-                           value="${card.marketprice}" required />
+                    <c:choose>
+                        <c:when test="${card.marketprice == -1}">
+                            <p>marketprice currently unavailable</p>
+                        </c:when>
+                        <c:otherwise>
+                            <input type="number" name="marketprice" class="form-control" step="0.01" min="0"
+                                   value="${card.marketprice}" required />
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
             <div class="form-group row">

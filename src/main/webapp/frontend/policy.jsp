@@ -19,6 +19,8 @@
             <div class="col text-left">
                 <h2 style="text-align: center;">Privacy Policy</h2>
                 
+                <p><em> * Last updated: 21/08/2024 </em></p>
+                
                 <h3>Introduction</h3>
                 <p>At Card Collectables Australia, we are committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website and use our services.</p>
                 
@@ -47,6 +49,7 @@
 
                 <h3>Contact Us</h3>
                 <p>If you have any questions or concerns about this Privacy Policy, please contact us at <a href="mailto:coit13230.2024.team2@gmail.com">coit13230.2024.team2@gmail.com</a>.</p>
+            	
             </div>
         </div>
         <div class="row">&nbsp;</div>

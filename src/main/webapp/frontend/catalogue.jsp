@@ -39,6 +39,7 @@
                             <th>Card Name</th>
                             <th>Description</th>
                             <th>Game</th>
+                           	<th>Marketprice</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -52,6 +53,16 @@
                                 <td>${card.cardName}</td>
                                 <td>${card.description}</td>
                                 <td>${card.game}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${card.marketprice == -1}">
+                                            marketprice currently unavailable
+                                        </c:when>
+                                        <c:otherwise>
+                                            $${card.marketprice}
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
                                 <td>
                                     <a href="card_update?id=${card.serialNumber}" class="btn btn-warning btn-sm">Update</a>
                                     <a href="card_delete?id=${card.serialNumber}" class="btn btn-danger btn-sm">Delete</a>

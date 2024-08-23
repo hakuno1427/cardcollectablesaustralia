@@ -1,4 +1,4 @@
-package com.cardstore.controller.person;
+package com.cardstore.controller.catalogue;
 
 import java.io.IOException;
 import java.util.Arrays;
