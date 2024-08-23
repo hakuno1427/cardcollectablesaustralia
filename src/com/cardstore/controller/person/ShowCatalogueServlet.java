@@ -40,10 +40,19 @@ public class ShowCatalogueServlet extends HttpServlet {
         List<Card> listCards = cardDAO.listPaged(start, pageSize);
         long totalCards = cardDAO.count();
         int totalPages = (int) Math.ceil((double) totalCards / pageSize);
+        int pageRange = 10;
+        int startPage = Math.max(1, page - pageRange / 2);
+        int endPage = Math.min(totalPages, startPage + pageRange - 1);
+
+        if (endPage - startPage < pageRange) {
+            startPage = Math.max(1, endPage - pageRange + 1);
+        }
 
         request.setAttribute("listCards", listCards);
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
+        request.setAttribute("startPage", startPage);
+        request.setAttribute("endPage", endPage);
 
         String cataloguePage = "frontend/catalogue.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(cataloguePage);
