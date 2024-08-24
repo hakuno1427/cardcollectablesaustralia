@@ -15,8 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * @author Sera Jeong 12211242
- * Created Date: 22/08/2024
+ * @author Sera Jeong 12211242 Created Date: 22/08/2024
  */
 
 @WebServlet("/card_update")

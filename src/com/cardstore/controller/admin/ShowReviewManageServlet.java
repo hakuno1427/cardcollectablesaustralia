@@ -14,15 +14,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * @author Sera Jeong 12211242
- * Created Date: 24/08/2024
+ * @author Sera Jeong 12211242 Created Date: 24/08/2024
  */
 
-@WebServlet("/review_monitor")
-public class ShowReviewMonitorServlet extends HttpServlet {
+@WebServlet("/review_manage")
+public class ShowReviewManageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public ShowReviewMonitorServlet() {
+	public ShowReviewManageServlet() {
 		super();
 	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -55,8 +54,8 @@ public class ShowReviewMonitorServlet extends HttpServlet {
         request.setAttribute("startPage", startPage);
         request.setAttribute("endPage", endPage);
 
-        String reviewMonitorPage = "frontend/review_monitor.jsp";
-        RequestDispatcher dispatcher = request.getRequestDispatcher(reviewMonitorPage);
+        String reviewManagePage = "frontend/review_manage.jsp";
+        RequestDispatcher dispatcher = request.getRequestDispatcher(reviewManagePage);
         dispatcher.forward(request, response);
     }
 }

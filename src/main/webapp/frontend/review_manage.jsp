@@ -1,6 +1,5 @@
 <!--
-	@author Sera Jeong 12211242
-	Created Date: 24/08/2024
+	@author Sera Jeong 12211242 Created Date: 24/08/2024
 -->
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
