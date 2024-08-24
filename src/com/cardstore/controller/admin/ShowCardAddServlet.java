@@ -30,7 +30,7 @@ public class ShowCardAddServlet extends HttpServlet {
 		List<String> games = Arrays.asList("Magic The Gathering", "Pokemon");
 		request.setAttribute("games", games);
 
-		String cardAddForm = "frontend/card_add.jsp";
+		String cardAddForm = "admin/card_add.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(cardAddForm);
 		dispatcher.forward(request, response);
 	}

@@ -52,7 +52,7 @@ public class ShowCardUpdateServlet extends HttpServlet {
 			request.setAttribute("error", "Serial Number is invalid.");
 		}
 
-		String cardAddForm = "frontend/card_update.jsp";
+		String cardAddForm = "admin/card_update.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(cardAddForm);
 		dispatcher.forward(request, response);
 	}

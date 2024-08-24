@@ -53,7 +53,7 @@ public class ShowCatalogueServlet extends HttpServlet {
         request.setAttribute("startPage", startPage);
         request.setAttribute("endPage", endPage);
 
-        String cataloguePage = "frontend/catalogue.jsp";
+        String cataloguePage = "admin/catalogue.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(cataloguePage);
         dispatcher.forward(request, response);
     }
