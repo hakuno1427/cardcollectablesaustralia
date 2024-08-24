@@ -125,4 +125,11 @@ public class UserServices {
 		RequestDispatcher dispatcher = request.getRequestDispatcher(loginPage);
 		dispatcher.forward(request, response);
 	}
+	
+    public void showAdminProfile() throws ServletException, IOException {
+        String profilePage = "/admin/index.jsp";
+        RequestDispatcher dispatcher = request.getRequestDispatcher(profilePage);
+        dispatcher.forward(request, response);
+    }
+
 }

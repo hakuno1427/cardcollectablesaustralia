@@ -21,7 +21,7 @@
         <div class="row">&nbsp;</div>
 
         <!-- Card Update Form -->
-        <form action="card_update_process" method="post" style="max-width: 800px; margin: 0 auto;">
+        <form action="card_update_save" method="post" style="max-width: 800px; margin: 0 auto;">
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Card Name :</label>
                 <div class="col-sm-8">

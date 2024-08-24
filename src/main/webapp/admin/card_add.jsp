@@ -22,7 +22,7 @@
 		</div>
 		<div class="row">&nbsp;</div>
 
-		<form action="register_buyer" method="post"
+		<form action="card_add_save" method="post"
 			style="max-width: 800px; margin: 0 auto;">
 			<jsp:directive.include file="../common/card_form.jsp" />
 		</form>

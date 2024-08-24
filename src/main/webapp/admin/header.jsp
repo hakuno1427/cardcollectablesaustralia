@@ -1,4 +1,8 @@
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<!--
+	@author Sera Jeong 12211242 Created Date: 24/08/2024
+-->
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="auth" uri="/WEB-INF/tld/permission.tld" %>
 
 <div class="row">
@@ -21,24 +25,19 @@
 		</form>
 		<ul class="navbar-nav">
 			<c:if test="${user == null}">
-				<li class="nav-item"><a href="login" class="nav-link">Sign
-						In</a></li>
-				<li class="nav-item"><a href="register" class="nav-link">Register</a>
+				<li class="nav-item"><a href="login" class="nav-link">Sign In</a></li>
+				<li class="nav-item"><a href="register" class="nav-link">Register Admin</a>
 				</li>
 			</c:if>
 			
 			<c:if test="${user !=null}">
-				<li class="nav-item"><a href="view_profile" class="nav-link">Welcome,
+				<li class="nav-item"><a href="view_profile" class="nav-link">Welcome, administrator 
 						${user.firstName}</a></li>
 				
-                <c:if test="${auth:hasPermission(role, 'VIEW_MY_ORDERS')}">
-                	<li class="nav-item"><a href="view_orders" class="nav-link">My
-						Orders</a></li>
-                </c:if>
+                <li class="nav-item"><a href="catalogue" class="nav-link">Catalogue</a></li>
                 
+                <li class="nav-item"><a href="review_manage" class="nav-link">Review Management</a></li>
 
-                	<li class="nav-item"><a href="catalogue" class="nav-link">Catalogue</a></li>
-				
 				<li class="nav-item"><a href="logout" class="nav-link">Logout</a>
 				</li>
 			</c:if>
