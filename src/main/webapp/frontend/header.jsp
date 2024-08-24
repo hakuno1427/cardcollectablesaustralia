@@ -25,7 +25,7 @@
 				<li class="nav-item"><a href="register" class="nav-link">Register</a>
 				</li>
 				<li class="nav-item"><a href="catalogue" class="nav-link">Catalogue</a></li>
-				<li class="nav-item"><a href="review_monitor" class="nav-link">Review Monitor (admin)</a></li>
+				<li class="nav-item"><a href="review_manage" class="nav-link">Review Monitor (admin)</a></li>
 			</c:if>
 			
 			<c:if test="${loggedInPerson !=null}">
