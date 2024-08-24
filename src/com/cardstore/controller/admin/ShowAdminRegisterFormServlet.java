@@ -1,4 +1,4 @@
-package com.cardstore.controller.user;
+package com.cardstore.controller.admin;
 
 import java.io.IOException;
 
@@ -9,17 +9,21 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/buyer_register")
-public class ShowBuyerRegisterFormServlet extends HttpServlet {
+/**
+ * @author Sera Jeong 12211242 Created Date: 24/08/2024
+ */
+
+@WebServlet("/admin/register")
+public class ShowAdminRegisterFormServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public ShowBuyerRegisterFormServlet() {
+	public ShowAdminRegisterFormServlet() {
 		super();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String registerForm = "frontend/buyer_register_form.jsp";
+		String registerForm = "../admin/admin_register_form.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(registerForm);
 		dispatcher.forward(request, response);
 	}

@@ -1,4 +1,4 @@
-package com.cardstore.controller.catalogue;
+package com.cardstore.controller.admin;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,8 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * @author Sera Jeong 12211242
- * Created Date: 21/08/2024
+ * @author Sera Jeong 12211242 Created Date: 21/08/2024
  */
 
 @WebServlet("/catalogue")

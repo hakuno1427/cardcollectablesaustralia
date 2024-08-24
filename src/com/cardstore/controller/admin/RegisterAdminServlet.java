@@ -1,4 +1,4 @@
-package com.cardstore.controller.user;
+package com.cardstore.controller.admin;
 
 import java.io.IOException;
 
@@ -12,13 +12,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/register")
-public class RegisterBuyerServlet extends HttpServlet {
+/**
+ * @author Sera Jeong 12211242 Created Date: 24/08/2024
+ */
+
+@WebServlet("/admin/register_save")
+public class RegisterAdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private RoleDAO roleDAO;
 
-	public RegisterBuyerServlet() {
+	public RegisterAdminServlet() {
 		super();
 		this.roleDAO = new RoleDAO();
 	}
@@ -26,6 +30,7 @@ public class RegisterBuyerServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		UserServices userServices = new UserServices(request, response);
-		userServices.register(roleDAO.findByName(Role.BUYER_ROLE));
+		userServices.register(roleDAO.findByName(Role.ADMIN_ROLE));
 	}
 }
+

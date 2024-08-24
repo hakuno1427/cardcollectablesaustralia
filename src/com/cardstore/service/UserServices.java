@@ -26,11 +26,23 @@ public class UserServices {
 
 	public void register(Role role) throws ServletException, IOException {
 		String email = request.getParameter("email");
+		//User existUser = userDAO.findByEmail(email);
 		User existUser = userDAO.findByEmail(email);
 		String message = "";
 
 		if (existUser != null) {
-			message = "Could not register. The email " + email + " is already registered by another user.";
+			if ( existUser.getRole().equals(role)) {
+			    message = "Could not register. The email " + email + " is already registered by another user.";
+			} else {
+
+				User newUser = new User();
+				newUser.setRole(role);
+
+				updateUserFieldsFromForm(newUser);
+				userDAO.create(newUser);
+
+				message = "You have registered successfully! Thank you.<br/>" + "<a href='login'>Click here</a> to login";
+			}
 		} else {
 
 			User newUser = new User();
@@ -105,6 +117,12 @@ public class UserServices {
 	public void showCustomerProfile() throws ServletException, IOException {
 		String profilePage = "frontend/index.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(profilePage);
+		dispatcher.forward(request, response);
+	}
+	
+	public void showAdminLogin() throws ServletException, IOException {
+		String loginPage = "/admin/login.jsp";
+		RequestDispatcher dispatcher = request.getRequestDispatcher(loginPage);
 		dispatcher.forward(request, response);
 	}
 }
