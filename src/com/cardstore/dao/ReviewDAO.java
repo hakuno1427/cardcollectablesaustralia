@@ -5,23 +5,22 @@ import java.util.List;
 import com.cardstore.entity.Review;
 
 /**
- * @author Sera Jeong 12211242
- * Created Date: 18/08/2024
+ * @author Sera Jeong 12211242 Created Date: 18/08/2024
  */
 
 public class ReviewDAO extends JpaDAO<Review> implements GenericDAO<Review> {
 	public ReviewDAO() {
 	}
-	
+
 	public Review create(Review review) {
 		return super.create(review);
 	}
-	
+
 	@Override
 	public Review update(Review review) {
 		return super.update(review);
 	}
-	
+
 	@Override
 	public Review get(Object reviewId) {
 		return super.find(Review.class, reviewId);
@@ -29,7 +28,7 @@ public class ReviewDAO extends JpaDAO<Review> implements GenericDAO<Review> {
 
 	@Override
 	public void delete(Object reviewId) {
-		super.delete(Review.class, reviewId);	
+		super.delete(Review.class, reviewId);
 	}
 
 	@Override

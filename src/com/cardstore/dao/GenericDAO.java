@@ -3,8 +3,7 @@ package com.cardstore.dao;
 import java.util.List;
 
 /**
- * @author Sera Jeong 12211242
- * Created Date: 17/08/2024
+ * @author Sera Jeong 12211242 Created Date: 17/08/2024
  */
 
 public interface GenericDAO<E> {

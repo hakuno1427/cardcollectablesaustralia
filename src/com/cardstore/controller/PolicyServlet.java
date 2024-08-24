@@ -10,23 +10,22 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * @author Sera Jeong 12211242
- * Created Date: 21/08/2024
+ * @author Sera Jeong 12211242 Created Date: 21/08/2024
  */
 
 @WebServlet("/policy")
 public class PolicyServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public PolicyServlet() {
-        super();
-    }
+	public PolicyServlet() {
+		super();
+	}
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-        String policyPage = "frontend/policy.jsp";
-        RequestDispatcher dispatcher = request.getRequestDispatcher(policyPage);
-        dispatcher.forward(request, response);
-    }
+		String policyPage = "frontend/policy.jsp";
+		RequestDispatcher dispatcher = request.getRequestDispatcher(policyPage);
+		dispatcher.forward(request, response);
+	}
 }

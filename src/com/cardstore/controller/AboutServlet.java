@@ -10,23 +10,22 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * @author Sera Jeong 12211242
- * Created Date: 21/08/2024
+ * @author Sera Jeong 12211242 Created Date: 21/08/2024
  */
 
 @WebServlet("/about")
 public class AboutServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public AboutServlet() {
-        super();
-    }
+	public AboutServlet() {
+		super();
+	}
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-        String aboutPage = "frontend/about.jsp";
-        RequestDispatcher dispatcher = request.getRequestDispatcher(aboutPage);
-        dispatcher.forward(request, response);
-    }
+		String aboutPage = "frontend/about.jsp";
+		RequestDispatcher dispatcher = request.getRequestDispatcher(aboutPage);
+		dispatcher.forward(request, response);
+	}
 }

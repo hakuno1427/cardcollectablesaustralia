@@ -16,9 +16,8 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "transaction")
 @NamedQueries({
-	@NamedQuery(name = "Transaction.findAll", query = "SELECT t from Transaction t ORDER BY t.transactionId"),	
-	@NamedQuery(name = "Transaction.countAll", query = "SELECT Count(*) FROM Transaction t")	
-})
+		@NamedQuery(name = "Transaction.findAll", query = "SELECT t from Transaction t ORDER BY t.transactionId"),
+		@NamedQuery(name = "Transaction.countAll", query = "SELECT Count(*) FROM Transaction t") })
 
 public class Transaction implements Serializable {
 	private static final long serialVersionUID = 1L;

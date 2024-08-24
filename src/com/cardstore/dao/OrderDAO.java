@@ -5,8 +5,7 @@ import java.util.List;
 import com.cardstore.entity.Order;
 
 /**
- * @author Sera Jeong 12211242
- * Created Date: 17/08/2024
+ * @author Sera Jeong 12211242 Created Date: 17/08/2024
  */
 
 public class OrderDAO extends JpaDAO<Order> implements GenericDAO<Order> {

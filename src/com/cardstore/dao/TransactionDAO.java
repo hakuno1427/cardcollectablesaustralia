@@ -5,8 +5,7 @@ import java.util.List;
 import com.cardstore.entity.Transaction;
 
 /**
- * @author Sera Jeong 12211242
- * Created Date: 18/08/2024
+ * @author Sera Jeong 12211242 Created Date: 18/08/2024
  */
 
 public class TransactionDAO extends JpaDAO<Transaction> implements GenericDAO<Transaction> {
