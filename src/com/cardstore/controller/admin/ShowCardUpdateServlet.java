@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * @author Sera Jeong 12211242 Created Date: 22/08/2024
  */
 
-@WebServlet("/card_update")
+@WebServlet("/admin/card_update")
 public class ShowCardUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -52,7 +52,7 @@ public class ShowCardUpdateServlet extends HttpServlet {
 			request.setAttribute("error", "Serial Number is invalid.");
 		}
 
-		String cardAddForm = "admin/card_update.jsp";
+		String cardAddForm = "/admin/card_update.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(cardAddForm);
 		dispatcher.forward(request, response);
 	}

@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * @author Sera Jeong 12211242 Created Date: 21/08/2024
  */
 
-@WebServlet("/catalogue")
+@WebServlet("/admin/catalogue")
 public class ShowCatalogueServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -53,7 +53,7 @@ public class ShowCatalogueServlet extends HttpServlet {
         request.setAttribute("startPage", startPage);
         request.setAttribute("endPage", endPage);
 
-        String cataloguePage = "admin/catalogue.jsp";
+        String cataloguePage = "/admin/catalogue.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(cataloguePage);
         dispatcher.forward(request, response);
     }

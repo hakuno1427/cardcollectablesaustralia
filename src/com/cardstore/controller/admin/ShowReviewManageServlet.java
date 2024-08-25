@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * @author Sera Jeong 12211242 Created Date: 24/08/2024
  */
 
-@WebServlet("/review_manage")
+@WebServlet("/admin/review_manage")
 public class ShowReviewManageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -54,7 +54,7 @@ public class ShowReviewManageServlet extends HttpServlet {
         request.setAttribute("startPage", startPage);
         request.setAttribute("endPage", endPage);
 
-        String reviewManagePage = "admin/review_manage.jsp";
+        String reviewManagePage = "/admin/review_manage.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(reviewManagePage);
         dispatcher.forward(request, response);
     }

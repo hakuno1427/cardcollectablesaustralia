@@ -30,7 +30,7 @@ public class RegisterAdminServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		UserServices userServices = new UserServices(request, response);
-		userServices.register(roleDAO.findByName(Role.ADMIN_ROLE));
+		userServices.adminRegister(roleDAO.findByName(Role.ADMIN_ROLE));
 	}
 }
 

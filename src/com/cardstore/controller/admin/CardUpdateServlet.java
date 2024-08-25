@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * @author Sera Jeong 12211242 Created Date: 23/08/2024
  */
 
-@WebServlet("/card_update_save")
+@WebServlet("/admin/card_update_save")
 public class CardUpdateServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -57,7 +57,7 @@ public class CardUpdateServlet extends HttpServlet {
             response.sendRedirect("catalogue");
         } else {
             request.setAttribute("error", "Card not found.");
-            request.getRequestDispatcher("frontend/card_update.jsp").forward(request, response);
+            request.getRequestDispatcher("/admin/card_update.jsp").forward(request, response);
         }
     }
 }

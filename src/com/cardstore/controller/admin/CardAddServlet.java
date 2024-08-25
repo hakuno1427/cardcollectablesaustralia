@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * @author Sera Jeong 12211242 Created Date: 23/08/2024
  */
 
-@WebServlet("/card_add_save")
+@WebServlet("/admin/card_add_save")
 public class CardAddServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -47,6 +47,6 @@ public class CardAddServlet extends HttpServlet {
         cardDAO.create(card);
 
         //redirect to catalogue
-        response.sendRedirect("catalogue");
+        response.sendRedirect("/admin/catalogue");
     }
 }
