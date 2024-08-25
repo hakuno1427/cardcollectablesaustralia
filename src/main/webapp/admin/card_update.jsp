@@ -1,6 +1,5 @@
 <!--
-	@author Sera Jeong 12211242
-	Created Date: 22/08/2024
+	@author Sera Jeong 12211242 Created Date: 22/08/2024
 -->
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -22,7 +21,7 @@
         <div class="row">&nbsp;</div>
 
         <!-- Card Update Form -->
-        <form action="card_update_process" method="post" style="max-width: 800px; margin: 0 auto;">
+        <form action="card_update_save" method="post" style="max-width: 800px; margin: 0 auto;">
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Card Name :</label>
                 <div class="col-sm-8">

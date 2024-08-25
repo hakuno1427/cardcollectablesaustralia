@@ -113,6 +113,34 @@ public class UserServices {
 		dispatcher.forward(request, response);
 	}
 
+
+	public void doAdminLogin() throws ServletException, IOException {
+	    String email = request.getParameter("email");
+	    String password = request.getParameter("password");
+
+	    User user = userDAO.checkLogin(email, password);
+
+	    if (user == null) {
+	        String message = "Login failed. Please check your email and password.";
+	        request.setAttribute("message", message);
+	        showAdminLogin(); // Show login page with error message
+	    } else {
+	        HttpSession session = request.getSession();
+	        session.setAttribute("user", user);
+	        session.setAttribute("role", user.getRole());
+
+	        Object objRedirectURL = session.getAttribute("redirectURL");
+
+	        if (objRedirectURL != null) {
+	            String redirectURL = (String) objRedirectURL;
+	            session.removeAttribute("redirectURL");
+	            response.sendRedirect(redirectURL);
+	        } else {
+	            showAdminProfile(); // Redirect to admin profile page
+	        }
+	    }
+	}
+
 	public void showUserProfile() throws ServletException, IOException {
 		User user = (User) request.getSession().getAttribute("user");
 
@@ -168,5 +196,42 @@ public class UserServices {
 		}
 
 		return false;
+	}
+
+	public void showAdminLogin() throws ServletException, IOException {
+		String loginPage = "/admin/login.jsp";
+		RequestDispatcher dispatcher = request.getRequestDispatcher(loginPage);
+		dispatcher.forward(request, response);
+	}
+	
+    public void showAdminProfile() throws ServletException, IOException {
+        String profilePage = "/admin/index.jsp";
+        RequestDispatcher dispatcher = request.getRequestDispatcher(profilePage);
+        dispatcher.forward(request, response);
+    }
+
+	public void adminRegister(Role role) throws ServletException, IOException {
+		String email = request.getParameter("email");
+		//User existUser = userDAO.findByEmail(email);
+		User existUser = userDAO.findByEmail(email);
+		String message = "";
+
+		if (existUser != null) {
+			    message = "Could not register. The email " + email + " is already registered by another user.";
+		} else {
+
+			User newUser = new User();
+			newUser.setRole(role);
+
+			updateUserFieldsFromForm(newUser);
+			userDAO.create(newUser);
+
+			message = "You have registered successfully! Thank you.<br/>" + "<a href='login'>Click here</a> to login";
+		}
+
+		String messagePage = "/admin/message.jsp";
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(messagePage);
+		request.setAttribute("message", message);
+		requestDispatcher.forward(request, response);
 	}
 }

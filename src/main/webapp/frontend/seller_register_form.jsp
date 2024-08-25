@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <jsp:include page="page_head.jsp">
-	<jsp:param name="pageTitle" value="Register as a Buyer" />
+	<jsp:param name="pageTitle" value="Register as a Seller" />
 </jsp:include>
 <body>
 	<div class="container">

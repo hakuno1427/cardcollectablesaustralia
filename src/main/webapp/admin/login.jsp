@@ -1,5 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<!--
+	@author Sera Jeong 12211242 Created Date: 24/08/2024
+-->
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
@@ -14,7 +17,7 @@
 
 		<div class="row">
 			<div class="col text-center">
-				<h2>Login</h2>
+				<h2>Admin Login</h2>
 			</div>
 		</div>
 

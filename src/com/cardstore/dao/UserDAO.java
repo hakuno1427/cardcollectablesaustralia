@@ -46,7 +46,7 @@ public class UserDAO extends JpaDAO<User> implements GenericDAO<User> {
 
 	public User findByEmail(String email) {
 		List<User> result = super.findWithNamedQuery("User.findByEmail", "email", email);
-
+		
 		if (!result.isEmpty()) {
 			return result.get(0);
 		}
