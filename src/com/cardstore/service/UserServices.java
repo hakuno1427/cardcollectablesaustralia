@@ -204,6 +204,12 @@ public class UserServices {
 	}
 
 	public void showAdminProfile() throws ServletException, IOException {
+		Role role = (Role) request.getSession().getAttribute("role");
+		if (role.getName().compareTo(Role.ADMIN_ROLE) == 0) {
+			response.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have permission to access this page.");
+			return;
+		}
+		
 		String profilePage = "/admin/index.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(profilePage);
 		dispatcher.forward(request, response);
