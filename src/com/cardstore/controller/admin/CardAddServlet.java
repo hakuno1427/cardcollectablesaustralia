@@ -2,8 +2,6 @@ package com.cardstore.controller.admin;
 
 import java.io.IOException;
 
-import com.cardstore.dao.CardDAO;
-import com.cardstore.entity.Card;
 import com.cardstore.service.CardServices;
 
 import jakarta.servlet.ServletException;

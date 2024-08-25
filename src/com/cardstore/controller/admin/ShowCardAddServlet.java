@@ -1,8 +1,8 @@
 package com.cardstore.controller.admin;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
+
+import com.cardstore.service.CardServices;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -25,13 +25,12 @@ public class ShowCardAddServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+        CardServices cardServices = new CardServices(request, response);
 
-		// add new game name to the list when they are available
-		List<String> games = Arrays.asList("Magic The Gathering", "Pokemon");
-		request.setAttribute("games", games);
+        cardServices.prepareCardAddPage();
 
-		String cardAddForm = "/admin/card_add.jsp";
-		RequestDispatcher dispatcher = request.getRequestDispatcher(cardAddForm);
-		dispatcher.forward(request, response);
-	}
+        String cardAddForm = "/admin/card_add.jsp";
+        RequestDispatcher dispatcher = request.getRequestDispatcher(cardAddForm);
+        dispatcher.forward(request, response);
+    }
 }

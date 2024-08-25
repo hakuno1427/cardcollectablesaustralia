@@ -1,10 +1,7 @@
 package com.cardstore.controller.admin;
 
 import java.io.IOException;
-import java.util.List;
-
-import com.cardstore.dao.CardDAO;
-import com.cardstore.entity.Card;
+import com.cardstore.service.CardServices;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -24,34 +21,13 @@ public class ShowCatalogueServlet extends HttpServlet {
 	public ShowCatalogueServlet() {
 		super();
 	}
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		
-        CardDAO cardDAO = new CardDAO();
-        int page = 1;
-        int pageSize = 10;
+	
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        CardServices cardServices = new CardServices(request, response);
 
-        if (request.getParameter("page") != null) {
-            page = Integer.parseInt(request.getParameter("page"));
-        }
-
-        int start = (page - 1) * pageSize;
-        List<Card> listCards = cardDAO.listPaged(start, pageSize);
-        long totalCards = cardDAO.count();
-        int totalPages = (int) Math.ceil((double) totalCards / pageSize);
-        int pageRange = 10;
-        int startPage = Math.max(1, page - pageRange / 2);
-        int endPage = Math.min(totalPages, startPage + pageRange - 1);
-
-        if (endPage - startPage < pageRange) {
-            startPage = Math.max(1, endPage - pageRange + 1);
-        }
-
-        request.setAttribute("listCards", listCards);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("totalPages", totalPages);
-        request.setAttribute("startPage", startPage);
-        request.setAttribute("endPage", endPage);
+        cardServices.listCards();
 
         String cataloguePage = "/admin/catalogue.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(cataloguePage);

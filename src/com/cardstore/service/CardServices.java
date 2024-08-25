@@ -1,6 +1,7 @@
 package com.cardstore.service;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import com.cardstore.dao.CardDAO;
@@ -27,12 +28,36 @@ public class CardServices {
     }
 
     public void listCards() throws ServletException, IOException {
-        List<Card> listCards = cardDAO.listAll();
+        int page = 1;
+        int pageSize = 10;
+
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+
+        int start = (page - 1) * pageSize;
+        List<Card> listCards = cardDAO.listPaged(start, pageSize);
+        long totalCards = cardDAO.count();
+        int totalPages = (int) Math.ceil((double) totalCards / pageSize);
+        int pageRange = 10;
+        int startPage = Math.max(1, page - pageRange / 2);
+        int endPage = Math.min(totalPages, startPage + pageRange - 1);
+
+        if (endPage - startPage < pageRange) {
+            startPage = Math.max(1, endPage - pageRange + 1);
+        }
+
         request.setAttribute("listCards", listCards);
-        
-        String cardAddPage = "/admin/catalogue.jsp";
-        RequestDispatcher dispatcher = request.getRequestDispatcher(cardAddPage);
-        dispatcher.forward(request, response);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("startPage", startPage);
+        request.setAttribute("endPage", endPage);
+    }
+    
+    public void prepareCardAddPage() throws ServletException, IOException {
+    	//add new game names to the list when they are available
+        List<String> games = Arrays.asList("Magic The Gathering", "Pokemon");
+        request.setAttribute("games", games);
     }
 
     public void createCard() throws ServletException, IOException {
@@ -48,21 +73,37 @@ public class CardServices {
 
         response.sendRedirect(request.getContextPath() + "/admin/catalogue");
     }
+    
+    public void prepareCardUpdatePage() throws ServletException, IOException {
+    	//add new game names to the list when they are available
+        List<String> games = Arrays.asList("Magic The Gathering", "Pokemon");
+        request.setAttribute("games", games);
 
-    public void updateCard() throws ServletException, IOException {
-        String serialNumber = request.getParameter("serialNumber");
-        String cardName = request.getParameter("cardName");
-        String description = request.getParameter("description");
-        String game = request.getParameter("game");
-        String marketprice = request.getParameter("marketprice");
-        String imageUrl = request.getParameter("imageUrl");
+        String serialNumber = request.getParameter("id");
+        Card card = cardDAO.get(serialNumber);
 
-        Card card = new Card(cardName, game, serialNumber, description, Double.parseDouble(marketprice), imageUrl);
-        cardDAO.update(card);
+        if (card == null) {
+            String message = "Could not find card with Serial Number " + serialNumber;
+            request.setAttribute("message", message);
+            listCards();  // Optionally redirect to the list page if card is not found
+            return;
+        }
 
-        response.sendRedirect(request.getContextPath() + "/admin/catalogue");
+        request.setAttribute("card", card);
     }
-
+    
+    public void updateCard(String serialNumber, String cardName, String description, String game, double marketPrice, String imageUrl) {
+        Card card = cardDAO.get(serialNumber);
+        if (card != null) {
+            card.setCardName(cardName);
+            card.setDescription(description);
+            card.setGame(game);
+            card.setMarketprice(marketPrice);
+            card.setImageUrl(imageUrl);
+            cardDAO.update(card);
+        }
+    }
+    
     public void deleteCard() throws ServletException, IOException {
         String serialNumber = request.getParameter("id"); 
         if (serialNumber != null && !serialNumber.trim().isEmpty()) {
@@ -73,22 +114,5 @@ public class CardServices {
             request.setAttribute("message", message);
             listCards(); 
         }
-    }
-
-    public void getCardBySerialNumber() throws ServletException, IOException {
-        String serialNumber = request.getParameter("serialNumber");
-        Card card = cardDAO.get(serialNumber);
-
-        if (card == null) {
-            String message = "Could not find card with Serial Number " + serialNumber;
-            request.setAttribute("message", message);
-            listCards();
-            return;
-        }
-
-        request.setAttribute("card", card);
-        String editPage = "/admin/card_form.jsp";
-        RequestDispatcher dispatcher = request.getRequestDispatcher(editPage);
-        dispatcher.forward(request, response);
     }
 }

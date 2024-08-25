@@ -2,7 +2,6 @@ package com.cardstore.controller.admin;
 
 import java.io.IOException;
 
-import com.cardstore.dao.CardDAO;
 import com.cardstore.service.CardServices;
 
 import jakarta.servlet.ServletException;
@@ -18,8 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/admin/card_delete")
 public class CardDeleteServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private CardDAO cardDAO = new CardDAO();
-
+    
     public CardDeleteServlet() {
         super();
     }

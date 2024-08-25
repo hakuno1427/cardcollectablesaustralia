@@ -2,8 +2,6 @@ package com.cardstore.controller.admin;
 
 import java.io.IOException;
 
-import com.cardstore.dao.CardDAO;
-import com.cardstore.entity.Card;
 import com.cardstore.service.CardServices;
 
 import jakarta.servlet.ServletException;
@@ -20,8 +18,6 @@ import jakarta.servlet.http.HttpServletResponse;
 public class CardUpdateServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    private CardDAO cardDAO = new CardDAO();
-    
     public CardUpdateServlet() {
         super();
     }
@@ -29,8 +25,17 @@ public class CardUpdateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	//use cardservices for update business logic
+        String serialNumber = request.getParameter("serialNumber");
+        String cardName = request.getParameter("cardName");
+        String description = request.getParameter("description");
+        String game = request.getParameter("game");
+        double marketPrice = Double.parseDouble(request.getParameter("marketprice"));
+        String imageUrl = request.getParameter("imageUrl");
+
+        //use cardservices for update business logic
         CardServices cardServices = new CardServices(request, response);
-        cardServices.updateCard(); 
+        cardServices.updateCard(serialNumber, cardName, description, game, marketPrice, imageUrl);
+        
+        response.sendRedirect(request.getContextPath() + "/admin/catalogue");
     }
 }
