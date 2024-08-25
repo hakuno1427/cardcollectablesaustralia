@@ -25,12 +25,12 @@ public class ShowCardAddServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-        CardServices cardServices = new CardServices(request, response);
+		CardServices cardServices = new CardServices(request, response);
 
-        cardServices.prepareCardAddPage();
+		cardServices.prepareCardAddPage();
 
-        String cardAddForm = "/admin/card_add.jsp";
-        RequestDispatcher dispatcher = request.getRequestDispatcher(cardAddForm);
-        dispatcher.forward(request, response);
-    }
+		String cardAddForm = "/admin/card_add.jsp";
+		RequestDispatcher dispatcher = request.getRequestDispatcher(cardAddForm);
+		dispatcher.forward(request, response);
+	}
 }

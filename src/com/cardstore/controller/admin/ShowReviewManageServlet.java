@@ -21,15 +21,16 @@ public class ShowReviewManageServlet extends HttpServlet {
 	public ShowReviewManageServlet() {
 		super();
 	}
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-        AdminReviewServices reviewServices = new AdminReviewServices(request, response);
 
-        reviewServices.listReviews();
+		AdminReviewServices reviewServices = new AdminReviewServices(request, response);
 
-        String reviewManagePage = "/admin/review_manage.jsp";
-        RequestDispatcher dispatcher = request.getRequestDispatcher(reviewManagePage);
-        dispatcher.forward(request, response);
-    }
+		reviewServices.listReviews();
+
+		String reviewManagePage = "/admin/review_manage.jsp";
+		RequestDispatcher dispatcher = request.getRequestDispatcher(reviewManagePage);
+		dispatcher.forward(request, response);
+	}
 }

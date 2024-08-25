@@ -20,14 +20,15 @@ public class ShowCardUpdateServlet extends HttpServlet {
 	public ShowCardUpdateServlet() {
 		super();
 	}
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-    	CardServices cardServices = new CardServices(request, response);
-        cardServices.prepareCardUpdatePage(); 
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/card_update.jsp");
-        dispatcher.forward(request, response);
-    }
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		CardServices cardServices = new CardServices(request, response);
+		cardServices.prepareCardUpdatePage();
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/card_update.jsp");
+		dispatcher.forward(request, response);
+	}
 }

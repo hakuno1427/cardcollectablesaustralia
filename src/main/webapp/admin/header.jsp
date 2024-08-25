@@ -34,9 +34,15 @@
             <!-- Links shown when user is logged in -->
             <c:if test="${user != null}">
                 <li class="nav-item nav-link" style="user-select: none;">Welcome, administrator ${user.firstName}</a></li>
-                <li class="nav-item"><a href="/admin/catalogue" class="nav-link">Catalogue</a></li>
-                <li class="nav-item"><a href="/admin/review_manage" class="nav-link">Review Management</a></li>
-                <li class="nav-item"><a href="logout" class="nav-link">Logout</a></li>
+                
+                <c:if test="${auth:hasPermission(role, 'VIEW_CARD_CARTALOGUE')}">
+                	<li class="nav-item"><a href="/admin/catalogue" class="nav-link">Catalogue</a></li>
+                </c:if>
+                <c:if test="${auth:hasPermission(role, 'MANAGE_REVIEW')}">
+	                <li class="nav-item"><a href="/admin/review_manage" class="nav-link">Review Management</a></li>
+                </c:if>
+
+               	<li class="nav-item"><a href="logout" class="nav-link">Logout</a></li>
             </c:if>
         </ul>
     </div>

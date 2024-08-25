@@ -62,10 +62,12 @@
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
+                                <c:if test="${auth:hasPermission(role, 'MANAGE_CARD_CARTALOGUE')}">                
                                 <td>
                                     <a href="card_update?id=${card.serialNumber}" class="btn btn-warning btn-sm">Update</a>
                                     <a href="card_delete?id=${card.serialNumber}" class="btn btn-danger btn-sm">Delete</a>
                                 </td>
+                                </c:if>
                             </tr>
                         </c:forEach>
                     </tbody>

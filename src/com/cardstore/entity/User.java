@@ -22,7 +22,6 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "user")
 @NamedQueries({ @NamedQuery(name = "User.findAll", query = "SELECT u from User u ORDER BY u.firstName"),
 		@NamedQuery(name = "User.coundAll", query = "SELECT Count(*) FROM User u"),
@@ -54,7 +53,7 @@ public class User implements Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "userId", unique = true, nullable = false)
 	public Integer getUserId() {
 		return userId;

@@ -21,16 +21,16 @@ public class ShowCatalogueServlet extends HttpServlet {
 	public ShowCatalogueServlet() {
 		super();
 	}
-	
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        CardServices cardServices = new CardServices(request, response);
 
-        cardServices.listCards();
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		CardServices cardServices = new CardServices(request, response);
 
-        String cataloguePage = "/admin/catalogue.jsp";
-        RequestDispatcher dispatcher = request.getRequestDispatcher(cataloguePage);
-        dispatcher.forward(request, response);
-    }
+		cardServices.listCards();
+
+		String cataloguePage = "/admin/catalogue.jsp";
+		RequestDispatcher dispatcher = request.getRequestDispatcher(cataloguePage);
+		dispatcher.forward(request, response);
+	}
 }
