@@ -32,16 +32,3 @@ public class CardDeleteServlet extends HttpServlet {
         cardServices.deleteCard();
     }
 }
-//    @Override
-//    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//        String serialNumber = request.getParameter("id");
-//
-//        if (serialNumber != null && !serialNumber.trim().isEmpty()) {
-//            cardDAO.delete(serialNumber);
-//        }
-//
-//      //redirect to catalogue
-//        response.sendRedirect("/admin/catalogue");
-//    }
-//}

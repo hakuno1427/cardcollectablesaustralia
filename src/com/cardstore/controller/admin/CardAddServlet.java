@@ -31,32 +31,3 @@ public class CardAddServlet extends HttpServlet {
         cardServices.createCard();
     }
 }
-
-
-//    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//        
-//        String serialNumber = request.getParameter("serialNumber");
-//        String cardName = request.getParameter("cardName");
-//        String description = request.getParameter("description");
-//        String game = request.getParameter("game");
-//        String marketprice = request.getParameter("marketprice");
-//        String imageUrl = request.getParameter("imageUrl");
-//
-//        //create new card object and set attributes
-//        Card card = new Card();
-//        card.setSerialNumber(serialNumber);
-//        card.setCardName(cardName);
-//        card.setDescription(description);
-//        card.setGame(game);
-//        card.setMarketprice(Double.parseDouble(marketprice));
-//        card.setImageUrl(imageUrl);
-//
-//        //save new card using CardDAO
-//        CardDAO cardDAO = new CardDAO();
-//        cardDAO.create(card);
-//
-//        //redirect to catalogue
-//        response.sendRedirect("/admin/catalogue");
-//    }
-//}
