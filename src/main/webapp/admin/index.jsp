@@ -3,6 +3,7 @@
 -->
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="en">
 <jsp:include page="page_head.jsp">
@@ -13,35 +14,45 @@
         <!-- Header Section -->
         <jsp:directive.include file="header.jsp" />
 
-        <!-- New Listings Section -->
+        <!-- Admin Home Section -->
         <div class="row text-center">
             <div class="col">
-                <h2>Admin Home Page</h2>
-                <div class="row justify-content-center">
-                    <c:forEach items="${listNewListings}" var="listing">
-                        <div class="col-md-3 col-sm-6 listing-item" style="margin-bottom: 15px;">
-                            <div class="card">
-                                <!-- Card Image Section -->
-                                <img class="card-img-top img-fluid" src="${listing.imageUrl}" alt="${listing.cardName}" style="max-width: 100%; height: auto;">
-                                
-                                <div class="card-body">
-                                    <a href="view_listing?id=${listing.listingId}" title="View Listing ${listing.listingId}">
-                                        <b>Listing ID: ${listing.listingId}</b>
-                                    </a>
-                                    <div>
-                                        <b>Card Name: ${listing.cardName}</b>
-                                    </div>
-                                    <div>
-                                        <b>Market Price: $${listing.marketPrice}</b>
-                                    </div>
-                                    <div>
-                                        <b>Price: $${listing.price}</b>
-                                    </div>
-                                </div>
-                            </div>
+                <h2>Admin Home</h2>
+                
+                <!-- Main page before login -->
+                <c:if test="${user == null}">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8 col-sm-12">
+                            <p>If you would like to use administration functions, please log in.</p> 
+                            <a href="login" class="btn btn-primary">Login</a>
+                            <hr class="my-4">
+                            <p>If you do not have a valid account, please register first.</p>
+                            <a href="register" class="btn btn-secondary">Register</a>
                         </div>
-                    </c:forEach>
-                </div>
+                    </div>
+                </c:if>
+
+                <!-- Main page after login -->
+                <c:if test="${user != null}">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8 col-sm-12">
+                            <p>Welcome, administrator ${user.firstName}!</p>
+                            <p>To utilise administration functions, please click the respective buttons.</p>
+                            <hr class="my-4">
+                            <p>To manage the card catalogue:</p> 
+                            <a href="/admin/catalogue" class="btn btn-info">Catalogue</a>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p>To monitor customer reviews:</p> 
+                            <a href="/admin/review_manage" class="btn btn-info">Review Management</a>
+                            <hr class="my-4">
+                            <a href="logout" class="btn btn-danger">Logout</a>
+                        </div>
+                    </div>
+                </c:if>
             </div>
         </div>
 

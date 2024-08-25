@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col text-center">
                 <h2>Register New Admin Account</h2>
-                <p>Please use your company email (@ccamail.com) for your email address when you register.</p>
+                <p>Please use your company email (@cca.com) for your email address when you register.</p>
             </div>
         </div>
         <div class="row">&nbsp;</div>
@@ -26,7 +26,7 @@
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">E-mail:</label>
                 <div class="col-sm-8">
-                    <input type="email" name="email" class="form-control" required minlength="5" maxlength="64" pattern="[a-zA-Z0-9._%+-]+@ccamail.com" title="Email must end with @ccamail.com"/>
+                    <input type="email" name="email" class="form-control" required minlength="5" maxlength="64" pattern="[a-zA-Z0-9._%+-]+@cca.com" title="Email must end with @ccam.com"/>
                 </div>
             </div>
             <div class="form-group row">
