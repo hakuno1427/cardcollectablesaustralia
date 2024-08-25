@@ -36,9 +36,6 @@
                 <c:if test="${auth:hasPermission(role, 'PROCEED_ORDER')}">
                     <li class="nav-item"><a href="proceed_orders" class="nav-link">Pending Orders</a></li>
                 </c:if>
-                <c:if test="${auth:hasPermission(role, 'MANAGE_CATALOGUE')}">
-                    <li class="nav-item"><a href="catalogue" class="nav-link">Catalogue</a></li>
-                </c:if>
                 <li class="nav-item"><a href="logout" class="nav-link">Logout</a></li>
             </c:if>
         </ul>

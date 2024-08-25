@@ -16,17 +16,17 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/admin/card_delete")
 public class CardDeleteServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-    
-    public CardDeleteServlet() {
-        super();
-    }
-    
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-    	//use cardservices for delete business logic
-        CardServices cardServices = new CardServices(request, response);
-        cardServices.deleteCard();
-    }
+	private static final long serialVersionUID = 1L;
+
+	public CardDeleteServlet() {
+		super();
+	}
+
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// use cardservices for delete business logic
+		CardServices cardServices = new CardServices(request, response);
+		cardServices.deleteCard();
+	}
 }

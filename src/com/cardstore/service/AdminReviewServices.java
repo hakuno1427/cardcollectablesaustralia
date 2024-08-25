@@ -2,9 +2,13 @@ package com.cardstore.service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 import com.cardstore.dao.ReviewDAO;
+import com.cardstore.entity.Permission;
 import com.cardstore.entity.Review;
+import com.cardstore.entity.Role;
+import com.cardstore.entity.User;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,40 +18,66 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 
 public class AdminReviewServices {
-    private ReviewDAO reviewDAO;
-    private HttpServletRequest request;
-    private HttpServletResponse response;
+	public static final String MANAGE_REVIEW = "MANAGE_REVIEW";
 
-    public AdminReviewServices(HttpServletRequest request, HttpServletResponse response) {
-        this.request = request;
-        this.response = response;
-        this.reviewDAO = new ReviewDAO();
-    }
+	private ReviewDAO reviewDAO;
+	private HttpServletRequest request;
+	private HttpServletResponse response;
 
-    public void listReviews() throws IOException {
-        int page = 1;
-        int pageSize = 10;
+	public AdminReviewServices(HttpServletRequest request, HttpServletResponse response) {
+		this.request = request;
+		this.response = response;
+		this.reviewDAO = new ReviewDAO();
+	}
 
-        if (request.getParameter("page") != null) {
-            page = Integer.parseInt(request.getParameter("page"));
-        }
+	public void listReviews() throws IOException {
+		User user = (User) request.getSession().getAttribute("user");
 
-        int start = (page - 1) * pageSize;
-        List<Review> listReviews = reviewDAO.listPaged(start, pageSize);
-        long totalReviews = reviewDAO.count();
-        int totalPages = (int) Math.ceil((double) totalReviews / pageSize);
-        int pageRange = 10;
-        int startPage = Math.max(1, page - pageRange / 2);
-        int endPage = Math.min(totalPages, startPage + pageRange - 1);
+		if (!this.hasPermission(user, MANAGE_REVIEW)) {
+			response.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have permission to access this page.");
+			return;
+		}
 
-        if (endPage - startPage < pageRange) {
-            startPage = Math.max(1, endPage - pageRange + 1);
-        }
+		int page = 1;
+		int pageSize = 10;
 
-        request.setAttribute("listReviews", listReviews);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("totalPages", totalPages);
-        request.setAttribute("startPage", startPage);
-        request.setAttribute("endPage", endPage);
-    }
+		if (request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+		}
+
+		int start = (page - 1) * pageSize;
+		List<Review> listReviews = reviewDAO.listPaged(start, pageSize);
+		long totalReviews = reviewDAO.count();
+		int totalPages = (int) Math.ceil((double) totalReviews / pageSize);
+		int pageRange = 10;
+		int startPage = Math.max(1, page - pageRange / 2);
+		int endPage = Math.min(totalPages, startPage + pageRange - 1);
+
+		if (endPage - startPage < pageRange) {
+			startPage = Math.max(1, endPage - pageRange + 1);
+		}
+
+		request.setAttribute("listReviews", listReviews);
+		request.setAttribute("currentPage", page);
+		request.setAttribute("totalPages", totalPages);
+		request.setAttribute("startPage", startPage);
+		request.setAttribute("endPage", endPage);
+	}
+
+	private boolean hasPermission(User user, String permissionName) {
+		if (user == null) {
+			return false;
+		}
+
+		Role role = user.getRole();
+
+		Set<Permission> permissions = role.getPermissions();
+		for (Permission permission : permissions) {
+			if (permission.getName().equals(permissionName)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 }

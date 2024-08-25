@@ -16,16 +16,16 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/admin/card_add_save")
 public class CardAddServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-    
-    public CardAddServlet() {
-        super();
-    }
+	private static final long serialVersionUID = 1L;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        //use cardservices for add business logic
-        CardServices cardServices = new CardServices(request, response);
-        cardServices.createCard();
-    }
+	public CardAddServlet() {
+		super();
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// use cardservices for add business logic
+		CardServices cardServices = new CardServices(request, response);
+		cardServices.createCard();
+	}
 }
