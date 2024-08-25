@@ -1,9 +1,12 @@
 package com.cardstore.service;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 import com.cardstore.dao.UserDAO;
+import com.cardstore.entity.Card;
 import com.cardstore.entity.Permission;
 import com.cardstore.entity.Role;
 import com.cardstore.entity.User;
@@ -17,6 +20,7 @@ import jakarta.servlet.http.HttpSession;
 public class UserServices {
 	public static final String VIEW_PROFILE_PERMISSION = "VIEW_MY_PROFILE";
 	public static final String EDIT_PROFILE_PERMISSION = "EDIT_MY_PROFILE";
+	public static final String MANAGE_USER_PERMISSION = "MANAGE_USER";
 
 	private UserDAO userDAO;
 	private HttpServletRequest request;
@@ -83,8 +87,10 @@ public class UserServices {
 			String message = "Login failed. Please check your email and password.";
 			request.setAttribute("message", message);
 			showLogin();
+			return;
+		}
 
-		} else {
+		if (user.getEnabled() == 1) {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
 			session.setAttribute("role", user.getRole());
@@ -98,7 +104,13 @@ public class UserServices {
 			} else {
 				showMyProfile();
 			}
+
+			return;
 		}
+
+		String message = "Your account has been banned permanently. If you think this is a mistake, you can send an appeal to us";
+		request.setAttribute("message", message);
+		showLogin();
 	}
 
 	public void showLogin() throws ServletException, IOException {
@@ -209,7 +221,7 @@ public class UserServices {
 			response.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have permission to access this page.");
 			return;
 		}
-		
+
 		String profilePage = "/admin/index.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(profilePage);
 		dispatcher.forward(request, response);
@@ -237,5 +249,103 @@ public class UserServices {
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(messagePage);
 		request.setAttribute("message", message);
 		requestDispatcher.forward(request, response);
+	}
+
+	public void listUsers() throws ServletException, IOException {
+		User user = (User) request.getSession().getAttribute("user");
+
+		if (!this.hasPermission(user, MANAGE_USER_PERMISSION)) {
+			response.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have permission to access this page.");
+			return;
+		}
+
+		int page = 1;
+		int pageSize = 25;
+
+		if (request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+		}
+
+		int start = (page - 1) * pageSize;
+		List<User> listUsers = userDAO.listPaged(start, pageSize);
+		long totalUsers = userDAO.count();
+		int totalPages = (int) Math.ceil((double) totalUsers / pageSize);
+		int pageRange = 10;
+		int startPage = Math.max(1, page - pageRange / 2);
+		int endPage = Math.min(totalPages, startPage + pageRange - 1);
+
+		if (endPage - startPage < pageRange) {
+			startPage = Math.max(1, endPage - pageRange + 1);
+		}
+
+		request.setAttribute("listUsers", listUsers);
+		request.setAttribute("currentPage", page);
+		request.setAttribute("totalPages", totalPages);
+		request.setAttribute("startPage", startPage);
+		request.setAttribute("endPage", endPage);
+
+		String listPage = "users.jsp";
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(listPage);
+		requestDispatcher.forward(request, response);
+	}
+
+	public void showAdminUpdateUserForm() throws ServletException, IOException {
+		User user = (User) request.getSession().getAttribute("user");
+
+		if (!this.hasPermission(user, MANAGE_USER_PERMISSION)) {
+			response.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have permission to access this page.");
+			return;
+		}
+
+		int userId = Integer.parseInt(request.getParameter("id"));
+		User selectedUser = userDAO.get(userId);
+
+		if (selectedUser == null) {
+			response.sendError(HttpServletResponse.SC_NOT_FOUND, "We cannot find user with that email");
+			return;
+		}
+
+		request.setAttribute("selectedUser", selectedUser);
+	}
+
+	public void updateUser() throws ServletException, IOException {
+		User user = (User) request.getSession().getAttribute("user");
+
+		if (!this.hasPermission(user, MANAGE_USER_PERMISSION)) {
+			response.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have permission to access this page.");
+			return;
+		}
+
+		int userId = Integer.parseInt(request.getParameter("id"));
+		User selectedUser = userDAO.get(userId);
+
+		updateUserFieldsFromForm(selectedUser);
+		userDAO.update(selectedUser);
+
+		listUsers();
+	}
+
+	public void banUser() throws ServletException, IOException {
+		User user = (User) request.getSession().getAttribute("user");
+
+		if (!this.hasPermission(user, MANAGE_USER_PERMISSION)) {
+			response.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have permission to access this page.");
+			return;
+		}
+
+		int userId = Integer.parseInt(request.getParameter("id"));
+		User selectedUser = userDAO.get(userId);
+
+		if (selectedUser == null) {
+			response.sendError(HttpServletResponse.SC_NOT_FOUND, "We cannot find user with that email");
+			return;
+		}
+
+		selectedUser.setEnabled(User.DISABLED_STATUS);
+		userDAO.update(selectedUser);
+
+		String message = "You have successfully banned this user";
+		request.setAttribute("message", message);
+		listUsers();
 	}
 }

@@ -39,17 +39,32 @@
                             <p>Welcome, administrator ${user.firstName}!</p>
                             <p>To utilise administration functions, please click the respective buttons.</p>
                             <hr class="my-4">
-                            <p>To manage the card catalogue:</p> 
-                            <a href="/admin/catalogue" class="btn btn-info">Catalogue</a>
-                            <p></p>
-                            <p></p>
-                            <p></p>
-                            <p></p>
-                            <p></p>
-                            <p>To monitor customer reviews:</p> 
-                            <a href="/admin/review_manage" class="btn btn-info">Review Management</a>
-                            <hr class="my-4">
-                            <a href="logout" class="btn btn-danger">Logout</a>
+                            <c:if test="${auth:hasPermission(role, 'MANAGE_USER')}">
+                            	<p>To manage users:</p> 
+	                            <a href="/admin/users" class="btn btn-info">Manage Users</a>
+	                            <p></p>
+	                            <p></p>
+	                            <p></p>
+	                            <p></p>
+	                            <p></p>	
+                            </c:if>
+                            
+                           	<c:if test="${auth:hasPermission(role, 'MANAGE_CARD_CARTALOGUE')}">
+                            	<p>To manage the card catalogue:</p> 
+	                            <a href="/admin/catalogue" class="btn btn-info">Catalogue</a>
+	                            <p></p>
+	                            <p></p>
+	                            <p></p>
+	                            <p></p>
+	                            <p></p>	
+                            </c:if>
+                            
+                            <c:if test="${auth:hasPermission(role, 'MANAGE_REVIEW')}">
+                            	<p>To monitor customer reviews:</p> 
+	                            <a href="/admin/review_manage" class="btn btn-info">Review Management</a>
+	                            <hr class="my-4">
+	                            <a href="logout" class="btn btn-danger">Logout</a>
+                            </c:if>
                         </div>
                     </div>
                 </c:if>

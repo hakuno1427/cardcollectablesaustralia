@@ -90,5 +90,4 @@
         <jsp:directive.include file="footer.jsp" />
     </div>
 </body>
-<script type="text/javascript" src="js/customer-form.js"></script>
 </html>
