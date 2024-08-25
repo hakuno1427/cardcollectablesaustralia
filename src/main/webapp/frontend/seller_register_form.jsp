@@ -13,7 +13,7 @@
 		<div class="row">&nbsp;</div>
 		<div class="row">
 			<div class="col text-center">
-				<h2>Register as a New Buyer</h2>
+				<h2>Register as a New Seller</h2>
 			</div>
 		</div>
 		<div class="row">&nbsp;</div>
