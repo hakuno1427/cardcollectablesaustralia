@@ -3,6 +3,7 @@ package com.cardstore.controller.admin;
 import java.io.IOException;
 
 import com.cardstore.dao.CardDAO;
+import com.cardstore.service.CardServices;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -22,17 +23,25 @@ public class CardDeleteServlet extends HttpServlet {
     public CardDeleteServlet() {
         super();
     }
-
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String serialNumber = request.getParameter("id");
-
-        if (serialNumber != null && !serialNumber.trim().isEmpty()) {
-            cardDAO.delete(serialNumber);
-        }
-
-      //redirect to catalogue
-        response.sendRedirect("/admin/catalogue");
+    	//use cardservices for delete business logic
+        CardServices cardServices = new CardServices(request, response);
+        cardServices.deleteCard();
     }
 }
+//    @Override
+//    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+//            throws ServletException, IOException {
+//        String serialNumber = request.getParameter("id");
+//
+//        if (serialNumber != null && !serialNumber.trim().isEmpty()) {
+//            cardDAO.delete(serialNumber);
+//        }
+//
+//      //redirect to catalogue
+//        response.sendRedirect("/admin/catalogue");
+//    }
+//}
