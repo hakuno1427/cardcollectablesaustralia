@@ -15,8 +15,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 public class UserServices {
-	public static final String VIEW_PROFILE_PERMISSION = "VIEW_PROFILE";
-	public static final String EDIT_PROFILE_PERMISSION = "EDIT_PROFILE";
+	public static final String VIEW_PROFILE_PERMISSION = "VIEW_MY_PROFILE";
+	public static final String EDIT_PROFILE_PERMISSION = "EDIT_MY_PROFILE";
 
 	private UserDAO userDAO;
 	private HttpServletRequest request;
