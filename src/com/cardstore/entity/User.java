@@ -54,7 +54,7 @@ public class User implements Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "userId", unique = true, nullable = false)
 	public Integer getUserId() {
 		return userId;
