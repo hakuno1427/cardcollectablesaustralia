@@ -4,7 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.cardstore.entity.Card;
 import com.cardstore.entity.User;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 
 /**
  * @author Sera Jeong 12211242 Created Date: 17/08/2024
@@ -25,13 +29,13 @@ public class UserDAO extends JpaDAO<User> implements GenericDAO<User> {
 	}
 
 	@Override
-	public User get(Object email) {
-		return super.find(User.class, email);
+	public User get(Object userId) {
+		return super.find(User.class, userId);
 	}
 
 	@Override
-	public void delete(Object email) {
-		super.delete(User.class, email);
+	public void delete(Object userId) {
+		super.delete(User.class, userId);
 	}
 
 	@Override
@@ -68,4 +72,11 @@ public class UserDAO extends JpaDAO<User> implements GenericDAO<User> {
 		return null;
 	}
 
+	public List<User> listPaged(int start, int pageSize) {
+		EntityManager entityManager = getEntityManager();
+		TypedQuery<User> query = entityManager.createNamedQuery("User.findAll", User.class);
+		query.setFirstResult(start);
+		query.setMaxResults(pageSize);
+		return query.getResultList();
+	}
 }

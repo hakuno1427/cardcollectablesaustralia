@@ -24,12 +24,15 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "user")
 @NamedQueries({ @NamedQuery(name = "User.findAll", query = "SELECT u from User u ORDER BY u.firstName"),
-		@NamedQuery(name = "User.coundAll", query = "SELECT Count(*) FROM User u"),
+		@NamedQuery(name = "User.countAll", query = "SELECT Count(*) FROM User u"),
 		@NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
 		@NamedQuery(name = "User.checkLogin", query = "SELECT u FROM User u WHERE u.email = :email AND u.password = :pass") })
 
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	public static final byte ENABLED_STATUS = 1;
+	public static final byte DISABLED_STATUS = 0;
 
 	private Integer userId;
 	private String firstName;
@@ -38,6 +41,7 @@ public class User implements Serializable {
 	private String email;
 	private String password;
 	private Role role;
+	private byte enabled;
 
 	public User() {
 
@@ -50,10 +54,11 @@ public class User implements Serializable {
 		this.phone = phone;
 		this.email = email;
 		this.password = password;
+		this.enabled = ENABLED_STATUS;
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "userId", unique = true, nullable = false)
 	public Integer getUserId() {
 		return userId;
@@ -90,7 +95,6 @@ public class User implements Serializable {
 		this.phone = phone;
 	}
 
-	@Id
 	@Column(name = "email", nullable = false, length = 320)
 	public String getEmail() {
 		return email;
@@ -121,8 +125,17 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Person [firstName=" + firstName + ", lastName=" + lastName + ", phone=" + phone + ", email=" + email
+		return "User [firstName=" + firstName + ", lastName=" + lastName + ", phone=" + phone + ", email=" + email
 				+ ", password=" + password + ", role=" + role + "]";
+	}
+
+	public void setEnabled(byte enabled) {
+		this.enabled = enabled;
+	}
+
+	@Column(name = "enabled", nullable = false)
+	public byte getEnabled() {
+		return this.enabled;
 	}
 
 	@Override

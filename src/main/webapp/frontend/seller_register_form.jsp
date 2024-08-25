@@ -20,7 +20,7 @@
 
 		<form action="register_seller" method="post"
 			style="max-width: 800px; margin: 0 auto;">
-			<jsp:directive.include file="../common/customer_form.jsp" />
+			<jsp:directive.include file="../common/user_form.jsp" />
 		</form>
 		
 		<div class="row">
@@ -32,5 +32,5 @@
 		<jsp:directive.include file="footer.jsp" />
 	</div>
 </body>
-<script type="text/javascript" src="js/customer-form.js"></script>
+<script type="text/javascript" src="js/user_form.js"></script>
 </html>

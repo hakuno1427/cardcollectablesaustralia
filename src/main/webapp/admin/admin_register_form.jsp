@@ -71,5 +71,5 @@
         <jsp:directive.include file="footer.jsp" />
     </div>
 </body>
-<script type="text/javascript" src="js/customer-form.js"></script>
+<script type="text/javascript" src="js/user_form.js"></script>
 </html>
