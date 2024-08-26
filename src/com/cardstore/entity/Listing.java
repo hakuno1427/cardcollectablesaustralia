@@ -35,6 +35,7 @@ public class Listing implements Serializable {
 	private String cardName;
 	private double marketPrice;
 	private String imageUrl;
+	private User seller;
 
 	public Listing() {
 
@@ -140,6 +141,14 @@ public class Listing implements Serializable {
 
 	public void setCardName(String cardName) {
 		this.cardName = cardName;
+	}
+	
+	@Transient
+	public User getSeller() {
+		return seller;
+	}
+	public void setSeller(User seller) {
+		this.seller = seller;
 	}
 
 	@Transient

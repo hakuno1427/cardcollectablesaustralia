@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.cardstore.dao.CardDAO;
 import com.cardstore.dao.ListingDAO;
+import com.cardstore.dao.UserDAO;
 import com.cardstore.entity.Card;
 import com.cardstore.entity.Listing;
 import com.cardstore.entity.Permission;
@@ -29,6 +30,7 @@ public class CardServices {
 
 	private CardDAO cardDAO;
 	private ListingDAO listingDAO;
+	private UserDAO userDAO;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 
@@ -37,6 +39,7 @@ public class CardServices {
 		this.response = response;
 		this.cardDAO = new CardDAO();
 		this.listingDAO = new ListingDAO();
+		this.userDAO = new UserDAO();
 	}
 
 	public void listCards() throws ServletException, IOException {
@@ -194,8 +197,15 @@ public class CardServices {
 		if (card != null) {
 	        List<Listing> listings = listingDAO.findWithNamedQuery("Listing.findBySerialNumber", "serialNumber", serialNumber);
 	        
-	        card.setListings(listings);
+	        for (Listing listing : listings) {
+	        	List<User> users = userDAO.findWithNamedQuery("User.findByUserId", "userId", listing.getSellerId());
+	        	if (!users.isEmpty()) {
+	        	    User user = users.get(0); 
+	        	    listing.setSeller(user);
+	        	}
+	        }
 	        
+	        card.setListings(listings);
 	        request.setAttribute("card", card);
 	        
 	        String detailPage = "frontend/card_detail.jsp";
