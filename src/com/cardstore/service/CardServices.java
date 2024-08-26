@@ -191,11 +191,20 @@ public class CardServices {
 		String serialNumber = request.getParameter("serialNumber");
 		Card card = cardDAO.get(serialNumber);
 		
-		request.setAttribute("card", card);
+		if (card != null) {
+	        List<Listing> listings = listingDAO.findWithNamedQuery("Listing.findBySerialNumber", "serialNumber", serialNumber);
+	        
+	        card.setListings(listings);
+	        
+	        request.setAttribute("card", card);
+	        
+	        String detailPage = "frontend/card_detail.jsp";
+	        RequestDispatcher requestDispatcher = request.getRequestDispatcher(detailPage);
+	        requestDispatcher.forward(request, response);
+	    } else {
+	        response.sendError(HttpServletResponse.SC_NOT_FOUND, "Card not found");
+	    }
 		
-		String detailPage = "frontend/card_detail.jsp";
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(detailPage);
-		requestDispatcher.forward(request, response);
 	}
 
 	private boolean hasPermission(User user, String permissionName) {
