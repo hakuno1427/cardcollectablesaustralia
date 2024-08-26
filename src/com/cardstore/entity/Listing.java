@@ -17,7 +17,9 @@ import jakarta.persistence.Transient;
 @Table(name = "listing")
 @NamedQueries({ @NamedQuery(name = "Listing.findAll", query = "SELECT l from Listing l ORDER BY l.listingId"),
 		@NamedQuery(name = "Listing.countAll", query = "SELECT Count(*) FROM Listing l"),
-		@NamedQuery(name = "Listing.listNewWithCardDetails", query = "SELECT l.listingId, l.serialNumber, l.condition, l.price, l.quantity, l.sellerId, c.cardName, c.marketprice, c.imageUrl FROM Listing l JOIN Card c ON l.serialNumber = c.serialNumber ORDER BY l.listingId DESC") })
+		@NamedQuery(name = "Listing.listNewWithCardDetails", query = "SELECT l.listingId, l.serialNumber, l.condition, l.price, l.quantity, l.sellerId, c.cardName, c.marketprice, c.imageUrl FROM Listing l JOIN Card c ON l.serialNumber = c.serialNumber ORDER BY l.listingId DESC"),
+		@NamedQuery(name = "Listing.findBySerialNumber", query = "SELECT l FROM Listing l WHERE l.serialNumber = :serialNumber")
+})
 
 public class Listing implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -29,12 +31,11 @@ public class Listing implements Serializable {
 	private double price;
 	private Integer quantity;
 
-	@Transient
+
 	private String cardName;
-	@Transient
 	private double marketPrice;
-	@Transient
 	private String imageUrl;
+	private User seller;
 
 	public Listing() {
 
@@ -133,6 +134,7 @@ public class Listing implements Serializable {
 				&& Objects.equals(serialNumber, other.serialNumber);
 	}
 
+	@Transient
 	public String getCardName() {
 		return cardName;
 	}
@@ -140,7 +142,16 @@ public class Listing implements Serializable {
 	public void setCardName(String cardName) {
 		this.cardName = cardName;
 	}
+	
+	@Transient
+	public User getSeller() {
+		return seller;
+	}
+	public void setSeller(User seller) {
+		this.seller = seller;
+	}
 
+	@Transient
 	public double getMarketPrice() {
 		return marketPrice;
 	}
@@ -149,6 +160,7 @@ public class Listing implements Serializable {
 		this.marketPrice = marketPrice;
 	}
 
+	@Transient
 	public String getImageUrl() {
 		return imageUrl;
 	}

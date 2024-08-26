@@ -1,6 +1,8 @@
 package com.cardstore.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -9,12 +11,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 
 @Table(name = "card")
 @NamedQueries({ @NamedQuery(name = "Card.findAll", query = "SELECT c from Card c ORDER BY c.serialNumber"),
-		@NamedQuery(name = "Card.countAll", query = "SELECT Count(*) FROM Card c") })
+		@NamedQuery(name = "Card.countAll", query = "SELECT Count(*) FROM Card c"),
+		@NamedQuery(name = "Card.search", query = "SELECT c FROM Card c WHERE c.cardName LIKE '%' || :keyword || '%'"
+		+ " OR c.game LIKE '%' || :keyword || '%'")
+})
 
 public class Card implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -25,6 +31,8 @@ public class Card implements Serializable {
 	private String description;
 	private double marketprice;
 	private String imageUrl;
+	
+	private List<Listing> listings = new ArrayList<>();
 
 	public Card() {
 
@@ -93,6 +101,15 @@ public class Card implements Serializable {
 
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
+	}
+	
+	@Transient
+	public List<Listing> getListings(){
+		return listings;
+	}
+	
+	public void setListings(List<Listing> listings) {
+		this.listings = listings;
 	}
 
 	@Override

@@ -3,7 +3,7 @@
 
 <div class="row">
     <a href="${pageContext.request.contextPath}/">
-        <img src="images/BookstoreLogo.png" class="img-fluid" />
+        <img src="https://i.imgur.com/OQVteNg.png" class="img-fluid" />
     </a>
 </div>
 
