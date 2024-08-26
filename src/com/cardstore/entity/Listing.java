@@ -29,11 +29,9 @@ public class Listing implements Serializable {
 	private double price;
 	private Integer quantity;
 
-	@Transient
+
 	private String cardName;
-	@Transient
 	private double marketPrice;
-	@Transient
 	private String imageUrl;
 
 	public Listing() {
@@ -133,6 +131,7 @@ public class Listing implements Serializable {
 				&& Objects.equals(serialNumber, other.serialNumber);
 	}
 
+	@Transient
 	public String getCardName() {
 		return cardName;
 	}
@@ -141,6 +140,7 @@ public class Listing implements Serializable {
 		this.cardName = cardName;
 	}
 
+	@Transient
 	public double getMarketPrice() {
 		return marketPrice;
 	}
@@ -149,6 +149,7 @@ public class Listing implements Serializable {
 		this.marketPrice = marketPrice;
 	}
 
+	@Transient
 	public String getImageUrl() {
 		return imageUrl;
 	}

@@ -47,6 +47,10 @@ public class CardDAO extends JpaDAO<Card> implements GenericDAO<Card> {
 		query.setMaxResults(pageSize);
 		return query.getResultList();
 	}
+	
+	public List<Card> search(String keyword){
+		return super.findWithNamedQuery("Card.search", "keyword", keyword);
+	}
 
 	@Override
 	public long count() {

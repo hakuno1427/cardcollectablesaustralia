@@ -4,8 +4,47 @@
 <jsp:include page="page_head.jsp">
     <jsp:param name="pageTitle" value="CCA - New Listings" />
 </jsp:include>
+<style>
+    /* left banner */
+    .left-ad {
+        position: fixed;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        z-index: 1000;
+    }
+    /* right banner */
+    .right-ad {
+        position: fixed;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        z-index: 1000;
+    }
+    /* banner image */
+    .ad-img {
+        width: 100px;
+        height: auto;
+    }
+</style>
 <body>
+
+    <!-- left banner -->
+    <div class="left-ad">
+        <a href="https://github.com/hakuno1427/cardcollectablesaustralia" target="_blank">
+            <img src="https://picsum.photos/100/300" alt="Ad 1" class="ad-img">
+        </a>
+    </div>
+
+    <!-- right banner -->
+    <div class="right-ad">
+        <a href="https://github.com/hakuno1427/cardcollectablesaustralia" target="_blank">
+            <img src="https://picsum.photos/100/300" alt="Ad 2" class="ad-img">
+        </a>
+    </div>
+    
     <div class="container">
+    
         <!-- Header Section -->
         <jsp:directive.include file="header.jsp" />
 

@@ -158,6 +158,22 @@ public class CardServices {
 			listCards();
 		}
 	}
+	
+	public void search() throws ServletException, IOException {
+		String keyword = request.getParameter("keyword");
+		List<Card> result = null;
+		if(keyword.equals("")) {
+			result = cardDAO.listAll();
+		} else {
+			result = cardDAO.search(keyword);
+		}
+		request.setAttribute("result", result);
+		request.setAttribute("keyword", keyword);
+		
+		String resultPage = "frontend/search_result.jsp";
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(resultPage);
+		requestDispatcher.forward(request, response);
+	}
 
 	private boolean hasPermission(User user, String permissionName) {
 		if (user == null) {
