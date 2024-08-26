@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <jsp:include page="page_head.jsp">
-    <jsp:param name="pageTitle" value="Card Catalogue" />
+    <jsp:param name="pageTitle" value="Search Result" />
 </jsp:include>
 
 <style>
@@ -74,18 +74,40 @@
 
             <c:if test="${fn:length(result) > 0}">
                 <h2>Results for "${keyword}":</h2>
-                <c:forEach items="${result}" var="card">
-                    <div class="card-item card">
-                                <a href="view_card?serialNumber=${card.serialNumber}">
+<c:forEach items="${result}" var="card">
+    <div class="card-item card">
+        <a href="view_card?serialNumber=${card.serialNumber}">
             <img class="card-img-top img-fluid" src="${card.imageUrl}" alt="${card.cardName}" style="cursor: pointer;">
         </a>
-                        <div class="card-body">
-                            <a href="view_card?serialNumber=${card.serialNumber}">${card.cardName}</a>
-                            <div class="game-name">${card.game}</div>
-                            <div class="market-price">Market Price: $${card.marketprice}</div>
-                        </div>
+        <div class="card-body">
+            <a href="view_card?serialNumber=${card.serialNumber}">
+                ${card.cardName}
+            </a>
+            <div class="game-name">${card.game}</div>
+            <div class="market-price">Market Price: $${card.marketprice}</div>
+
+            <!-- Listing info -->
+            <c:choose>
+                <c:when test="${fn:length(card.listings) == 0}">
+                    <div class="listing-info text-danger">Out of Stock</div>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="lowestPrice" value="${card.listings[0].price}" />
+                    <c:forEach items="${card.listings}" var="listing">
+                        <c:if test="${listing.price < lowestPrice}">
+                            <c:set var="lowestPrice" value="${listing.price}" />
+                        </c:if>
+                    </c:forEach>
+                    <div class="listing-info text-success">
+                        ${fn:length(card.listings)} listings from $${lowestPrice}
                     </div>
-                </c:forEach>
+                </c:otherwise>
+            </c:choose>
+        </div>
+    </div>
+</c:forEach>
+
+
             </c:if>
         </div>
 

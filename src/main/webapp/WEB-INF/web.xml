@@ -19,4 +19,14 @@
     <servlet-name>SearchServlet</servlet-name>
     <url-pattern>/search</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ViewCardServlet</display-name>
+    <servlet-name>ViewCardServlet</servlet-name>
+    <servlet-class>com.cardstore.controller.card.ViewCardServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ViewCardServlet</servlet-name>
+    <url-pattern>/view_card</url-pattern>
+  </servlet-mapping>
 </web-app>

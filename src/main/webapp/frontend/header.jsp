@@ -3,7 +3,7 @@
 
 <div class="row">
     <a href="${pageContext.request.contextPath}/">
-        <img src="https://mp-assets.tcgplayer.com/img/TCGplayer-logo-primary@2x.png" class="img-fluid" />
+        <img src="https://i.imgur.com/OQVteNg.png" class="img-fluid" />
     </a>
 </div>
 

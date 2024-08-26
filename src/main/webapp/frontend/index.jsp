@@ -5,83 +5,118 @@
     <jsp:param name="pageTitle" value="CCA - New Listings" />
 </jsp:include>
 <style>
+    /* Page container*/
+    .page-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        position: relative;
+    }
+
+    /* Banner container */
+    .banner-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        position: sticky;
+        top: 100px;
+    }
+
     /* left banner */
     .left-ad {
-        position: fixed;
-        top: 50%;
-        left: 0;
-        transform: translateY(-50%);
-        z-index: 1000;
+        margin-right: 20px;
     }
+
     /* right banner */
     .right-ad {
-        position: fixed;
-        top: 50%;
-        right: 0;
-        transform: translateY(-50%);
-        z-index: 1000;
+        margin-left: 20px;
     }
-    /* banner image */
+
+    /* Banner image */
     .ad-img {
-        width: 100px;
+        width: 120px;
+        height: 600px;
+        object-fit: cover;
+    }
+
+    /* New listings container */
+    .new-listings-container {
+        flex: 1;
+        margin: 0 20px;
+    }
+
+    /* Card styles */
+    .listing-item {
+        margin-bottom: 15px;
+    }
+
+    .card-img-top {
+        max-width: 100%;
         height: auto;
     }
+
 </style>
 <body>
 
-    <!-- left banner -->
-    <div class="left-ad">
-        <a href="https://github.com/hakuno1427/cardcollectablesaustralia" target="_blank">
-            <img src="https://picsum.photos/100/300" alt="Ad 1" class="ad-img">
-        </a>
-    </div>
+    <div class="page-container">
+        
+        <!-- Left banner -->
+        <div class="banner-container left-ad">
+            <a href="https://github.com/hakuno1427/cardcollectablesaustralia" target="_blank">
+                <img src="https://picsum.photos/120/300" alt="Ad 1" class="ad-img">
+            </a>
+        </div>
 
-    <!-- right banner -->
-    <div class="right-ad">
-        <a href="https://github.com/hakuno1427/cardcollectablesaustralia" target="_blank">
-            <img src="https://picsum.photos/100/300" alt="Ad 2" class="ad-img">
-        </a>
-    </div>
-    
-    <div class="container">
-    
-        <!-- Header Section -->
-        <jsp:directive.include file="header.jsp" />
+<!-- New Listings Section -->
+        <div class="new-listings-container">
+            <!-- Header Section -->
+            <jsp:directive.include file="header.jsp" />
 
-        <!-- New Listings Section -->
-        <div class="row text-center">
-            <div class="col">
-                <h2>New Listings:</h2>
-                <div class="row justify-content-center">
-                    <c:forEach items="${listNewListings}" var="listing">
-                        <div class="col-md-3 col-sm-6 listing-item" style="margin-bottom: 15px;">
-                            <div class="card">
-                                <!-- Card Image Section -->
-                                <img class="card-img-top img-fluid" src="${listing.imageUrl}" alt="${listing.cardName}" style="max-width: 100%; height: auto;">
-                                
-                                <div class="card-body">
+            <div class="row text-center">
+                <div class="col">
+                    <h2>New Listings:</h2>
+                    <div class="row justify-content-center">
+                        <c:forEach items="${listNewListings}" var="listing">
+                            <div class="col-md-3 col-sm-6 listing-item">
+                                <div class="card">
+                                    <!-- Card Image Section -->
                                     <a href="view_listing?id=${listing.listingId}" title="View Listing ${listing.listingId}">
-                                        <b>Listing ID: ${listing.listingId}</b>
+                                        <img class="card-img-top img-fluid" src="${listing.imageUrl}" alt="${listing.cardName}">
                                     </a>
-                                    <div>
-                                        <b>Card Name: ${listing.cardName}</b>
-                                    </div>
-                                    <div>
-                                        <b>Market Price: $${listing.marketPrice}</b>
-                                    </div>
-                                    <div>
-                                        <b>Price: $${listing.price}</b>
+                                    
+                                    <div class="card-body">
+                                        <a href="view_listing?id=${listing.listingId}" title="View Listing ${listing.listingId}">
+                                            <b>${listing.cardName}</b>
+                                        </a>
+                                        <div>
+                                            <b>Market Price: $${listing.marketPrice}</b>
+                                        </div>
+                                        <div>
+                                            <b>Price: $${listing.price}</b>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </c:forEach>
+                        </c:forEach>
+                    </div>
                 </div>
             </div>
+
+            <!-- Footer Section -->
+            <jsp:directive.include file="footer.jsp" />
         </div>
 
-        <!-- Footer Section -->
-        <jsp:directive.include file="footer.jsp" />
+        <!-- Right banner -->
+        <div class="banner-container right-ad">
+            <a href="https://github.com/hakuno1427/cardcollectablesaustralia" target="_blank">
+                <img src="https://picsum.photos/120/300" alt="Ad 2" class="ad-img">
+            </a>
+        </div>
+
     </div>
 </body>
 </html>

@@ -6,11 +6,14 @@ import java.util.List;
 import java.util.Set;
 
 import com.cardstore.dao.CardDAO;
+import com.cardstore.dao.ListingDAO;
 import com.cardstore.entity.Card;
+import com.cardstore.entity.Listing;
 import com.cardstore.entity.Permission;
 import com.cardstore.entity.Role;
 import com.cardstore.entity.User;
 
+import jakarta.persistence.EntityManager;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,6 +28,7 @@ public class CardServices {
 	public static final String MANAGE_CARD_CARTALOGUE = "MANAGE_CARD_CARTALOGUE";
 
 	private CardDAO cardDAO;
+	private ListingDAO listingDAO;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 
@@ -32,6 +36,7 @@ public class CardServices {
 		this.request = request;
 		this.response = response;
 		this.cardDAO = new CardDAO();
+		this.listingDAO = new ListingDAO();
 	}
 
 	public void listCards() throws ServletException, IOException {
@@ -162,16 +167,34 @@ public class CardServices {
 	public void search() throws ServletException, IOException {
 		String keyword = request.getParameter("keyword");
 		List<Card> result = null;
-		if(keyword.equals("")) {
+		
+		if (keyword == null || keyword.trim().isEmpty()) {
 			result = cardDAO.listAll();
 		} else {
 			result = cardDAO.search(keyword);
 		}
+		
+		for (Card card : result) {
+	        List<Listing> listings = listingDAO.findWithNamedQuery("Listing.findBySerialNumber", "serialNumber", card.getSerialNumber());
+	        card.setListings(listings);
+	    }
+		
 		request.setAttribute("result", result);
 		request.setAttribute("keyword", keyword);
 		
 		String resultPage = "frontend/search_result.jsp";
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(resultPage);
+		requestDispatcher.forward(request, response);
+	}
+	
+	public void viewCardDetail() throws ServletException, IOException {
+		String serialNumber = request.getParameter("serialNumber");
+		Card card = cardDAO.get(serialNumber);
+		
+		request.setAttribute("card", card);
+		
+		String detailPage = "frontend/card_detail.jsp";
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(detailPage);
 		requestDispatcher.forward(request, response);
 	}
 
