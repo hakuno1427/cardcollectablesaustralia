@@ -195,19 +195,8 @@ public class CardServices {
 		Card card = cardDAO.get(serialNumber);
 		
 		if (card != null) {
-	        List<Listing> listings = listingDAO.findWithNamedQuery("Listing.findBySerialNumber", "serialNumber", serialNumber);
-	        
-	        for (Listing listing : listings) {
-	        	List<User> users = userDAO.findWithNamedQuery("User.findByUserId", "userId", listing.getSellerId());
-	        	if (!users.isEmpty()) {
-	        	    User user = users.get(0); 
-	        	    listing.setSeller(user);
-	        	}
-	        }
-	        
-	        card.setListings(listings);
-	        request.setAttribute("card", card);
-	        
+			request.setAttribute("card", card);
+			
 	        String detailPage = "frontend/card_detail.jsp";
 	        RequestDispatcher requestDispatcher = request.getRequestDispatcher(detailPage);
 	        requestDispatcher.forward(request, response);
