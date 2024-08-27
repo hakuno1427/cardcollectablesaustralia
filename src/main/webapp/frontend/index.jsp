@@ -93,7 +93,7 @@
                                             <b>${listing.card.cardName}</b>
                                         </a>
                                         <div>
-                                            <b>Market Price: $${listing.card.marketprice}</b>
+                                            <b>Market Price: $${(card.marketprice !=-1) ? card.marketprice : "N/A" }</b>
                                         </div>
                                         <div>
                                             <b>Price: $${listing.price}</b>

@@ -51,6 +51,22 @@ public class CardDAO extends JpaDAO<Card> implements GenericDAO<Card> {
 	public List<Card> search(String keyword){
 		return super.findWithNamedQuery("Card.search", "keyword", keyword);
 	}
+	
+	public List<Card> searchPaged(String keyword, int start, int pageSize){
+		EntityManager entityManager = getEntityManager();
+	    TypedQuery<Card> query = entityManager.createNamedQuery("Card.search", Card.class);
+	    query.setParameter("keyword", keyword);
+	    query.setFirstResult(start);
+	    query.setMaxResults(pageSize);
+	    return query.getResultList();
+	}
+	
+	public long countSearchResults(String keyword) {
+	    EntityManager entityManager = getEntityManager();
+	    TypedQuery<Long> query = entityManager.createNamedQuery("Card.countSearchResults", Long.class);
+	    query.setParameter("keyword", keyword);
+	    return query.getSingleResult();
+	}
 
 	@Override
 	public long count() {

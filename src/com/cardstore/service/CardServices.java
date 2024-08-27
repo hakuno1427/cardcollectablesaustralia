@@ -169,12 +169,26 @@ public class CardServices {
 	
 	public void search() throws ServletException, IOException {
 		String keyword = request.getParameter("keyword");
+		int page = 1;
+	    int pageSize = 9;
+	    
+	    if (request.getParameter("page") != null) {
+	        page = Integer.parseInt(request.getParameter("page"));
+	    }
+	    int start = (page - 1) * pageSize;
+	    
 		List<Card> result = null;
 		
 		if (keyword == null || keyword.trim().isEmpty()) {
-			result = cardDAO.listAll();
+			result = cardDAO.listPaged(start, pageSize);
+	        long totalCards = cardDAO.count();
+	        int totalPages = (int) Math.ceil((double) totalCards / pageSize);
+	        request.setAttribute("totalPages", totalPages);
 		} else {
-			result = cardDAO.search(keyword);
+			result = cardDAO.searchPaged(keyword, start, pageSize);
+	        long totalResults = cardDAO.countSearchResults(keyword);
+	        int totalPages = (int) Math.ceil((double) totalResults / pageSize);
+	        request.setAttribute("totalPages", totalPages);
 		}
 		
 		for (Card card : result) {
@@ -184,6 +198,7 @@ public class CardServices {
 		
 		request.setAttribute("result", result);
 		request.setAttribute("keyword", keyword);
+		request.setAttribute("currentPage", page);
 		
 		String resultPage = "frontend/search_result.jsp";
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(resultPage);

@@ -123,7 +123,7 @@
 						<strong>Description:</strong> ${card.description}
 					</p>
 				</div>
-				<div class="market-price">Market Price: $${card.marketprice}</div>
+				<div class="market-price"> Market Price: $${card.marketprice}</div>
 
 				<!-- Listing Info -->
 				<div class="listings-info">
