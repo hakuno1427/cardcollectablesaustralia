@@ -7,9 +7,11 @@ import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
@@ -103,7 +105,7 @@ public class Card implements Serializable {
 		this.imageUrl = imageUrl;
 	}
 	
-	@Transient
+	@OneToMany(mappedBy = "card", fetch = FetchType.EAGER)
 	public List<Listing> getListings(){
 		return listings;
 	}

@@ -55,26 +55,11 @@ public class ListingDAO extends JpaDAO<Listing> implements GenericDAO<Listing> {
 		List<Listing> listNewListings = new ArrayList<>();
 
 		try {
-			Query query = entityManager.createNamedQuery("Listing.listNewWithCardDetails");
+			Query query = entityManager.createNamedQuery("Listing.listNew");
 			query.setMaxResults(4);
 
-			List<Object[]> results = query.getResultList();
-
-			for (Object[] row : results) {
-				Listing listing = new Listing();
-				listing.setListingId((Integer) row[0]);
-				listing.setSerialNumber((String) row[1]);
-				listing.setCondition((String) row[2]);
-				listing.setPrice((Double) row[3]);
-				listing.setQuantity((Integer) row[4]);
-				listing.setSellerId((Integer) row[5]);
-
-				listing.setCardName((String) row[6]);
-				listing.setMarketPrice((Double) row[7]);
-				listing.setImageUrl((String) row[8]);
-
-				listNewListings.add(listing);
-			}
+			listNewListings = query.getResultList();
+			
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Failed to retrieve the latest listings.", e);
 			throw new RuntimeException("Unable to retrieve latest listings", e);

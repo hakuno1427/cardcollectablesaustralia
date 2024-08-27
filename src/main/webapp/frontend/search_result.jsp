@@ -84,7 +84,7 @@
                 ${card.cardName}
             </a>
             <div class="game-name">${card.game}</div>
-            <div class="market-price">Market Price: $${card.marketprice}</div>
+            <div class="market-price">Market Price: $${(card.marketprice !=-1) ? card.marketprice : "N/A" }</div>
 
             <!-- Listing info -->
             <c:choose>
