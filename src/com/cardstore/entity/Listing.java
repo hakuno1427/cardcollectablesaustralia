@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
@@ -17,36 +19,32 @@ import jakarta.persistence.Transient;
 @Table(name = "listing")
 @NamedQueries({ @NamedQuery(name = "Listing.findAll", query = "SELECT l from Listing l ORDER BY l.listingId"),
 		@NamedQuery(name = "Listing.countAll", query = "SELECT Count(*) FROM Listing l"),
-		@NamedQuery(name = "Listing.listNewWithCardDetails", query = "SELECT l.listingId, l.serialNumber, l.condition, l.price, l.quantity, l.sellerId, c.cardName, c.marketprice, c.imageUrl FROM Listing l JOIN Card c ON l.serialNumber = c.serialNumber ORDER BY l.listingId DESC"),
-		@NamedQuery(name = "Listing.findBySerialNumber", query = "SELECT l FROM Listing l WHERE l.serialNumber = :serialNumber")
+		@NamedQuery(name = "Listing.listNew", query = "SELECT l FROM Listing l ORDER BY l.listingId DESC"),
+		@NamedQuery(name = "Listing.findBySerialNumber", query = "SELECT l FROM Listing l WHERE l.card.serialNumber = :serialNumber")
 })
 
 public class Listing implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer listingId;
-	private Integer sellerId;
-	private String serialNumber;
 	private String condition;
 	private double price;
 	private Integer quantity;
 
-
-	private String cardName;
-	private double marketPrice;
-	private String imageUrl;
 	private User seller;
+	private Card card;
+
 
 	public Listing() {
 
 	}
 
-	public Listing(Integer listingId, Integer sellerId, String serialNumber, String condition, double price,
+	public Listing(Integer listingId, User seller, Card card, String condition, double price,
 			Integer quantity) {
 		super();
 		this.listingId = listingId;
-		this.sellerId = sellerId;
-		this.serialNumber = serialNumber;
+		this.seller = seller;
+		this.card = card;
 		this.condition = condition;
 		this.price = price;
 		this.quantity = quantity;
@@ -61,24 +59,6 @@ public class Listing implements Serializable {
 
 	public void setListingId(Integer listingId) {
 		this.listingId = listingId;
-	}
-
-	@Column(name = "sellerId", nullable = false)
-	public Integer getSellerId() {
-		return sellerId;
-	}
-
-	public void setSellerId(Integer sellerId) {
-		this.sellerId = sellerId;
-	}
-
-	@Column(name = "serialNumber", nullable = false, length = 50)
-	public String getSerialNumber() {
-		return serialNumber;
-	}
-
-	public void setSerialNumber(String serialNumber) {
-		this.serialNumber = serialNumber;
 	}
 
 	@Column(name = "listingCondition", nullable = false, length = 50)
@@ -110,13 +90,13 @@ public class Listing implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Listing [listingId=" + listingId + ", sellerId=" + sellerId + ", serialNumber=" + serialNumber
+		return "Listing [listingId=" + listingId + ", sellerId=" + seller.getUserId() + ", serialNumber=" + card.getSerialNumber()
 				+ ", condition=" + condition + ", price=" + price + ", quantity=" + quantity + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(condition, listingId, price, quantity, sellerId, serialNumber);
+		return Objects.hash(condition, listingId, price, quantity, seller.getUserId(), card.getSerialNumber());
 	}
 
 	@Override
@@ -130,43 +110,28 @@ public class Listing implements Serializable {
 		Listing other = (Listing) obj;
 		return Objects.equals(condition, other.condition) && Objects.equals(listingId, other.listingId)
 				&& Double.doubleToLongBits(price) == Double.doubleToLongBits(other.price)
-				&& Objects.equals(quantity, other.quantity) && Objects.equals(sellerId, other.sellerId)
-				&& Objects.equals(serialNumber, other.serialNumber);
-	}
-
-	@Transient
-	public String getCardName() {
-		return cardName;
-	}
-
-	public void setCardName(String cardName) {
-		this.cardName = cardName;
+				&& Objects.equals(quantity, other.quantity) && Objects.equals(seller.getUserId(), other.seller.getUserId())
+				&& Objects.equals(card.getSerialNumber(), other.card.getSerialNumber());
 	}
 	
-	@Transient
+	@ManyToOne
+	@JoinColumn(name = "sellerId", nullable = false)
 	public User getSeller() {
 		return seller;
 	}
+	
 	public void setSeller(User seller) {
 		this.seller = seller;
 	}
+	
 
-	@Transient
-	public double getMarketPrice() {
-		return marketPrice;
+	@ManyToOne
+	@JoinColumn(name = "serialNumber", nullable = false)
+	public Card getCard() {
+		return card;
 	}
-
-	public void setMarketPrice(double marketPrice) {
-		this.marketPrice = marketPrice;
+	
+	public void setCard(Card card) {
+		this.card = card;
 	}
-
-	@Transient
-	public String getImageUrl() {
-		return imageUrl;
-	}
-
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
-
 }

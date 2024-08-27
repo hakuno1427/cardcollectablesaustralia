@@ -27,7 +27,7 @@
                             <a href="login" class="btn btn-primary">Login</a>
                             <hr class="my-4">
                             <p>If you do not have a valid account, please register first.</p>
-                            <a href="register" class="btn btn-secondary">Register</a>
+                            <a href="register" class="btn btn-secondary">Register Admin</a>
                         </div>
                     </div>
                 </c:if>
@@ -37,7 +37,7 @@
                     <div class="row justify-content-center">
                         <div class="col-md-8 col-sm-12">
                             <p>Welcome, administrator ${user.firstName}!</p>
-                            <p>To utilise administration functions, please click the respective buttons.</p>
+                            <p>To utilise administration functions, please click the respective buttons below.</p>
                             <hr class="my-4">
                             <c:if test="${auth:hasPermission(role, 'MANAGE_USER')}">
                             	<p>To manage users:</p> 

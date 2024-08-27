@@ -99,19 +99,19 @@
 				<h2>No Result for "${keyword}"</h2>
 			</c:if>
 
-			<c:if test="${fn:length(result) > 0}">
-				<h2>Results for "${keyword}":</h2>
-				<c:forEach items="${result}" var="card">
-					<div class="card-item card">
-						<a href="view_card?serialNumber=${card.serialNumber}"> <img
-							class="card-img-top img-fluid" src="${card.imageUrl}"
-							alt="${card.cardName}" style="cursor: pointer;">
-						</a>
-						<div class="card-body">
-							<a href="view_card?serialNumber=${card.serialNumber}">
-								${card.cardName} </a>
-							<div class="game-name">${card.game}</div>
-							<div class="market-price"> Market Price: $${card.marketprice}</div>
+            <c:if test="${fn:length(result) > 0}">
+                <h2>Results for "${keyword}":</h2>
+<c:forEach items="${result}" var="card">
+    <div class="card-item card">
+        <a href="view_card?serialNumber=${card.serialNumber}">
+            <img class="card-img-top img-fluid" src="${card.imageUrl}" alt="${card.cardName}" style="cursor: pointer;">
+        </a>
+        <div class="card-body">
+            <a href="view_card?serialNumber=${card.serialNumber}">
+                ${card.cardName}
+            </a>
+            <div class="game-name">${card.game}</div>
+            <div class="market-price">Market Price: $${(card.marketprice !=-1) ? card.marketprice : "N/A" }</div>
 
 							<!-- Listing info -->
 							<c:choose>

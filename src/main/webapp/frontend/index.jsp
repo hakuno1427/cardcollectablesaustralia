@@ -84,15 +84,17 @@
                             <div class="col-md-3 col-sm-6 listing-item">
                                 <div class="card">
                                     <!-- Card Image Section -->
-                                    <a href="view_listing?id=${listing.listingId}" title="View Listing ${listing.listingId}">
-                                        <img class="card-img-top img-fluid" src="${listing.imageUrl}" alt="${listing.cardName}">
+                                    <a href="view_card?id=${listing.card.serialNumber}" title="View Listing ${listing.listingId}">
+                                        <img class="card-img-top img-fluid" src="${listing.card.imageUrl}" alt="${listing.card.cardName}">
                                     </a>
                                     
                                     <div class="card-body">
-                                        <a href="view_listing?id=${listing.listingId}" title="View Listing ${listing.listingId}">
-                                            <b>${listing.cardName}</b>
+                                        <a href="view_card?id=${listing.card.serialNumber}" title="View Listing ${listing.listingId}">
+                                            <b>${listing.card.cardName}</b>
                                         </a>
-                                        <div class="market-price"> Market Price: $${listing.marketPrice}</div>
+                                        <div>
+                                            <b>Market Price: $${(card.marketprice !=-1) ? card.marketprice : "N/A" }</b>
+                                        </div>
                                         <div>
                                             <b>Price: $${listing.price}</b>
                                         </div>

@@ -19,6 +19,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -42,10 +43,13 @@ public class User implements Serializable {
 	private String email;
 	private String password;
 	private Role role;
-	private byte enabled;
+	private byte enabled = ENABLED_STATUS;
+	
+
+	@OneToMany(mappedBy = "listing")
+	private Set<Listing> listings = new HashSet<>();
 
 	public User() {
-
 	}
 
 	public User(String firstName, String lastName, Integer phone, String email, String password) {
@@ -55,7 +59,6 @@ public class User implements Serializable {
 		this.phone = phone;
 		this.email = email;
 		this.password = password;
-		this.enabled = ENABLED_STATUS;
 	}
 
 	@Id
@@ -123,6 +126,14 @@ public class User implements Serializable {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+	
+	public Set<Listing> getListings() {
+		return listings;
+	}
+	
+	public void setListings(Set<Listing> listings) {
+		this.listings = listings;
+	}
 
 	@Override
 	public String toString() {
@@ -138,6 +149,7 @@ public class User implements Serializable {
 	public byte getEnabled() {
 		return this.enabled;
 	}
+	
 
 	@Override
 	public int hashCode() {
