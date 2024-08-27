@@ -19,7 +19,8 @@ import jakarta.persistence.Transient;
 @NamedQueries({ @NamedQuery(name = "Card.findAll", query = "SELECT c from Card c ORDER BY c.serialNumber"),
 		@NamedQuery(name = "Card.countAll", query = "SELECT Count(*) FROM Card c"),
 		@NamedQuery(name = "Card.search", query = "SELECT c FROM Card c WHERE c.cardName LIKE '%' || :keyword || '%'"
-		+ " OR c.game LIKE '%' || :keyword || '%'")
+		+ " OR c.game LIKE '%' || :keyword || '%'"),
+		@NamedQuery(name = "Card.countSearchResults", query = "SELECT COUNT(c) FROM Card c WHERE c.cardName LIKE '%' || :keyword || '%' OR c.game LIKE '%' || :keyword || '%'")
 })
 
 public class Card implements Serializable {
