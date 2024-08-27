@@ -8,7 +8,7 @@
 
 <div class="row">
     <a href="${pageContext.request.contextPath}/">
-        <img src="images/BookstoreLogo.png" class="img-fluid" />
+        <img src="https://i.imgur.com/OQVteNg.png" class="img-fluid" />
     </a>
 </div>
 
@@ -27,7 +27,7 @@
         <ul class="navbar-nav">
             <!-- Links shown when user is not logged in -->
             <c:if test="${user == null}">
-                <li class="nav-item"><a href="login" class="nav-link">Sign In</a></li>
+                <li class="nav-item"><a href="login" class="nav-link">Login</a></li>
                 <li class="nav-item"><a href="register" class="nav-link">Register Admin</a></li>
             </c:if>
 
