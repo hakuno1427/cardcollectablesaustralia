@@ -45,7 +45,7 @@ public class User implements Serializable {
 	private byte enabled;
 
 	public User() {
-
+		this.enabled = ENABLED_STATUS;
 	}
 
 	public User(String firstName, String lastName, Integer phone, String email, String password) {
