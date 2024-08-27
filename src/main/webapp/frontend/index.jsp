@@ -92,17 +92,7 @@
                                         <a href="view_listing?id=${listing.listingId}" title="View Listing ${listing.listingId}">
                                             <b>${listing.cardName}</b>
                                         </a>
-                                        <div class="market-price">
-    Market Price: 
-    <c:choose>
-        <c:when test="${listing.marketPrice == -1}">
-            N/A
-        </c:when>
-        <c:otherwise>
-            $${listing.marketPrice}
-        </c:otherwise>
-    </c:choose>
-</div>
+                                        <div class="market-price"> Market Price: $${listing.marketPrice}</div>
                                         <div>
                                             <b>Price: $${listing.price}</b>
                                         </div>

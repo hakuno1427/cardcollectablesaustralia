@@ -123,17 +123,7 @@
 						<strong>Description:</strong> ${card.description}
 					</p>
 				</div>
-				<div class="market-price">
-					Market Price:
-					<c:choose>
-						<c:when test="${card.marketprice == -1}">
-        			    	N/A
-      				    </c:when>
-						<c:otherwise>
-         				   $${card.marketprice}
-     				    </c:otherwise>
-					</c:choose>
-				</div>
+				<div class="market-price"> Market Price: $${card.marketprice}</div>
 
 				<!-- Listing Info -->
 				<div class="listings-info">

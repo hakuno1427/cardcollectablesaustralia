@@ -111,13 +111,7 @@
 							<a href="view_card?serialNumber=${card.serialNumber}">
 								${card.cardName} </a>
 							<div class="game-name">${card.game}</div>
-							<div class="market-price">
-								Market Price:
-								<c:choose>
-									<c:when test="${card.marketprice == -1}">N/A</c:when>
-									<c:otherwise>$${card.marketprice}</c:otherwise>
-								</c:choose>
-							</div>
+							<div class="market-price"> Market Price: $${card.marketprice}</div>
 
 							<!-- Listing info -->
 							<c:choose>
