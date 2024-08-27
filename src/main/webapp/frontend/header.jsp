@@ -23,7 +23,7 @@
                 <li class="nav-item"><a href="register" class="nav-link">Register</a></li>
             </c:if>
             <c:if test="${user != null}">
-                <li class="nav-item"><a href="view_profile" class="nav-link">Welcome, ${user.firstName}</a></li>
+                <li class="nav-item"><a href="profile" class="nav-link">Welcome, ${user.firstName}</a></li>
                 <c:if test="${auth:hasPermission(role, 'VIEW_MY_ORDERS')}">
                     <li class="nav-item"><a href="view_orders" class="nav-link">My Orders</a></li>
                 </c:if>
