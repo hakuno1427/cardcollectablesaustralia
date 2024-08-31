@@ -31,7 +31,7 @@
                     <li class="nav-item"><a href="cart" class="nav-link">Cart</a></li>
                 </c:if>
                 <c:if test="${auth:hasPermission(role, 'MANAGE_MY_LISTING')}">
-                    <li class="nav-item"><a href="my_listings" class="nav-link">My Listing</a></li>
+                    <li class="nav-item"><a href="listings" class="nav-link">My Listing</a></li>
                 </c:if>
                 <c:if test="${auth:hasPermission(role, 'PROCEED_ORDER')}">
                     <li class="nav-item"><a href="proceed_orders" class="nav-link">Pending Orders</a></li>

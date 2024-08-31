@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import com.cardstore.entity.Listing;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceException;
 import jakarta.persistence.Query;
 
 /**
@@ -70,5 +71,39 @@ public class ListingDAO extends JpaDAO<Listing> implements GenericDAO<Listing> {
 		}
 		return listNewListings;
 	}
+	
+	//rutvi
+		public Listing findBySerialNumber(String serialNumber) {
+			List<Listing> result = super.findWithNamedQuery("Listing.findBySerialNumber", "serialNumber", serialNumber);
+			if (!result.isEmpty()) {
+				return result.get(0);
+			}
+			return null;
+		}
+	
+	public List<Listing> listSellerListing(Integer sellerId){
+		EntityManager entityManager = getEntityManager();
+		List<Listing> sellerListing = new ArrayList<>();
+
+		try {
+			Query query = entityManager.createNamedQuery("Listing.listSellerListings", Listing.class);
+			query.setParameter("sellerId", sellerId);
+			List<Listing> resultList = query.getResultList();
+			logger.info("Successfully retrieved listings for seller ID: "+sellerId);
+			return resultList;
+		}catch (PersistenceException e){
+			logger.log(Level.SEVERE,"Error retrieving listings for seller ID: "+sellerId, e);
+			throw new RuntimeException("Error retrieving listings for seller ID: "+sellerId, e);
+		}catch (Exception e){
+			logger.log(Level.SEVERE,"Error retrieving listings for seller ID: "+sellerId, e);
+			throw new RuntimeException("Error retrieving listings for seller ID: "+sellerId, e);
+		}finally {
+			if (entityManager != null && entityManager.isOpen()) {
+				entityManager.close();
+			}
+		}
+
+	}
+
 
 }

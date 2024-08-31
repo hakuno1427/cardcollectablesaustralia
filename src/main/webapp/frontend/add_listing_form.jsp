@@ -18,7 +18,7 @@
 		</div>
 		<div class="row">&nbsp;</div>
 
-		<form action="register_buyer" method="post"
+		<form action="listings" method="post"
 			style="max-width: 800px; margin: 0 auto;">
 			<jsp:directive.include file="../common/listing_form.jsp" />
 		</form>
