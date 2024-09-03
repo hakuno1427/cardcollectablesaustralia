@@ -40,7 +40,7 @@ public class ListingService {
         Listing listingBySerialNumber = listingDAO.findBySerialNumber(serialNumber);
         String message = "";
         if(listingBySerialNumber!=null){
-            message = "Listing already added with serial number: " + serialNumber;
+        	message = "Listing already added with serial number: " + serialNumber + "<br/>"+"<a href='listings'>Click here</a> to check listing.";
         }else {
             HttpSession httpSession = request.getSession();
             User user = (User) httpSession.getAttribute("user");

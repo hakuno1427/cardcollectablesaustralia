@@ -4,13 +4,13 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-<jsp:include page="page_head.jsp">
+<jsp:include page="../frontend/page_head.jsp">
 	<jsp:param name="pageTitle" value="CCA - My Listings" />
 </jsp:include>
 <body>
 	<div class="container">
 		<!-- Header Section -->
-		<jsp:directive.include file="header.jsp" />
+		<jsp:directive.include file="../frontend/header.jsp" />
 
 		<!-- New Listings Section -->
 		<div class="row text-center">
@@ -96,7 +96,7 @@
 		</div>
 
 		<!-- Footer Section -->
-		<jsp:directive.include file="footer.jsp" />
+		<jsp:directive.include file="../frontend/footer.jsp" />
 	</div>
 </body>
 </html>

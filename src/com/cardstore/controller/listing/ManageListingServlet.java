@@ -1,7 +1,8 @@
 package com.cardstore.controller.listing;
 
+import com.cardstore.dao.CardDAO;
 import com.cardstore.dao.ListingDAO;
-import com.cardstore.dto.CardListingDTO;
+import com.cardstore.entity.Card;
 import com.cardstore.entity.Listing;
 import com.cardstore.entity.User;
 import com.cardstore.service.ListingService;
@@ -25,13 +26,16 @@ import java.util.List;
 public class ManageListingServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    private ListingDAO listingDAO = new ListingDAO();
+    private ListingDAO listingDAO ;
+    private CardDAO cardDAO;
 
     public static final String ADD_LISTING_PERMISSION = "MANAGE_MY_LISTING";
 
     private PermissionService permissionService;
     public ManageListingServlet() {
         super();
+        this.listingDAO = new ListingDAO();
+        this.cardDAO = new CardDAO();
         this.permissionService = new PermissionService();
     }
 
@@ -51,7 +55,7 @@ public class ManageListingServlet extends HttpServlet {
                 updateListings(req, resp);
                 break;
             default:
-                RequestDispatcher dispatcher = req.getRequestDispatcher("frontend/my_listing.jsp");
+                RequestDispatcher dispatcher = req.getRequestDispatcher("seller/my_listing.jsp");
                 dispatcher.forward(req, resp);
                 break;
         }
@@ -91,6 +95,9 @@ public class ManageListingServlet extends HttpServlet {
             case "del":
                 deleteListing(req, resp);
                 break;
+            case "fetchCard":
+                fetchCard(req, resp);
+                break;
             default:
                 RequestDispatcher dispatcher = req.getRequestDispatcher("frontend/my_listing.jsp");
                 dispatcher.forward(req, resp);
@@ -100,7 +107,38 @@ public class ManageListingServlet extends HttpServlet {
 
     }
 
-    private void deleteListing(HttpServletRequest req, HttpServletResponse resp) {
+    private void fetchCard(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		
+    	String serialNumber = (String) req.getParameter("serialNumber");
+    	Card card = cardDAO.get(serialNumber);
+    	
+    	 String jsonResponse = String.format(
+    	            "{\"cardName\": \"%s\", \"marketprice\": \"%s\", \"description\": \"%s\", \"imageUrl\":\"%s\", \"game\":\"%s\"}",
+    	            escapeJson(card.getCardName()),
+    	            escapeJson(String.valueOf(card.getMarketprice())),
+    	            escapeJson(card.getDescription()),
+    	            escapeJson(card.getImageUrl()),
+    	            escapeJson(card.getGame())
+    	        );
+    	        
+    	        resp.setContentType("application/json");
+    	        resp.setCharacterEncoding("UTF-8");
+    	        resp.getWriter().write(jsonResponse);
+	}
+
+ // Helper method to escape JSON special characters
+    private String escapeJson(String value) {
+        if (value == null) return "";
+        return ((String) value).replace("\\", "\\\\")
+                    .replace("\"", "\\\"")
+                    .replace("\b", "\\b")
+                    .replace("\f", "\\f")
+                    .replace("\n", "\\n")
+                    .replace("\r", "\\r")
+                    .replace("\t", "\\t");
+    }
+
+	private void deleteListing(HttpServletRequest req, HttpServletResponse resp) {
         ListingService listingService = new ListingService(req, resp);
         listingService.deleteListing();
     }
@@ -116,7 +154,7 @@ public class ManageListingServlet extends HttpServlet {
             }
             Integer listingId = Integer.valueOf(req.getParameter("listingId"));
             Listing listing = listingDAO.get(listingId);
-            String registerForm = "frontend/add_listing_form.jsp";
+            String registerForm = "seller/edit_listing.jsp";
             req.setAttribute("action", "Edit");
             req.setAttribute("listing", listing);
             RequestDispatcher dispatcher = req.getRequestDispatcher(registerForm);
@@ -136,8 +174,10 @@ public class ManageListingServlet extends HttpServlet {
                 resp.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have permission to access this page.");
                 return;
             }
-            String registerForm = "frontend/add_listing_form.jsp";
+            List<Card> cards = cardDAO.listAll();
+            String registerForm = "seller/add_listing.jsp";
             req.setAttribute("action", "Add");
+            req.setAttribute("cards", cards);
             RequestDispatcher dispatcher = req.getRequestDispatcher(registerForm);
             dispatcher.forward(req, resp);
         }
@@ -151,7 +191,7 @@ public class ManageListingServlet extends HttpServlet {
             User user = (User) session.getAttribute("user");
             List<Listing> sellerListing = listingDAO.listSellerListing(user.getUserId());
             req.setAttribute("listOfListings", sellerListing);
-            RequestDispatcher dispatcher = req.getRequestDispatcher("frontend/my_listing.jsp");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("seller/my_listing.jsp");
             dispatcher.forward(req, resp);
         }else{
             RequestDispatcher dispatcher = req.getRequestDispatcher("/");
