@@ -30,11 +30,17 @@
                 <c:if test="${auth:hasPermission(role, 'MANAGE_MY_ORDERS')}">
                     <li class="nav-item"><a href="cart" class="nav-link">Cart</a></li>
                 </c:if>
+               <c:if test="${auth:hasPermission(role, 'REVIEW_BUYER')}">
+                    <li class="nav-item"><a href="review_buyer" class="nav-link">Buyer Reviews</a></li>
+                </c:if>
                 <c:if test="${auth:hasPermission(role, 'MANAGE_MY_LISTING')}">
                     <li class="nav-item"><a href="listings" class="nav-link">My Listing</a></li>
                 </c:if>
                 <c:if test="${auth:hasPermission(role, 'PROCEED_ORDER')}">
                     <li class="nav-item"><a href="proceed_orders" class="nav-link">Pending Orders</a></li>
+                </c:if>
+                <c:if test="${auth:hasPermission(role, 'REVIEW_SELLER')}">
+                    <li class="nav-item"><a href="review_seller" class="nav-link">Seller Reviews</a></li>
                 </c:if>
                 <li class="nav-item"><a href="logout" class="nav-link">Logout</a></li>
             </c:if>
