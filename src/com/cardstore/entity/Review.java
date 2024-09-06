@@ -15,8 +15,12 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "review")
-@NamedQueries({ @NamedQuery(name = "Review.findAll", query = "SELECT r from Review r ORDER BY r.reviewId"),
-		@NamedQuery(name = "Review.countAll", query = "SELECT Count(*) FROM Review r") })
+@NamedQueries({
+		@NamedQuery(name = "Review.findAll", query = "SELECT r from Review r ORDER BY r.reviewId"),
+		@NamedQuery(name = "Review.countAll", query = "SELECT Count(*) FROM Review r"),
+		@NamedQuery(name = "Review.findByBuyerId", query = "SELECT r FROM Review r WHERE r.buyerId = :buyerId"),
+		@NamedQuery(name = "Review.countByBuyerId", query = "SELECT COUNT(r) FROM Review r WHERE r.buyerId = :buyerId")
+		})
 
 public class Review implements Serializable {
 	private static final long serialVersionUID = 1L;

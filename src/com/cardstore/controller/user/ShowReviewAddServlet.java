@@ -1,7 +1,9 @@
 package com.cardstore.controller.user;
 
 import java.io.IOException;
+import java.util.List;
 
+import com.cardstore.entity.User;
 import com.cardstore.service.ReviewServices;
 
 import jakarta.servlet.RequestDispatcher;
@@ -12,25 +14,30 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * @author Sera Jeong 12211242 Created Date: 01/09/2024
+ * @author Sera Jeong 12211242 Created Date: 03/09/2024
  */
 
-@WebServlet("/review_buyer")
-public class ShowReviewBuyerServlet extends HttpServlet {
+
+@WebServlet("/review_add")
+public class ShowReviewAddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public ShowReviewBuyerServlet() {
+	public ShowReviewAddServlet() {
 		super();
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
         ReviewServices reviewServices = new ReviewServices(request, response);
-        reviewServices.listReviews();
         
-		String reviewBuyerPage = "/frontend/review_buyer.jsp";
-		RequestDispatcher dispatcher = request.getRequestDispatcher(reviewBuyerPage);
+        List<User> sellers = reviewServices.getSellers(); 
+        request.setAttribute("sellers", sellers);
+
+		String reviewAddPage = "/frontend/review_add.jsp";
+		RequestDispatcher dispatcher = request.getRequestDispatcher(reviewAddPage);
 		dispatcher.forward(request, response);
 	}
 }
+

@@ -39,12 +39,28 @@ public class ReviewDAO extends JpaDAO<Review> implements GenericDAO<Review> {
 		return super.findWithNamedQuery("Review.findAll");
 	}
 
-	public List<Review> listPaged(int start, int pageSize) {
+
+	 public List<Review> listPaged(int start, int pageSize) { EntityManager
+		 entityManager = getEntityManager(); TypedQuery<Review> query =
+		 entityManager.createNamedQuery("Review.findAll", Review.class);
+		 query.setFirstResult(start); query.setMaxResults(pageSize); return
+		 query.getResultList(); }
+
+
+	public List<Review> searchByBuyer(int buyerId, int start, int pageSize) {
 		EntityManager entityManager = getEntityManager();
-		TypedQuery<Review> query = entityManager.createNamedQuery("Review.findAll", Review.class);
+		TypedQuery<Review> query = entityManager.createNamedQuery("Review.findByBuyerId", Review.class);
+		query.setParameter("buyerId", buyerId);
 		query.setFirstResult(start);
 		query.setMaxResults(pageSize);
 		return query.getResultList();
+	}
+
+	public long countByBuyer(int buyerId) {
+		EntityManager entityManager = getEntityManager();
+		TypedQuery<Long> query = entityManager.createNamedQuery("Review.countByBuyerId", Long.class);
+		query.setParameter("buyerId", buyerId);
+		return query.getSingleResult();
 	}
 
 	@Override

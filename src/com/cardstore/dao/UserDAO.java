@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.cardstore.entity.Card;
+import com.cardstore.entity.Role;
 import com.cardstore.entity.User;
 
 import jakarta.persistence.EntityManager;
@@ -79,4 +80,9 @@ public class UserDAO extends JpaDAO<User> implements GenericDAO<User> {
 		query.setMaxResults(pageSize);
 		return query.getResultList();
 	}
+	
+    public List<User> findSellers() {
+        String sellerRoleName = Role.SELLER_ROLE;
+        return super.findWithNamedQuery("User.findByRole", "roleName", sellerRoleName);
+    }
 }
