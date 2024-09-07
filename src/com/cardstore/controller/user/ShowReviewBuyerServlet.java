@@ -2,6 +2,8 @@ package com.cardstore.controller.user;
 
 import java.io.IOException;
 
+import com.cardstore.service.ReviewServices;
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -24,9 +26,7 @@ public class ShowReviewBuyerServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		String reviewBuyerPage = "/frontend/review_buyer.jsp";
-		RequestDispatcher dispatcher = request.getRequestDispatcher(reviewBuyerPage);
-		dispatcher.forward(request, response);
+        ReviewServices reviewServices = new ReviewServices(request, response);
+        reviewServices.listReviews();
 	}
 }

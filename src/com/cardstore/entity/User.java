@@ -28,7 +28,8 @@ import jakarta.persistence.Table;
 		@NamedQuery(name = "User.countAll", query = "SELECT Count(*) FROM User u"),
 		@NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
 		@NamedQuery(name = "User.checkLogin", query = "SELECT u FROM User u WHERE u.email = :email AND u.password = :pass"),
-		@NamedQuery(name ="User.findByUserId", query = "SELECT u FROM User u WHERE u.userId = :userId")})
+		@NamedQuery(name ="User.findByUserId", query = "SELECT u FROM User u WHERE u.userId = :userId"),
+	    @NamedQuery(name = "User.findByRole", query = "SELECT u FROM User u WHERE u.role.name = :roleName")})
 
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;

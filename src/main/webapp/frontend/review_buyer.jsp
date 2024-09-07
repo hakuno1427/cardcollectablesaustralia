@@ -23,6 +23,10 @@
                     <p>To add a new review and rating: </p>
                     <a href="review_add" class="btn btn-primary">Add Review</a>
                 </div>
+                <hr class="my-4">
+                <div>
+                    <p>Your Buyer ID number is: ${buyerId}</p>
+                </div>
             </div>
         </div>
         <div class="row">&nbsp;</div>
@@ -34,7 +38,6 @@
                     <thead>
                         <tr>
                             <th>Review ID</th>
-                            <th>Buyer ID</th>
                             <th>Seller ID</th>
                             <th>Comment</th>
                             <th>Rating</th>
@@ -43,10 +46,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${listReviews}" var="review">
+                        <c:forEach items="${reviews}" var="review">
                             <tr>
                                 <td>${review.reviewId}</td>
-                                <td>${review.buyerId}</td>
                                 <td>${review.sellerId}</td>
                                 <td>${review.comment}</td>
                                 <td>${review.rating}</td>
@@ -62,39 +64,31 @@
             </div>
         </div>
         
-        <!-- Pagination Links -->
-        <div class="row">
-            <div class="col text-center">
-                <c:if test="${currentPage > 1}">
-                    <a href="?page=1">&laquo; First</a>
-                    <a href="?page=${currentPage - 1}">&lt; Previous</a>
-                </c:if>
-        
-        <!-- Pagination Links -->
-        <div class="row">
-            <div class="col text-center">
-                <c:if test="${currentPage > 1}">
-                    <a href="?page=1">&laquo; First</a>
-                    <a href="?page=${currentPage - 1}">&lt; Previous</a>
-                </c:if>
-                
-                <c:forEach begin="${startPage}" end="${endPage}" var="i">
-                    <c:choose>
-                        <c:when test="${i == currentPage}">
-                            <span>${i}</span>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="?page=${i}">${i}</a>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-
-                <c:if test="${currentPage < totalPages}">
-                    <a href="?page=${currentPage + 1}">Next &gt;</a>
-                    <a href="?page=${totalPages}">Last &raquo;</a>
-                </c:if>
-            </div>
-        </div>
+		<!-- Pagination Links -->
+		<div class="row">
+		    <div class="col text-center">
+		        <c:if test="${currentPage > 1}">
+		            <a href="?page=1">&laquo; First</a>
+		            <a href="?page=${currentPage - 1}">&lt; Previous</a>
+		        </c:if>
+		
+		        <c:forEach begin="${startPage}" end="${endPage}" var="i">
+		            <c:choose>
+		                <c:when test="${i == currentPage}">
+		                    <span>${i}</span>
+		                </c:when>
+		                <c:otherwise>
+		                    <a href="?page=${i}">${i}</a>
+		                </c:otherwise>
+		            </c:choose>
+		        </c:forEach>
+		
+		        <c:if test="${currentPage < totalPages}">
+		            <a href="?page=${currentPage + 1}">Next &gt;</a>
+		            <a href="?page=${totalPages}">Last &raquo;</a>
+		        </c:if>
+		    </div>
+		</div>
 
         <div class="row">&nbsp;</div>
 

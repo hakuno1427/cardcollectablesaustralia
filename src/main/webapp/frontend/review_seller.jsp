@@ -19,6 +19,9 @@
                 <h2>Seller Reviews</h2>
                 <p>You can view the reviews and ratings left by the buyers from your card sales here.</p>
                 <hr class="my-4">
+                <div>
+                    <p>Your Seller ID number is: ${sellerId}</p>
+                </div>
             </div>
         </div>
         <div class="row">&nbsp;</div>
@@ -31,26 +34,19 @@
                         <tr>
                             <th>Review ID</th>
                             <th>Buyer ID</th>
-                            <th>Seller ID</th>
                             <th>Comment</th>
                             <th>Rating</th>
                             <th>Review Date</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${listReviews}" var="review">
+                        <c:forEach items="${reviews}" var="review">
                             <tr>
                                 <td>${review.reviewId}</td>
                                 <td>${review.buyerId}</td>
-                                <td>${review.sellerId}</td>
                                 <td>${review.comment}</td>
                                 <td>${review.rating}</td>
                                 <td>${review.reviewDate}</td>
-                                <td>
-                                    <a href="review_hide?id=${review.reviewId}" class="btn btn-warning btn-sm">Hide</a>
-                                    <a href="review_unhide?id=${review.reviewId}" class="btn btn-success btn-sm">Unhide</a>
-                                </td>
                             </tr>
                         </c:forEach>
                     </tbody>
