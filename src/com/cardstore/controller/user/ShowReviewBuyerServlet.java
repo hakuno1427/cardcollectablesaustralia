@@ -28,9 +28,5 @@ public class ShowReviewBuyerServlet extends HttpServlet {
 			throws ServletException, IOException {
         ReviewServices reviewServices = new ReviewServices(request, response);
         reviewServices.listReviews();
-        
-		String reviewBuyerPage = "/frontend/review_buyer.jsp";
-		RequestDispatcher dispatcher = request.getRequestDispatcher(reviewBuyerPage);
-		dispatcher.forward(request, response);
 	}
 }

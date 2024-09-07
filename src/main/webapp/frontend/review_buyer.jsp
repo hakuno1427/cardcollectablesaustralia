@@ -38,7 +38,6 @@
                     <thead>
                         <tr>
                             <th>Review ID</th>
-<!--                             <th>Buyer ID</th> -->
                             <th>Seller ID</th>
                             <th>Comment</th>
                             <th>Rating</th>
@@ -50,7 +49,6 @@
                         <c:forEach items="${reviews}" var="review">
                             <tr>
                                 <td>${review.reviewId}</td>
-<%--                                 <td>${review.buyerId}</td> --%>
                                 <td>${review.sellerId}</td>
                                 <td>${review.comment}</td>
                                 <td>${review.rating}</td>

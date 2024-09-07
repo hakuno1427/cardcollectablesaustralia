@@ -1,13 +1,13 @@
 <!--
-    @author Sera Jeong 12211242 Created Date: 03/09/2024
+    @author Sera Jeong 12211242 Created Date: 05/09/2024
 -->
 
-<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <jsp:include page="page_head.jsp">
-    <jsp:param name="pageTitle" value="Add Review" />
+    <jsp:param name="pageTitle" value="Update Review" />
 </jsp:include>
 <body>
     <div class="container">
@@ -16,28 +16,30 @@
         <div class="row">&nbsp;</div>
         <div class="row">
             <div class="col text-center">
-                <h2>Add New Review</h2>
+                <h2>Update Review</h2>
             </div>
         </div>
         <div class="row">&nbsp;</div>
 
-        <!-- Review form -->
-        <form action="review_add_save" method="post" style="max-width: 800px; margin: 0 auto;">
-            
-			<div class="form-group row">
-			    <label class="col-sm-4 col-form-label">Seller :</label>
-			    <div class="col-sm-8">
-			        <select name="sellerId" class="form-control" required>
-			         	<option value="" disabled selected>Select seller name here...</option>
-			            <c:forEach var="seller" items="${sellers}">
-			                <option value="${seller.userId}">
-			                    ${seller.firstName} ${seller.lastName}
-			                </option>
-			            </c:forEach>
-			        </select>
-			    </div>
-			</div>
-                 
+        <!-- Review update form -->
+        <form action="review_update_save" method="post" style="max-width: 800px; margin: 0 auto;">
+            <!-- Hidden field to store the review ID -->
+            <input type="hidden" name="reviewId" value="${review.reviewId}" />
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Seller :</label>
+                <div class="col-sm-8">
+                    <select name="sellerId" class="form-control" disabled>
+                        <option value="" disabled>Select seller name here...</option>
+                        <c:forEach var="seller" items="${sellers}">
+                            <option value="${seller.userId}" <c:if test="${seller.userId == review.sellerId}">selected</c:if>>
+                                ${seller.firstName} ${seller.lastName}
+                            </option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Rating :</label>
                 <div class="col-sm-8">
