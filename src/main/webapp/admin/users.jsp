@@ -51,7 +51,7 @@
                                 <td>${listUser.role.name}</td>
                                 <td>${listUser.enabled == 1 ? "Active" : "Banned"}</td>
                                 <td>
-                                    <a href="user_update?id=${user.userId}" class="btn btn-warning btn-sm">Update</a>
+                                    <a href="user_update?id=${listUser.userId}" class="btn btn-warning btn-sm">Update</a>
                                     
 									<c:if test="${listUser.enabled == 1}">
                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmBanModal-${listUser.userId}">Ban</button>

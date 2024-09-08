@@ -1,0 +1,80 @@
+.message-row {
+    margin: 0;
+}
+
+.message-col {
+    margin: 0;
+    padding: 0;
+}
+
+/* Remove padding and margin from list items */
+.scrollable-list {
+    padding: 0;
+    margin: 0;
+}
+
+.list-group-item {
+    padding: 5px 10px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+}
+
+.list-group-item.selected {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Overall message box styling */
+.message-box {
+    border: 1px solid #ddd;
+    padding: 10px;
+    max-height: calc(100vh - 150px); /* Adjust based on header/footer height */
+    overflow-y: auto;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between messages */
+}
+
+/* Styling for message wrappers */
+.message-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Default for received messages */
+}
+
+/* Styling for sent messages */
+.sent-message {
+    background-color: #e1ffc7; /* Light green background */
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid #d0f0c0;
+    max-width: 70%; /* Adjust as needed */
+    display: inline-block;
+    align-self: flex-start; /* Align to the left */
+    text-align: left;
+}
+
+/* Styling for received messages */
+.received-message {
+    background-color: #ffffff; /* White background */
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+    max-width: 70%; /* Adjust as needed */
+    display: inline-block;
+    align-self: flex-end; /* Align to the right */
+    text-align: right;
+}
+
+/* Ensuring proper alignment of strong elements inside messages */
+.message-box div strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Selected user and subject styles */
+.user-item.selected, .subject-item.selected {
+    background-color: #007bff; /* Highlight color */
+    color: white;
+}

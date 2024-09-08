@@ -24,6 +24,7 @@
             </c:if>
             <c:if test="${user != null}">
                 <li class="nav-item"><a href="profile" class="nav-link">Welcome, ${user.firstName}</a></li>
+                <li class="nav-item"><a href="my_messages" class="nav-link">Messages</a></li>
                 <c:if test="${auth:hasPermission(role, 'VIEW_MY_ORDERS')}">
                     <li class="nav-item"><a href="view_orders" class="nav-link">My Orders</a></li>
                 </c:if>
