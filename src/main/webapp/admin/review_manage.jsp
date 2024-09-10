@@ -50,7 +50,21 @@
                                 <td>${review.comment}</td>
                                 <td>${review.reviewDate}</td>
                                 <td>
-                                    <a href="review_hide?id=${review.reviewId}" class="btn btn-danger btn-sm">Hide</a>
+                                 	<c:if test="${review.hidden eq '0'}">
+										<!-- Hide Review Form -->
+										<form action="/admin/review_hide" method="post" style="display:inline;">
+										    <input type="hidden" name="id" value="${review.reviewId}" />
+										    <button type="submit" class="btn btn-danger btn-sm">Hide</button>
+										</form>
+									</c:if>
+									
+									<!-- Unhide Review Form -->
+									<c:if test="${review.hidden eq '1'}">
+										<form action="/admin/review_unhide" method="post" style="display:inline;">
+										    <input type="hidden" name="id" value="${review.reviewId}" />
+										    <button type="submit" class="btn btn-warning btn-sm">Unhide</button>
+										</form>
+									</c:if>
                                 </td>
                             </tr>
                         </c:forEach>

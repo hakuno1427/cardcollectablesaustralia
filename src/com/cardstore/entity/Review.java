@@ -18,10 +18,10 @@ import jakarta.persistence.Table;
 @NamedQueries({
 		@NamedQuery(name = "Review.findAll", query = "SELECT r from Review r ORDER BY r.reviewId"),
 		@NamedQuery(name = "Review.countAll", query = "SELECT Count(*) FROM Review r"),
-		@NamedQuery(name = "Review.findByBuyerId", query = "SELECT r FROM Review r WHERE r.buyerId = :buyerId"),
-		@NamedQuery(name = "Review.countByBuyerId", query = "SELECT COUNT(r) FROM Review r WHERE r.buyerId = :buyerId"),
-	    @NamedQuery(name = "Review.findBySellerId", query = "SELECT r FROM Review r WHERE r.sellerId = :sellerId"),
-	    @NamedQuery(name = "Review.countBySellerId", query = "SELECT COUNT(r) FROM Review r WHERE r.sellerId = :sellerId")
+		@NamedQuery(name = "Review.findByBuyerId", query = "SELECT r FROM Review r WHERE r.hidden = '0' AND r.buyerId = :buyerId"),
+		@NamedQuery(name = "Review.countByBuyerId", query = "SELECT COUNT(r) FROM Review r WHERE r.hidden = '0' AND r.buyerId = :buyerId"),
+	    @NamedQuery(name = "Review.findBySellerId", query = "SELECT r FROM Review r WHERE r.hidden = '0' AND r.sellerId = :sellerId"),
+	    @NamedQuery(name = "Review.countBySellerId", query = "SELECT COUNT(r) FROM Review r WHERE r.hidden = '0' AND r.sellerId = :sellerId")
 		})
 
 public class Review implements Serializable {
@@ -33,13 +33,14 @@ public class Review implements Serializable {
 	private double rating;
 	private String comment;
 	private LocalDate reviewDate;
+	private String hidden;
 
 	public Review() {
 
 	}
 
 	public Review(Integer reviewId, Integer buyerId, Integer sellerId, double rating, String comment,
-			LocalDate reviewDate) {
+			LocalDate reviewDate, String hidden) {
 		super();
 		this.reviewId = reviewId;
 		this.buyerId = buyerId;
@@ -47,6 +48,7 @@ public class Review implements Serializable {
 		this.rating = rating;
 		this.comment = comment;
 		this.reviewDate = reviewDate;
+		this.hidden = hidden;
 	}
 
 	@Id
@@ -105,15 +107,24 @@ public class Review implements Serializable {
 		this.reviewDate = reviewDate;
 	}
 
+	public String getHidden() {
+		return hidden;
+	}
+
+
+	public void setHidden(String hidden) {
+		this.hidden = hidden;
+	}
+
 	@Override
 	public String toString() {
 		return "Review [reviewId=" + reviewId + ", buyerId=" + buyerId + ", sellerId=" + sellerId + ", rating=" + rating
-				+ ", comment=" + comment + ", reviewDate=" + reviewDate + "]";
+				+ ", comment=" + comment + ", reviewDate=" + reviewDate + ", hidden =" + hidden + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(buyerId, comment, rating, reviewDate, reviewId, sellerId);
+		return Objects.hash(buyerId, comment, hidden, rating, reviewDate, reviewId, sellerId);
 	}
 
 	@Override
@@ -126,9 +137,12 @@ public class Review implements Serializable {
 			return false;
 		Review other = (Review) obj;
 		return Objects.equals(buyerId, other.buyerId) && Objects.equals(comment, other.comment)
+				&& hidden == other.hidden
 				&& Double.doubleToLongBits(rating) == Double.doubleToLongBits(other.rating)
 				&& Objects.equals(reviewDate, other.reviewDate) && Objects.equals(reviewId, other.reviewId)
 				&& Objects.equals(sellerId, other.sellerId);
 	}
+
+
 
 }
