@@ -2,6 +2,7 @@ package com.cardstore.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -12,30 +13,35 @@ import jakarta.persistence.Id;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "sales_order")
 @NamedQueries({ @NamedQuery(name = "Order.findAll", query = "SELECT o from Order o ORDER BY o.orderId"),
-		@NamedQuery(name = "Order.countAll", query = "SELECT Count(*) FROM Order o") })
+		@NamedQuery(name = "Order.countAll", query = "SELECT Count(*) FROM Order o"),
+		@NamedQuery(name = "Order.findByBuyerId", query = "SELECT o FROM Order o WHERE o.buyerId = :buyerId ORDER BY o.orderDate DESC")})
 
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer orderId;
 	private Integer buyerId;
-	private String orderItems;
+	
 	private double totalPrice;
 	private String status;
 	private LocalDate orderDate;
 	private String shippingAddress;
 	private String billingAddress;
 	private String trackingNumber;
+	
+	@Transient
+    private List<OrderItem> orderItems;
 
 	public Order() {
 
 	}
 
-	public Order(Integer orderId, Integer buyerId, String orderItems, double totalPrice, String status,
+	public Order(Integer orderId, Integer buyerId, List<OrderItem> orderItems, double totalPrice, String status,
 			LocalDate orderDate, String shippingAddress, String billingAddress, String trackingNumber) {
 		super();
 		this.orderId = orderId;
@@ -69,12 +75,12 @@ public class Order implements Serializable {
 		this.buyerId = buyerId;
 	}
 
-	@Column(name = "orderItems", nullable = false)
-	public String getOrderItems() {
+	@Transient
+	public List<OrderItem> getOrderItems() {
 		return orderItems;
 	}
 
-	public void setOrderItems(String orderItems) {
+	public void setOrderItems(List<OrderItem> orderItems) {
 		this.orderItems = orderItems;
 	}
 
