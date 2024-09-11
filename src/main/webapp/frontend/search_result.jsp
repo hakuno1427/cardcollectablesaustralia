@@ -137,20 +137,31 @@
 			</c:if>
 		</div>
 
-		<div class="pagination">
-			<c:if test="${currentPage > 1}">
-				<a href="?keyword=${keyword}&page=${currentPage - 1}">Previous</a>
-			</c:if>
+<div class="pagination">
+    <c:if test="${currentPage > 1}">
+        <a href="?keyword=${keyword}&page=${currentPage - 1}">Previous</a>
+    </c:if>
 
-			<c:forEach var="i" begin="1" end="${totalPages}">
-				<a href="?keyword=${keyword}&page=${i}"
-					class="${i == currentPage ? 'active' : ''}">${i}</a>
-			</c:forEach>
+    <c:set var="startPage" value="${currentPage - 3 > 1 ? currentPage - 3 : 1}" />
+    <c:set var="endPage" value="${currentPage + 3 < totalPages ? currentPage + 3 : totalPages}" />
 
-			<c:if test="${currentPage < totalPages}">
-				<a href="?keyword=${keyword}&page=${currentPage + 1}">Next</a>
-			</c:if>
-		</div>
+    <c:if test="${startPage > 1}">
+        <a href="?keyword=${keyword}&page=1">1</a>
+        <span>...</span> <!-- 省略号，提示有更多页 -->
+    </c:if>
+
+    <c:forEach var="i" begin="${startPage}" end="${endPage}">
+        <a href="?keyword=${keyword}&page=${i}" class="${i == currentPage ? 'active' : ''}">${i}</a>
+    </c:forEach>
+
+    <c:if test="${endPage < totalPages}">
+        <a href="?keyword=${keyword}&page=${totalPages}">${totalPages}</a>
+    </c:if>
+
+    <c:if test="${currentPage < totalPages}">
+        <a href="?keyword=${keyword}&page=${currentPage + 1}">Next</a>
+    </c:if>
+</div>
 
 		<jsp:directive.include file="footer.jsp" />
 	</div>

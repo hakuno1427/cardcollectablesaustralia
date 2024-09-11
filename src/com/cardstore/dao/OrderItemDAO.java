@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.cardstore.entity.OrderItem;
 
+import jakarta.persistence.EntityManager;
+
 /**
  * @author Sera Jeong 12211242 Created Date: 18/08/2024
  */
@@ -39,6 +41,10 @@ public class OrderItemDAO extends JpaDAO<OrderItem> implements GenericDAO<OrderI
 	@Override
 	public long count() {
 		return super.countWithNamedQuery("OrderItem.countAll");
+	}
+	
+	public List<OrderItem> findByOrderId(int orderId) {
+	    return super.findWithNamedQuery("OrderItem.findByOrderId", "orderId", orderId);
 	}
 
 }

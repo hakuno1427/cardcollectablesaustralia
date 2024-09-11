@@ -40,5 +40,9 @@ public class OrderDAO extends JpaDAO<Order> implements GenericDAO<Order> {
 	public long count() {
 		return super.countWithNamedQuery("Order.countAll");
 	}
+	
+	public List<Order> findOrdersByBuyer(int buyerId){
+		return super.findWithNamedQuery("Order.findByBuyerId","buyerId", buyerId);
+	}
 
 }
