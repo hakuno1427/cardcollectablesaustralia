@@ -134,7 +134,7 @@ public class UserServices {
 		if (user == null) {
 			String message = "Login failed. Please check your email and password.";
 			request.setAttribute("message", message);
-			showAdminLogin(); // Show login page with error message
+			showAdminLogin(); 
 		} else {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
@@ -147,7 +147,7 @@ public class UserServices {
 				session.removeAttribute("redirectURL");
 				response.sendRedirect(redirectURL);
 			} else {
-				showAdminProfile(); // Redirect to admin profile page
+				showAdminProfile();
 			}
 		}
 	}
