@@ -36,7 +36,7 @@ public class Review implements Serializable {
 	private String hidden;
 
 	public Review() {
-
+		this.hidden = "0";
 	}
 
 	public Review(Integer reviewId, Integer buyerId, Integer sellerId, double rating, String comment,
@@ -107,6 +107,7 @@ public class Review implements Serializable {
 		this.reviewDate = reviewDate;
 	}
 
+	@Column(name = "hidden", nullable = false)
 	public String getHidden() {
 		return hidden;
 	}
