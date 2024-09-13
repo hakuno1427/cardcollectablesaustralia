@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="https://jakarta.ee/xml/ns/jsp"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee 
+                            https://jakarta.ee/xml/ns/jakartaee/web-jsptaglibrary_3_0.xsd"
+        version="3.0">
+
+    <display-name>Custom Functions</display-name>
+    
+    <tlib-version>1.0</tlib-version>
+    <short-name>custom</short-name>
+    
+    <!-- Custom Function Definitions -->
+    <function>
+        <name>hasPermission</name>
+        <function-class>com.cardstore.service.PermissionService</function-class>
+        <function-signature>boolean hasPermission(com.cardstore.entity.Role, java.lang.String)</function-signature>
+    </function>
+
+</taglib>
