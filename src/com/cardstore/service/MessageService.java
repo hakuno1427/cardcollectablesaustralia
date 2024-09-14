@@ -22,7 +22,6 @@ public class MessageService {
 	private UserDAO userDAO;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
-	private EmailService emailService;
 
 	public MessageService(HttpServletRequest request, HttpServletResponse response) {
 		super();
@@ -33,35 +32,51 @@ public class MessageService {
 	}
 
 	// Fetch users who have exchanged messages with the logged-in user
-    public List<User> findUsersWithMessages(Integer userId) {
-        return messageDAO.findUsersWithMessages(userId);
-    }
+	public List<User> findUsersWithMessages(Integer userId) {
+		return messageDAO.findUsersWithMessages(userId);
+	}
 
-    // Fetch subjects exchanged between the logged-in user and the selected user
-    public List<String> getSubjectsWithUser(Integer userId, Integer selectedUserId) {
-        return messageDAO.findSubjectsByUserPair(userId, selectedUserId);
-    }
+	// Fetch subjects exchanged between the logged-in user and the selected user
+	public List<String> getSubjectsWithUser(Integer userId, Integer selectedUserId) {
+		return messageDAO.findSubjectsByUserPair(userId, selectedUserId);
+	}
 
-    // Fetch messages by subject between two users
-    public List<Message> getMessagesBySubject(Integer userId, Integer selectedUserId, String subject) {
-        return messageDAO.findMessagesByUserAndSubject(userId, selectedUserId, subject);
-    }
-    
-    public Message sendMessage(Integer receiverId, String subject, String content) {
-    	User sender = (User) request.getSession().getAttribute("user");
-    	User receiver = userDAO.get(receiverId);
-        
-        Message newMessage = new Message();
-        newMessage.setSender(sender);
-        newMessage.setReceiver(receiver); // Assuming userId is the ID of the recipient
-        newMessage.setSubject(subject);
-        newMessage.setContent(content);
-        newMessage.setSentDate(new java.util.Date()); // Set the current date
-        
-        // Save the message to the database
-        messageDAO.create(newMessage);
-        emailService.notifyMessage(sender.getEmail(), sender.getFirstName(), subject, content);
-        
-        return newMessage;
-    }
+	// Fetch messages by subject between two users
+	public List<Message> getMessagesBySubject(Integer userId, Integer selectedUserId, String subject) {
+		return messageDAO.findMessagesByUserAndSubject(userId, selectedUserId, subject);
+	}
+
+	public Message sendMessage(Integer receiverId, String subject, String content) {
+		User sender = (User) request.getSession().getAttribute("user");
+		User receiver = userDAO.get(receiverId);
+
+		Message newMessage = new Message();
+		newMessage.setSender(sender);
+		newMessage.setReceiver(receiver);
+		newMessage.setSubject(subject);
+		newMessage.setContent(content);
+		newMessage.setSentDate(new java.util.Date()); 
+		
+		// Save the message to the database
+		messageDAO.create(newMessage);
+
+		return newMessage;
+	}
+	
+	public Message sendAdminMessage(Integer receiverId, String subject, String content) {
+		User sender = userDAO.findByEmail("admin@cca.com");
+		User receiver = userDAO.get(receiverId);
+
+		Message newMessage = new Message();
+		newMessage.setSender(sender);
+		newMessage.setReceiver(receiver); // Assuming userId is the ID of the recipient
+		newMessage.setSubject(subject);
+		newMessage.setContent(content);
+		newMessage.setSentDate(new java.util.Date()); // Set the current date
+
+		// Save the message to the database
+		messageDAO.create(newMessage);
+
+		return newMessage;
+	}
 }

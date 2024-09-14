@@ -25,12 +25,14 @@ public class OrderService {
 	private ListingDAO listingDao;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
+	private MessageService messageService;
 
 	public OrderService(HttpServletRequest request, HttpServletResponse response) {
 		this.request = request;
 		this.response = response;
 		this.orderDao = new OrderDAO();
 		this.listingDao = new ListingDAO();
+		this.messageService = new MessageService(request, response);
 	}
 
 	public void showCheckoutForm() throws ServletException, IOException {
@@ -76,6 +78,8 @@ public class OrderService {
 			} else
 				listingDao.delete(listing);
 		}
+		
+		messageService.sendAdminMessage(order.getSellerId(), "Order Notification", "Someone bought from you. Please check your pending order page to see detail");
 
 		ShoppingCart shoppingCart = (ShoppingCart) request.getSession().getAttribute("cart");
 		shoppingCart.clear();
