@@ -30,6 +30,7 @@ public class Order implements Serializable {
 
 	private Integer orderId;
 	private Integer buyerId;
+	private Integer sellerId;
 
 	private double totalPrice;
 	private String status;
@@ -45,11 +46,12 @@ public class Order implements Serializable {
 
 	}
 
-	public Order(Integer orderId, Integer buyerId, List<OrderItem> orderItems, double totalPrice, String status,
+	public Order(Integer orderId, Integer buyerId, Integer sellerId, List<OrderItem> orderItems, double totalPrice, String status,
 			LocalDate orderDate, String shippingAddress, String billingAddress, String trackingNumber) {
 		super();
 		this.orderId = orderId;
 		this.buyerId = buyerId;
+		this.sellerId = sellerId;
 		this.orderItems = orderItems;
 		this.totalPrice = totalPrice;
 		this.status = status;
@@ -77,6 +79,15 @@ public class Order implements Serializable {
 
 	public void setBuyerId(Integer buyerId) {
 		this.buyerId = buyerId;
+	}
+	
+	@Column(name = "sellerId", nullable = false)
+	public Integer getSellerId() {
+		return sellerId;
+	}
+
+	public void setSellerId(Integer sellerId) {
+		this.sellerId = sellerId;
 	}
 
 	@Transient

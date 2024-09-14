@@ -3,11 +3,8 @@ package com.cardstore.service;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.cardstore.controller.cart.ShoppingCart;
 import com.cardstore.dao.ListingDAO;
@@ -82,7 +79,7 @@ public class OrderService {
 
 		ShoppingCart shoppingCart = (ShoppingCart) request.getSession().getAttribute("cart");
 		shoppingCart.clear();
-
+				
 		return savedOrder.getOrderId();
 	}
 
@@ -114,6 +111,7 @@ public class OrderService {
 			orderItem.setOrderId(order.getOrderId());
 			orderItem.setQuantity(quantity);
 			orderItems.add(orderItem);
+			order.setSellerId(listing.getSeller().getUserId());
 		}
 		order.setOrderItems(orderItems);
 
