@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <jsp:include page="page_head.jsp">
-    <jsp:param name="pageTitle" value="Card Catalogue" />
+    <jsp:param name="pageTitle" value="User Management" />
 </jsp:include>
 <body>
     <div class="container">
@@ -31,13 +31,14 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>User Id</th>
+                            <th>User ID</th>
                             <th>Email</th>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Phone</th>
                             <th>Role</th>
                             <th>Status</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>

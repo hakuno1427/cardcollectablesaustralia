@@ -149,7 +149,7 @@
 									<div>
 										<span>Quantity:</span> ${listing.quantity}
 									</div>
-									<button class="add-to-cart-btn">Add to Cart</button>
+ 							        <a href="add_to_cart?listingId=${listing.listingId}" class="btn add-to-cart-btn">Add to Cart</a>
 								</div>
 							</c:forEach>
 						</c:otherwise>
@@ -160,5 +160,11 @@
 
 		<jsp:directive.include file="footer.jsp" />
 	</div>
+	
+	<script type="text/javascript">
+	 function addToCart(listingId) {			
+				window.location = 'add_to_cart?listingId=' + listingId;							
+		});
+	</script>
 </body>
 </html>

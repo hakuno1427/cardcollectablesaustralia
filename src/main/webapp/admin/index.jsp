@@ -41,7 +41,7 @@
                             <hr class="my-4">
                             <c:if test="${auth:hasPermission(role, 'MANAGE_USER')}">
                             	<p>To manage users:</p> 
-	                            <a href="/admin/users" class="btn btn-info">Manage Users</a>
+	                            <a href="/admin/users" class="btn btn-info">User Management</a>
 	                            <p></p>
 	                            <p></p>
 	                            <p></p>
