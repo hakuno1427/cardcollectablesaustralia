@@ -19,33 +19,39 @@ import jakarta.persistence.Transient;
 @Table(name = "sales_order")
 @NamedQueries({ @NamedQuery(name = "Order.findAll", query = "SELECT o from Order o ORDER BY o.orderId"),
 		@NamedQuery(name = "Order.countAll", query = "SELECT Count(*) FROM Order o"),
-		@NamedQuery(name = "Order.findByBuyerId", query = "SELECT o FROM Order o WHERE o.buyerId = :buyerId ORDER BY o.orderDate DESC")})
+		@NamedQuery(name = "Order.findByBuyerId", query = "SELECT o FROM Order o WHERE o.buyerId = :buyerId ORDER BY o.orderDate DESC") })
 
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	public static final String STATUS_SHIPMENT_PENDING = "shipment pending";
+	public static final String STATUS_SHIPPED = "shipped";
+	public static final String STATUS_COMPLETE = "complete";
+
 	private Integer orderId;
 	private Integer buyerId;
-	
+	private Integer sellerId;
+
 	private double totalPrice;
 	private String status;
 	private LocalDate orderDate;
 	private String shippingAddress;
 	private String billingAddress;
 	private String trackingNumber;
-	
+
 	@Transient
-    private List<OrderItem> orderItems;
+	private List<OrderItem> orderItems;
 
 	public Order() {
 
 	}
 
-	public Order(Integer orderId, Integer buyerId, List<OrderItem> orderItems, double totalPrice, String status,
+	public Order(Integer orderId, Integer buyerId, Integer sellerId, List<OrderItem> orderItems, double totalPrice, String status,
 			LocalDate orderDate, String shippingAddress, String billingAddress, String trackingNumber) {
 		super();
 		this.orderId = orderId;
 		this.buyerId = buyerId;
+		this.sellerId = sellerId;
 		this.orderItems = orderItems;
 		this.totalPrice = totalPrice;
 		this.status = status;
@@ -73,6 +79,15 @@ public class Order implements Serializable {
 
 	public void setBuyerId(Integer buyerId) {
 		this.buyerId = buyerId;
+	}
+	
+	@Column(name = "sellerId", nullable = false)
+	public Integer getSellerId() {
+		return sellerId;
+	}
+
+	public void setSellerId(Integer sellerId) {
+		this.sellerId = sellerId;
 	}
 
 	@Transient

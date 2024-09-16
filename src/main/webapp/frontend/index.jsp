@@ -84,7 +84,7 @@
                             <div class="col-md-3 col-sm-6 listing-item">
                                 <div class="card">
                                     <!-- Card Image Section -->
-                                    <a href="view_card?id=${listing.card.serialNumber}" title="View Listing ${listing.listingId}">
+                                    <a href="view_card?serialNumber=${listing.card.serialNumber}" title="View Listing ${listing.listingId}">
                                         <img class="card-img-top img-fluid" src="${listing.card.imageUrl}" alt="${listing.card.cardName}">
                                     </a>
                                     
