@@ -166,59 +166,60 @@ public class CardServices {
 			listCards();
 		}
 	}
-	
+
 	public void search() throws ServletException, IOException {
 		String keyword = request.getParameter("keyword");
 		int page = 1;
-	    int pageSize = 9;
-	    
-	    if (request.getParameter("page") != null) {
-	        page = Integer.parseInt(request.getParameter("page"));
-	    }
-	    int start = (page - 1) * pageSize;
-	    
+		int pageSize = 9;
+
+		if (request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+		}
+		int start = (page - 1) * pageSize;
+
 		List<Card> result = null;
-		
+
 		if (keyword == null || keyword.trim().isEmpty()) {
 			result = cardDAO.listPaged(start, pageSize);
-	        long totalCards = cardDAO.count();
-	        int totalPages = (int) Math.ceil((double) totalCards / pageSize);
-	        request.setAttribute("totalPages", totalPages);
+			long totalCards = cardDAO.count();
+			int totalPages = (int) Math.ceil((double) totalCards / pageSize);
+			request.setAttribute("totalPages", totalPages);
 		} else {
 			result = cardDAO.searchPaged(keyword, start, pageSize);
-	        long totalResults = cardDAO.countSearchResults(keyword);
-	        int totalPages = (int) Math.ceil((double) totalResults / pageSize);
-	        request.setAttribute("totalPages", totalPages);
+			long totalResults = cardDAO.countSearchResults(keyword);
+			int totalPages = (int) Math.ceil((double) totalResults / pageSize);
+			request.setAttribute("totalPages", totalPages);
 		}
-		
+
 		for (Card card : result) {
-	        List<Listing> listings = listingDAO.findWithNamedQuery("Listing.findBySerialNumber", "serialNumber", card.getSerialNumber());
-	        card.setListings(listings);
-	    }
-		
+			List<Listing> listings = listingDAO.findWithNamedQuery("Listing.findBySerialNumber", "serialNumber",
+					card.getSerialNumber());
+			card.setListings(listings);
+		}
+
 		request.setAttribute("result", result);
 		request.setAttribute("keyword", keyword);
 		request.setAttribute("currentPage", page);
-		
+
 		String resultPage = "frontend/search_result.jsp";
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(resultPage);
 		requestDispatcher.forward(request, response);
 	}
-	
+
 	public void viewCardDetail() throws ServletException, IOException {
 		String serialNumber = request.getParameter("serialNumber");
 		Card card = cardDAO.get(serialNumber);
-		
+
 		if (card != null) {
 			request.setAttribute("card", card);
-			
-	        String detailPage = "frontend/card_detail.jsp";
-	        RequestDispatcher requestDispatcher = request.getRequestDispatcher(detailPage);
-	        requestDispatcher.forward(request, response);
-	    } else {
-	        response.sendError(HttpServletResponse.SC_NOT_FOUND, "Card not found");
-	    }
-		
+
+			String detailPage = "frontend/card_detail.jsp";
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher(detailPage);
+			requestDispatcher.forward(request, response);
+		} else {
+			response.sendError(HttpServletResponse.SC_NOT_FOUND, "Card not found");
+		}
+
 	}
 
 	private boolean hasPermission(User user, String permissionName) {

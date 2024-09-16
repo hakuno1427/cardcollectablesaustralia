@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import com.cardstore.controller.cart.ShoppingCart;
 import com.cardstore.dao.ListingDAO;
 import com.cardstore.dao.OrderDAO;
+import com.cardstore.dao.OrderItemDAO;
 import com.cardstore.entity.Listing;
 import com.cardstore.entity.Order;
 import com.cardstore.entity.OrderItem;
@@ -23,6 +25,7 @@ import jakarta.servlet.http.HttpSession;
 public class OrderService {
 	private OrderDAO orderDao;
 	private ListingDAO listingDao;
+	private OrderItemDAO orderItemDao;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private MessageService messageService;
@@ -32,6 +35,7 @@ public class OrderService {
 		this.response = response;
 		this.orderDao = new OrderDAO();
 		this.listingDao = new ListingDAO();
+		this.orderItemDao = new OrderItemDAO();
 		this.messageService = new MessageService(request, response);
 	}
 
@@ -126,5 +130,44 @@ public class OrderService {
 		order.setStatus(Order.STATUS_SHIPMENT_PENDING);
 
 		return order;
+	}
+
+	public void shipOrder() throws IOException, ServletException {
+		Order order = orderDao.get(request.getParameter("orderId"));
+		order.setTrackingNumber(request.getParameter("trackingNumber"));
+		order.setStatus(Order.STATUS_SHIPPED);
+		orderDao.update(order);
+		
+		messageService.sendMessage(order.getBuyerId(), "Order Number:" + order.getOrderId(), request.getParameter("message"));
+		
+		showSellerOrders();
+	}
+	
+	public void showSellerOrders() throws IOException, ServletException {
+		HttpSession session = request.getSession();
+		User loggedInUser = (User) session.getAttribute("user");
+
+		if (loggedInUser == null) {
+			response.sendRedirect("login");
+			return;
+		}
+
+		int buyerId = loggedInUser.getUserId();
+		List<Order> userOrders = orderDao.findOrdersBySeller(buyerId);
+		float totalEarning = 0;
+		
+		for (Order order : userOrders) {
+			List<OrderItem> orderItems = orderItemDao.findWithNamedQuery("OrderItem.findByOrderId", "orderId",
+					order.getOrderId());
+			order.setOrderItems(orderItems);
+			
+			if (order.getStatus() == Order.STATUS_COMPLETE) {
+				totalEarning += order.getTotalPrice();
+			}
+		}
+
+		request.setAttribute("orders", userOrders);
+		request.setAttribute("totalEarning", totalEarning);
+		request.getRequestDispatcher("/frontend/view_seller_orders.jsp").forward(request, response);
 	}
 }

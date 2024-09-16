@@ -38,7 +38,7 @@
                     <li class="nav-item"><a href="listings" class="nav-link">My Listing</a></li>
                 </c:if>
                 <c:if test="${auth:hasPermission(role, 'PROCEED_ORDER')}">
-                    <li class="nav-item"><a href="proceed_orders" class="nav-link">Pending Orders</a></li>
+                    <li class="nav-item"><a href="view_seller_orders" class="nav-link">Pending Orders</a></li>
                 </c:if>
                 <c:if test="${auth:hasPermission(role, 'REVIEW_SELLER')}">
                     <li class="nav-item"><a href="review_seller" class="nav-link">Seller Reviews</a></li>
