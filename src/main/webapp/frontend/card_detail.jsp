@@ -137,7 +137,7 @@
 								<div class="listing-item">
 									<div>
 										<span>Seller:</span> <a
-											href="view_seller?userId=${listing.seller.userId}">
+											href="view_seller?sellerId=${listing.seller.userId}">
 											${listing.seller.firstName} ${listing.seller.lastName} </a>
 									</div>
 									<div>
@@ -149,7 +149,7 @@
 									<div>
 										<span>Quantity:</span> ${listing.quantity}
 									</div>
- 							        <a href="add_to_cart?listingId=${listing.listingId}" class="btn add-to-cart-btn">Add to Cart</a>
+									<button class="add-to-cart-btn">Add to Cart</button>
 								</div>
 							</c:forEach>
 						</c:otherwise>
@@ -160,11 +160,5 @@
 
 		<jsp:directive.include file="footer.jsp" />
 	</div>
-	
-	<script type="text/javascript">
-	 function addToCart(listingId) {			
-				window.location = 'add_to_cart?listingId=' + listingId;							
-		});
-	</script>
 </body>
 </html>

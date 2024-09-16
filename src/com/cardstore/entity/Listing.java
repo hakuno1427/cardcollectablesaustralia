@@ -21,7 +21,8 @@ import jakarta.persistence.Transient;
 		@NamedQuery(name = "Listing.countAll", query = "SELECT Count(*) FROM Listing l"),
 		@NamedQuery(name = "Listing.listNew", query = "SELECT l FROM Listing l ORDER BY l.listingId DESC"),
 		@NamedQuery(name = "Listing.findBySerialNumber", query = "SELECT l FROM Listing l WHERE l.card.serialNumber = :serialNumber"),
-		@NamedQuery(name = "Listing.listSellerListings", query = "SELECT l FROM Listing l where l.seller.userId = :sellerId")
+		@NamedQuery(name = "Listing.listSellerListings", query = "SELECT l FROM Listing l where l.seller.userId = :sellerId"),
+		@NamedQuery(name = "Listing.countBySellerId", query = "SELECT COUNT(*) FROM Listing l WHERE l.seller.userId = :sellerId")
 })
 
 public class Listing implements Serializable {

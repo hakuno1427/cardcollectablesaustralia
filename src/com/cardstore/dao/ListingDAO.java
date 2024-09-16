@@ -10,6 +10,7 @@ import com.cardstore.entity.Listing;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 
 /**
  * @author Sera Jeong 12211242 Created Date: 18/08/2024
@@ -81,13 +82,15 @@ public class ListingDAO extends JpaDAO<Listing> implements GenericDAO<Listing> {
 			return null;
 		}
 	
-	public List<Listing> listSellerListing(Integer sellerId){
+	public List<Listing> listSellerListing(Integer sellerId, int start, int pageSize){
 		EntityManager entityManager = getEntityManager();
 		List<Listing> sellerListing = new ArrayList<>();
 
 		try {
 			Query query = entityManager.createNamedQuery("Listing.listSellerListings", Listing.class);
 			query.setParameter("sellerId", sellerId);
+			query.setFirstResult(start);
+			query.setMaxResults(pageSize);
 			List<Listing> resultList = query.getResultList();
 			logger.info("Successfully retrieved listings for seller ID: "+sellerId);
 			return resultList;
@@ -103,6 +106,13 @@ public class ListingDAO extends JpaDAO<Listing> implements GenericDAO<Listing> {
 			}
 		}
 
+	}
+	
+	public long listingCountBySeller(Integer sellerId) {
+		EntityManager entityManager = getEntityManager();
+		TypedQuery<Long> query = entityManager.createNamedQuery("Listing.countBySellerId", Long.class);
+		query.setParameter("sellerId", sellerId);
+		return query.getSingleResult();
 	}
 
 
