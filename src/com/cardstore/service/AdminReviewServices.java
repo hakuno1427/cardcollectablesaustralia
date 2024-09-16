@@ -64,36 +64,37 @@ public class AdminReviewServices {
 		request.setAttribute("startPage", startPage);
 		request.setAttribute("endPage", endPage);
 	}
-	
-    public void hideReview(String reviewId) throws ServletException, IOException {
-        User user = (User) request.getSession().getAttribute("user");
 
-        if (!this.hasPermission(user, MANAGE_REVIEW)) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have permission to access this page.");
-            return;
-        }
+	public void hideReview(String reviewId) throws ServletException, IOException {
+		User user = (User) request.getSession().getAttribute("user");
 
-        Review review = reviewDAO.get(reviewId);
-        if (review != null) {
-            review.setHidden("1"); 
-            reviewDAO.update(review);
-        }
-    }
+		if (!this.hasPermission(user, MANAGE_REVIEW)) {
+			response.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have permission to access this page.");
+			return;
+		}
 
-    public void unhideReview(String reviewId) throws ServletException, IOException {
-        User user = (User) request.getSession().getAttribute("user");
+		Review review = reviewDAO.get(reviewId);
+		if (review != null) {
+			review.setHidden("1");
+			reviewDAO.update(review);
+		}
+	}
 
-        if (!this.hasPermission(user, MANAGE_REVIEW)) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have permission to access this page.");
-            return;
-        }
+	public void unhideReview(String reviewId) throws ServletException, IOException {
+		User user = (User) request.getSession().getAttribute("user");
 
-        Review review = reviewDAO.get(reviewId);
-        if (review != null) {
-            review.setHidden("0"); 
-            reviewDAO.update(review);
-        }
-    }
+		if (!this.hasPermission(user, MANAGE_REVIEW)) {
+			response.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have permission to access this page.");
+			return;
+		}
+
+		Review review = reviewDAO.get(reviewId);
+		if (review != null) {
+			review.setHidden("0");
+			reviewDAO.update(review);
+		}
+	}
+
 	private boolean hasPermission(User user, String permissionName) {
 		if (user == null) {
 			return false;
