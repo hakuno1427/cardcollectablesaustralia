@@ -19,7 +19,9 @@ import jakarta.persistence.Transient;
 @Table(name = "sales_order")
 @NamedQueries({ @NamedQuery(name = "Order.findAll", query = "SELECT o from Order o ORDER BY o.orderId"),
 		@NamedQuery(name = "Order.countAll", query = "SELECT Count(*) FROM Order o"),
-		@NamedQuery(name = "Order.findByBuyerId", query = "SELECT o FROM Order o WHERE o.buyerId = :buyerId ORDER BY o.orderDate DESC") })
+		@NamedQuery(name = "Order.findByBuyerId", query = "SELECT o FROM Order o WHERE o.buyerId = :buyerId ORDER BY o.orderDate DESC"),
+		@NamedQuery(name = "Order.findBySellerId", query = "SELECT o FROM Order o WHERE o.sellerId = :sellerId ORDER BY o.orderDate DESC"),
+		})
 
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
