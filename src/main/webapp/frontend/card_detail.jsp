@@ -80,15 +80,11 @@
 }
 
 .listing-item {
-	margin-bottom: 10px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 10px;
 	background-color: #f9f9f9;
 	border-radius: 5px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 	font-size: 1.1em;
+	margin-bottom: 10px;
 }
 
 .listing-item span {
@@ -161,35 +157,38 @@
 
 <div class="listings-info">
     <h4>Available Listings:</h4>
+    
+    <!-- Listings Table Header -->
+    <div class="row bg-light font-weight-bold py-2 align-items-center text-center m-0 mb-3">
+        <div class="col-md-3">Seller</div>
+        <div class="col-md-2">Condition</div>
+        <div class="col-md-2">Price</div>
+        <div class="col-md-2">Quantity</div>
+        <div class="col-md-3"></div>
+    </div>
+
+    <!-- Listings Data with Card Effect -->
     <c:forEach items="${card.listings}" var="listing">
-        <div class="listing-item">
-            <div><span>Seller:</span> <a href="view_seller?sellerId=${listing.seller.userId}">
-                ${listing.seller.firstName} ${listing.seller.lastName}</a></div>
-            <div><span>Condition:</span> ${listing.condition}</div>
-            <div><span>Price:</span> $${listing.price}</div>
-            <div><span>Quantity:</span> ${listing.quantity}</div>
-            <a href="add_to_cart?listingId=${listing.listingId}" class="btn add-to-cart-btn">Add to Cart</a>
+        <div class="card mb-3 shadow-sm border-0">
+            <div class="card-body">
+                <div class="row align-items-center text-center">
+                    <div class="col-md-3">
+                        <a href="view_seller?sellerId=${listing.seller.userId}" class="text-dark font-weight-bold">
+                            ${listing.seller.firstName} ${listing.seller.lastName}
+                        </a>
+                    </div>
+                    <div class="col-md-2">
+                        ${listing.condition}
+                    </div>
+                    <div class="col-md-2 text-success">$${listing.price}</div>
+                    <div class="col-md-2">${listing.quantity}</div>
+                    <div class="col-md-3 text-right">
+                        <a href="add_to_cart?listingId=${listing.listingId}" class="btn btn-success">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </c:forEach>
-
-
-<!-- Pagination Section -->
-<div class="pagination">
-
-    <button>&laquo; Previous</button>
-
-
-    <button>1</button>
-    <button>2</button>
-    <button>3</button>
-    <button>4</button>
-    <button>5</button>
-
-
-    <button>Next &raquo;</button>
-</div>
-
-
 </div>
 
 
