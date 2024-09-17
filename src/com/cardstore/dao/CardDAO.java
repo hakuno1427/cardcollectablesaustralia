@@ -67,6 +67,27 @@ public class CardDAO extends JpaDAO<Card> implements GenericDAO<Card> {
 	    query.setParameter("keyword", keyword);
 	    return query.getSingleResult();
 	}
+	
+	public List<Card> findBestSellers(int limit){
+		 EntityManager entityManager = getEntityManager();
+		 
+		 String jpql = "SELECT DISTINCT c " +
+                 "FROM orderItem oi " +
+                 "JOIN listing l ON oi.listingId = l.listingId " +
+                 "JOIN card c ON l.serialNumber = c.serialNumber " +
+                 "GROUP BY c.serialNumber, c.cardName " +
+                 "ORDER BY SUM(oi.quantity) DESC";
+		 
+		 TypedQuery<Card> query = entityManager.createQuery(jpql, Card.class);
+		    query.setMaxResults(limit);
+		    List<Card> result = query.getResultList();
+		    
+		    for (Card card : result) {
+		        System.out.println("Card: " + card.getSerialNumber() + ", Name: " + card.getCardName());
+		    }
+		    
+		    return result;
+	}
 
 	@Override
 	public long count() {

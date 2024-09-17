@@ -70,6 +70,7 @@ public class ListingDAO extends JpaDAO<Listing> implements GenericDAO<Listing> {
 				entityManager.close();
 			}
 		}
+		logger.info("NEW LISTINGS QUERY EXECUTED");
 		return listNewListings;
 	}
 	

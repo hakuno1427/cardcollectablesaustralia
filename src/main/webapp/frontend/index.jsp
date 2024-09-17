@@ -1,122 +1,189 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
+
+<head>
 <jsp:include page="page_head.jsp">
-    <jsp:param name="pageTitle" value="CCA - New Listings" />
+	<jsp:param name="pageTitle" value="CCA - Index" />
 </jsp:include>
+
 <style>
-    /* Page container*/
-    .page-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-        position: relative;
-    }
+/* Page container */
+.page-container {
+	max-width: 1500px;
+	margin: 0 auto;
+	padding: 0 20px;
+	position: relative;
+}
 
-    /* Banner container */
-    .banner-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        position: sticky;
-        top: 100px;
-    }
+/* Top banner style */
+.top-banner {
+	width: 100%;
+	height: 300px;
+	overflow: hidden;
+}
 
-    /* left banner */
-    .left-ad {
-        margin-right: 20px;
-    }
+/* New listings container */
+.new-listings-container {
+	margin: 0 20px;
+}
 
-    /* right banner */
-    .right-ad {
-        margin-left: 20px;
-    }
+/* Card styles */
+.listing-item {
+	margin-bottom: 15px;
+}
 
-    /* Banner image */
-    .ad-img {
-        width: 120px;
-        height: 600px;
-        object-fit: cover;
-    }
+.card-img-top {
+	max-width: 100%;
+	height: auto;
+}
 
-    /* New listings container */
-    .new-listings-container {
-        flex: 1;
-        margin: 0 20px;
-    }
+/* Ad banner */
+.ad-banner {
+	width: 100%;
+	height: auto;
+	margin-bottom: 20px;
+}
 
-    /* Card styles */
-    .listing-item {
-        margin-bottom: 15px;
-    }
-
-    .card-img-top {
-        max-width: 100%;
-        height: auto;
-    }
-
+.new-listings-section {
+	margin-bottom: 40px;
+}
 </style>
+</head>
+
+
 <body>
+	<div class="page-container">
+		<!-- Top banner -->
+		<div class="container-fluid">
+			<div class="top-banner">
+				<img src="https://i.imgur.com/yIqU2Nl.png" alt="Top-banner"
+					style="width: 100%; height: 100%; object-fit: cover;">
+			</div>
+		</div>
 
-    <div class="page-container">
-        
-        <!-- Left banner -->
-        <div class="banner-container left-ad">
-            <a href="https://github.com/hakuno1427/cardcollectablesaustralia" target="_blank">
-                <img src="https://picsum.photos/120/300" alt="Ad 1" class="ad-img">
-            </a>
-        </div>
+		<!-- Header Section -->
+		<jsp:directive.include file="header.jsp" />
 
-<!-- New Listings Section -->
-        <div class="new-listings-container">
-            <!-- Header Section -->
-            <jsp:directive.include file="header.jsp" />
+		<div class="container-fluid">
+			<div class="row">
+				<!-- Left Side: New Listings and Best sellers section -->
+				<div class="col-lg-9 col-md-12">
+					<!-- New Listings Section -->
+					<div class="new-listings-section">
+						<h2>New Listings:</h2>
+						<div class="row">
+							<c:forEach items="${listNewListings}" var="listing">
+								<div class="col-md-3 col-sm-6 listing-item">
+									<div class="card">
+										<!-- Card Image Section -->
+										<a href="view_card?serialNumber=${listing.card.serialNumber}"
+											title="View Card ${listing.card.serialNumber}"> <img
+											class="card-img-top img-fluid" src="${listing.card.imageUrl}"
+											alt="${listing.card.cardName}">
+										</a>
+										<div class="card-body">
+											<a href="view_card?serialNumber=${listing.card.serialNumber}"
+												title="View Card ${listing.card.serialNumber}"> <b>${listing.card.cardName}</b>
+											</a>
+											<div>
+												<b>Market Price: $${(listing.card.marketprice !=-1) ?
+													listing.card.marketprice : "N/A" }</b>
+											</div>
+											<div>
+												<b>Price: $${listing.price}</b>
+											</div>
+										</div>
+									</div>
+								</div>
+							</c:forEach>
+						</div>
+					</div>
 
-            <div class="row text-center">
-                <div class="col">
-                    <h2>New Listings:</h2>
-                    <div class="row justify-content-center">
-                        <c:forEach items="${listNewListings}" var="listing">
-                            <div class="col-md-3 col-sm-6 listing-item">
-                                <div class="card">
-                                    <!-- Card Image Section -->
-                                    <a href="view_card?serialNumber=${listing.card.serialNumber}" title="View Listing ${listing.listingId}">
-                                        <img class="card-img-top img-fluid" src="${listing.card.imageUrl}" alt="${listing.card.cardName}">
-                                    </a>
-                                    
-                                    <div class="card-body">
-                                        <a href="view_card?id=${listing.card.serialNumber}" title="View Listing ${listing.listingId}">
-                                            <b>${listing.card.cardName}</b>
-                                        </a>
-                                        <div>
-                                            <b>Market Price: $${(listing.card.marketprice !=-1) ? listing.card.marketprice : "N/A" }</b>
-                                        </div>
-                                        <div>
-                                            <b>Price: $${listing.price}</b>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:forEach>
-                    </div>
-                </div>
-            </div>
+					<!-- Best Sellers Section -->
+					<div class="best-sellers-section">
+						<h2>Best Sellers:</h2>
 
-            <!-- Footer Section -->
-            <jsp:directive.include file="footer.jsp" />
-        </div>
+  <!--   CAN'T WORK, REPLACED WITH NEW LISTINGS FOR TESTING LAYOUT
+						<div class="row">
+							<c:forEach items="${bestSellers}" var="bestSellerCard">
+								<div class="col-md-3 col-sm-6 listing-item">
+									<div class="card">
 
-        <!-- Right banner -->
-        <div class="banner-container right-ad">
-            <a href="https://github.com/hakuno1427/cardcollectablesaustralia" target="_blank">
-                <img src="https://picsum.photos/120/300" alt="Ad 2" class="ad-img">
-            </a>
-        </div>
+										<a
+											href="view_card?serialNumber=${bestSellerCard.serialNumber}"
+											title="View Card ${bestSellerCard.serialNumber}"> <img
+											class="card-img-top img-fluid"
+											src="${bestSellerCard.imageUrl}"
+											alt="${bestSellerCard.cardName}">
+										</a>
+										<div class="card-body">
+											<a
+												href="view_card?serialNumber=${bestSellerCard.serialNumber}"
+												title="View Card ${bestSellerCard.serialNumber}"> <b>${bestSellerCard.cardName}</b>
+											</a>
+											<div>
+												<b>Market Price: $${(bestSellerCard.marketprice !=-1) ?
+													bestSellerCard.marketprice : "N/A"}</b>
+											</div>
+										</div>
+									</div>
+								</div>
+							</c:forEach>
 
-    </div>
+						</div>
+-->
+
+						<div class="row">
+							<c:forEach items="${listNewListings}" var="listing">
+								<div class="col-md-3 col-sm-6 listing-item">
+									<div class="card">
+										<!-- Card Image Section -->
+										<a href="view_card?serialNumber=${listing.card.serialNumber}"
+											title="View Card ${listing.card.serialNumber}"> <img
+											class="card-img-top img-fluid" src="${listing.card.imageUrl}"
+											alt="${listing.card.cardName}">
+										</a>
+										<div class="card-body">
+											<a href="view_card?serialNumber=${listing.card.serialNumber}"
+												title="View Card ${listing.card.serialNumber}"> <b>${listing.card.cardName}</b>
+											</a>
+											<div>
+												<b>Market Price: $${(listing.card.marketprice !=-1) ?
+													listing.card.marketprice : "N/A" }</b>
+											</div>
+											<div>
+												<b>Price: $${listing.price}</b>
+											</div>
+										</div>
+									</div>
+								</div>
+							</c:forEach>
+						</div>
+
+					</div>
+					</div>
+
+
+					<!-- Right Side: Ad Banners -->
+					<div class="col-lg-3 col-md-12">
+						<!-- First Ad Banner -->
+						<div class="ad-banner">
+							<img src="https://i.imgur.com/vJGXodh.png" alt="First Ad"
+								style="width: 100%; height: auto;">
+						</div>
+						<!-- Second Ad Banner -->
+						<div class="ad-banner">
+							<img src="https://i.imgur.com/xWzzMZD.png" alt="Second Ad"
+								style="width: 100%; height: auto;">
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Footer Section -->
+			<jsp:directive.include file="footer.jsp" />
+		</div>
 </body>
 </html>
