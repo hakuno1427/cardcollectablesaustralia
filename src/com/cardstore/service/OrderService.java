@@ -122,6 +122,10 @@ public class OrderService {
 			order.setSellerId(listing.getSeller().getUserId());
 		}
 		order.setOrderItems(orderItems);
+		
+		for (OrderItem orderItem: orderItems) {
+			orderItemDao.create(orderItem);
+		}
 
 		float total = (Float) session.getAttribute("total");
 

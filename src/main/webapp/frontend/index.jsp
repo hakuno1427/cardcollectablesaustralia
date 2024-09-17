@@ -58,7 +58,7 @@
 		<!-- Top banner -->
 		<div class="container-fluid">
 			<div class="top-banner">
-				<img src="https://i.imgur.com/yIqU2Nl.png" alt="Top-banner"
+				<img src="https://i.imgur.com/fccHfPo.png" alt="Top-banner"
 					style="width: 100%; height: 100%; object-fit: cover;">
 			</div>
 		</div>
