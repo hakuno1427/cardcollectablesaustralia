@@ -9,6 +9,13 @@
 <jsp:include page="page_head.jsp">
     <jsp:param name="pageTitle" value="Card Catalogue" />
 </jsp:include>
+<head>
+    <script type="text/javascript">
+        function confirmDelete() {
+            return confirm("Are you sure you want to delete this card?");
+        }
+    </script>
+</head>
 <body>
     <div class="container">
         <jsp:directive.include file="header.jsp" />
@@ -65,8 +72,8 @@
                                 <c:if test="${auth:hasPermission(role, 'MANAGE_CARD_CARTALOGUE')}">                
                                 <td>
                                     <a href="card_update?id=${card.serialNumber}" class="btn btn-warning btn-sm">Update</a>
-                                    <a href="card_delete?id=${card.serialNumber}" class="btn btn-danger btn-sm">Delete</a>
-                                </td>
+                                    <a href="card_delete?id=${card.serialNumber}" class="btn btn-danger btn-sm" onclick="return confirmDelete();">Delete</a>
+                        </td>
                                 </c:if>
                             </tr>
                         </c:forEach>
