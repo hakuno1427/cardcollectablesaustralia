@@ -83,15 +83,13 @@ public class ListingDAO extends JpaDAO<Listing> implements GenericDAO<Listing> {
 			return null;
 		}
 	
-	public List<Listing> listSellerListing(Integer sellerId, int start, int pageSize){
+	public List<Listing> listSellerListing(Integer sellerId){
 		EntityManager entityManager = getEntityManager();
 		List<Listing> sellerListing = new ArrayList<>();
 
 		try {
 			Query query = entityManager.createNamedQuery("Listing.listSellerListings", Listing.class);
 			query.setParameter("sellerId", sellerId);
-			query.setFirstResult(start);
-			query.setMaxResults(pageSize);
 			List<Listing> resultList = query.getResultList();
 			logger.info("Successfully retrieved listings for seller ID: "+sellerId);
 			return resultList;
@@ -106,7 +104,6 @@ public class ListingDAO extends JpaDAO<Listing> implements GenericDAO<Listing> {
 				entityManager.close();
 			}
 		}
-
 	}
 	
 	public long listingCountBySeller(Integer sellerId) {
