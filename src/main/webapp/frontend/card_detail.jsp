@@ -17,8 +17,12 @@
 
 .card-detail {
 	display: flex;
-	justify-content: space-between;
+	flex-direction: row;
 	align-items: flex-start;
+	border: 1px dashed #ccc;
+	padding: 15px;
+	border-radius: 10px;
+	width: 100%;
 }
 
 .card-img {
@@ -47,6 +51,10 @@
 	line-height: 1.6;
 	color: #555;
 	margin: 10px 0;
+	width: 100%;
+	border-bottom: 1px solid #ccc; /* 添加分隔线 */
+	margin-bottom: 10px;
+	padding-bottom: 10px;
 }
 
 .market-price {
@@ -54,6 +62,10 @@
 	font-weight: bold;
 	font-size: 1.3em;
 	color: #d35400;
+	width: 100%;
+	border-bottom: 1px solid #ccc; /* 添加分隔线 */
+	margin-bottom: 10px;
+	padding-bottom: 10px;
 }
 
 .listings-info {
@@ -101,6 +113,32 @@
 .add-to-cart-btn:hover {
 	background-color: #218838;
 }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    margin: 0 4px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    background-color: #0056b3;
+}
+
+.pagination button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+
 </style>
 
 <body>
@@ -108,63 +146,61 @@
 		<jsp:directive.include file="header.jsp" />
 
 		<div class="card-detail">
-			<div>
-				<img class="card-img" src="${card.imageUrl}" alt="${card.cardName}">
-			</div>
-			<div class="card-info">
-				<h2>${card.cardName}</h2>
-				<div class="card-description">
-					<p>
-						<strong>Game:</strong> ${card.game}
-					</p>
-				</div>
-				<div class="card-description">
-					<p>
-						<strong>Description:</strong> ${card.description}
-					</p>
-				</div>
-				<div class="market-price"> Market Price: $${card.marketprice}</div>
-
-				<!-- Listing Info -->
-				<div class="listings-info">
-					<h4>Available Listings:</h4>
-					<c:choose>
-						<c:when test="${fn:length(card.listings) == 0}">
-							<p class="text-danger">Out of Stock</p>
-						</c:when>
-						<c:otherwise>
-							<c:forEach items="${card.listings}" var="listing">
-								<div class="listing-item">
-									<div>
-										<span>Seller:</span> <a
-											href="view_seller?userId=${listing.seller.userId}">
-											${listing.seller.firstName} ${listing.seller.lastName} </a>
-									</div>
-									<div>
-										<span>Condition:</span> ${listing.condition}
-									</div>
-									<div>
-										<span>Price:</span> $${listing.price}
-									</div>
-									<div>
-										<span>Quantity:</span> ${listing.quantity}
-									</div>
- 							        <a href="add_to_cart?listingId=${listing.listingId}" class="btn add-to-cart-btn">Add to Cart</a>
-								</div>
-							</c:forEach>
-						</c:otherwise>
-					</c:choose>
-				</div>
-			</div>
+	<div>
+		<img class="card-img" src="${card.imageUrl}" alt="${card.cardName}">
+	</div>
+	<div class="card-info">
+		<h2>${card.cardName}</h2>
+		<div class="card-description">
+			<p><strong>Game:</strong> ${card.game}</p>
+			<p><strong>Description:</strong> ${card.description}</p>
 		</div>
+		<div class="market-price">Market Price: $${card.marketprice}</div>
+	</div>
+</div>
+
+<div class="listings-info">
+    <h4>Available Listings:</h4>
+    <c:forEach items="${card.listings}" var="listing">
+        <div class="listing-item">
+            <div><span>Seller:</span> <a href="view_seller?userId=${listing.seller.userId}">
+                ${listing.seller.firstName} ${listing.seller.lastName}</a></div>
+            <div><span>Condition:</span> ${listing.condition}</div>
+            <div><span>Price:</span> $${listing.price}</div>
+            <div><span>Quantity:</span> ${listing.quantity}</div>
+            <a href="add_to_cart?listingId=${listing.listingId}" class="btn add-to-cart-btn">Add to Cart</a>
+        </div>
+    </c:forEach>
+
+
+<!-- Pagination Section -->
+<div class="pagination">
+
+    <button>&laquo; Previous</button>
+
+
+    <button>1</button>
+    <button>2</button>
+    <button>3</button>
+    <button>4</button>
+    <button>5</button>
+
+
+    <button>Next &raquo;</button>
+</div>
+
+
+</div>
+
+
+
+
+
+</div>
+
 
 		<jsp:directive.include file="footer.jsp" />
 	</div>
-	
-	<script type="text/javascript">
-	 function addToCart(listingId) {			
-				window.location = 'add_to_cart?listingId=' + listingId;							
-		});
-	</script>
+
 </body>
 </html>

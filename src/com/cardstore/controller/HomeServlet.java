@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.cardstore.dao.ListingDAO;
 import com.cardstore.entity.Listing;
+import com.cardstore.service.CardServices;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -29,6 +30,9 @@ public class HomeServlet extends HttpServlet {
 		List<Listing> listNewListings = listingDAO.listNewListingsWithCardDetails();
 
 		request.setAttribute("listNewListings", listNewListings);
+		
+		CardServices cardServices = new CardServices(request, response);
+		cardServices.listBestSellers();
 
 		String homepage = "frontend/index.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(homepage);
