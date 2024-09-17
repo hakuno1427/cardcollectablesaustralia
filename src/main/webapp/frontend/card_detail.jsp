@@ -168,7 +168,7 @@
             <div><span>Condition:</span> ${listing.condition}</div>
             <div><span>Price:</span> $${listing.price}</div>
             <div><span>Quantity:</span> ${listing.quantity}</div>
-            <button class="add-to-cart-btn">Add to Cart</button>
+            <a href="add_to_cart?listingId=${listing.listingId}" class="btn add-to-cart-btn">Add to Cart</a>
         </div>
     </c:forEach>
 
@@ -201,6 +201,6 @@
 
 		<jsp:directive.include file="footer.jsp" />
 	</div>
-	
+
 </body>
 </html>

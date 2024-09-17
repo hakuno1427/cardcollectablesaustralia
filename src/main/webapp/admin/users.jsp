@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <jsp:include page="page_head.jsp">
-    <jsp:param name="pageTitle" value="Card Catalogue" />
+    <jsp:param name="pageTitle" value="User Management" />
 </jsp:include>
 <body>
     <div class="container">
@@ -31,13 +31,14 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>User Id</th>
+                            <th>User ID</th>
                             <th>Email</th>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Phone</th>
                             <th>Role</th>
                             <th>Status</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,7 +52,7 @@
                                 <td>${listUser.role.name}</td>
                                 <td>${listUser.enabled == 1 ? "Active" : "Banned"}</td>
                                 <td>
-                                    <a href="user_update?id=${user.userId}" class="btn btn-warning btn-sm">Update</a>
+                                    <a href="user_update?id=${listUser.userId}" class="btn btn-warning btn-sm">Update</a>
                                     
 									<c:if test="${listUser.enabled == 1}">
                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmBanModal-${listUser.userId}">Ban</button>

@@ -110,7 +110,7 @@
 							<c:forEach items="${bestSellers}" var="bestSellerCard">
 								<div class="col-md-3 col-sm-6 listing-item">
 									<div class="card">
-										
+
 										<a
 											href="view_card?serialNumber=${bestSellerCard.serialNumber}"
 											title="View Card ${bestSellerCard.serialNumber}"> <img

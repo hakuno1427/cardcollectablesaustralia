@@ -4,11 +4,19 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
 <!DOCTYPE html>
 <html>
 <jsp:include page="page_head.jsp">
     <jsp:param name="pageTitle" value="Review Management" />
 </jsp:include>
+<head>
+    <script type="text/javascript">
+        function confirmAction(actionType) {
+            return confirm("Hello, Admin! Are you sure you want to " + actionType + " this review?");
+        }
+    </script>
+</head>
 <body>
     <div class="container">
         <jsp:directive.include file="header.jsp" />
@@ -50,7 +58,21 @@
                                 <td>${review.comment}</td>
                                 <td>${review.reviewDate}</td>
                                 <td>
-                                    <a href="review_hide?id=${review.reviewId}" class="btn btn-danger btn-sm">Hide</a>
+                                 	<c:if test="${review.hidden eq '0'}">
+										<!-- Hide Review Form with Confirmation -->
+										<form action="/admin/review_hide" method="post" style="display:inline;">
+										    <input type="hidden" name="id" value="${review.reviewId}" />
+										    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirmAction('hide');">Hide</button>
+										</form>
+									</c:if>
+									
+									<!-- Unhide Review Form with Confirmation -->
+									<c:if test="${review.hidden eq '1'}">
+										<form action="/admin/review_unhide" method="post" style="display:inline;">
+										    <input type="hidden" name="id" value="${review.reviewId}" />
+										    <button type="submit" class="btn btn-warning btn-sm" onclick="return confirmAction('unhide');">Unhide</button>
+										</form>
+									</c:if>
                                 </td>
                             </tr>
                         </c:forEach>

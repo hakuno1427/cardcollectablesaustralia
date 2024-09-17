@@ -25,18 +25,20 @@ public class ViewOrderServlet extends HttpServlet {
 	private OrderDAO orderDAO;
 	private OrderItemDAO orderItemDAO;
 
-    /**
-     * Default constructor. 
-     */
-    public ViewOrderServlet() {
-        this.orderDAO = new OrderDAO();
-        this.orderItemDAO = new OrderItemDAO();
-    }
+	/**
+	 * Default constructor.
+	 */
+	public ViewOrderServlet() {
+		this.orderDAO = new OrderDAO();
+		this.orderItemDAO = new OrderItemDAO();
+	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		User loggedInUser = (User) session.getAttribute("user");
 
@@ -44,18 +46,16 @@ public class ViewOrderServlet extends HttpServlet {
 			response.sendRedirect("login");
 			return;
 		}
-		
-		
 
 		int buyerId = loggedInUser.getUserId();
 		List<Order> userOrders = orderDAO.findOrdersByBuyer(buyerId);
-		
-		 for (Order order : userOrders) {
-	            List<OrderItem> orderItems = orderItemDAO.findWithNamedQuery("OrderItem.findByOrderId", "orderId", order.getOrderId());
-	            order.setOrderItems(orderItems);
-	            
-	            
-	        }
+
+		for (Order order : userOrders) {
+			List<OrderItem> orderItems = orderItemDAO.findWithNamedQuery("OrderItem.findByOrderId", "orderId",
+					order.getOrderId());
+			order.setOrderItems(orderItems);
+
+		}
 
 		request.setAttribute("orders", userOrders);
 		request.getRequestDispatcher("/frontend/view_orders.jsp").forward(request, response);

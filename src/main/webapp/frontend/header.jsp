@@ -66,7 +66,7 @@
 									<a class="dropdown-item" href="listings">My Listing</a>
 								</c:if>
 								<c:if test="${auth:hasPermission(role, 'PROCEED_ORDER')}">
-									<a class="dropdown-item" href="proceed_orders">Pending
+									<a class="dropdown-item" href="view_seller_orders">Pending
 										Orders</a>
 								</c:if>
 								<c:if test="${auth:hasPermission(role, 'REVIEW_SELLER')}">
@@ -75,8 +75,9 @@
 								</c:if>
 								<a class="dropdown-item" href="logout">Logout</a>
 							</div></li>
+                        <li class="nav-item"><a href="my_messages" class="nav-link">Messages</a></li>
 
-						<c:if test="${auth:hasPermission(role, 'MANAGE_MY_ORDERS')}">
+                        <c:if test="${auth:hasPermission(role, 'MANAGE_MY_ORDERS')}">
 							<li class="nav-item"><a href="cart" class="nav-link"><i
 									class="bi bi-cart"></i></a></li>
 						</c:if>
