@@ -32,7 +32,6 @@ public class HomeServlet extends HttpServlet {
 		request.setAttribute("listNewListings", listNewListings);
 		
 		CardServices cardServices = new CardServices(request, response);
-		cardServices.listBestSellers();
 
 		String homepage = "frontend/index.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(homepage);
