@@ -45,7 +45,7 @@ public class OrderDAO extends JpaDAO<Order> implements GenericDAO<Order> {
 		return super.findWithNamedQuery("Order.findByBuyerId","buyerId", buyerId);
 	}
 	
-	public List<Order> findOrdersBySeller(int buyerId){
-		return super.findWithNamedQuery("Order.findByBuyerId","buyerId", buyerId);
+	public List<Order> findOrdersBySeller(int sellerId){
+		return super.findWithNamedQuery("Order.findBySellerId","sellerId", sellerId);
 	}
 }

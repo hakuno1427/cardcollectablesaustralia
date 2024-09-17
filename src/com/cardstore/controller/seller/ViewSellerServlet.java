@@ -32,8 +32,4 @@ public class ViewSellerServlet extends HttpServlet{
 		SellerService sellerService = new SellerService(req, resp);
 		sellerService.viewSellerProfile();
 	}
-	
-	
-	
-
 }
