@@ -134,8 +134,6 @@
 
 
 
-
-
 						<!-- Order details (status, price, shipping, etc.) -->
 						<div class="order-details">
 							<div class="order-header">

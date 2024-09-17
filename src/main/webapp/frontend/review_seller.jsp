@@ -32,8 +32,10 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
+<!--                         
                             <th>Review ID</th>
                             <th>Buyer ID</th>
+                             -->
                             <th>Comment</th>
                             <th>Rating</th>
                             <th>Review Date</th>
@@ -42,8 +44,10 @@
                     <tbody>
                         <c:forEach items="${reviews}" var="review">
                             <tr>
+<%--                             
                                 <td>${review.reviewId}</td>
                                 <td>${review.buyerId}</td>
+                                 --%>
                                 <td>${review.comment}</td>
                                 <td>${review.rating}</td>
                                 <td>${review.reviewDate}</td>

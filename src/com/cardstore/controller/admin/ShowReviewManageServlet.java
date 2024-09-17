@@ -25,9 +25,9 @@ public class ShowReviewManageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		AdminReviewServices reviewServices = new AdminReviewServices(request, response);
+		AdminReviewServices adminReviewServices = new AdminReviewServices(request, response);
 
-		reviewServices.listReviews();
+		adminReviewServices.listReviews();
 
 		String reviewManagePage = "/admin/review_manage.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(reviewManagePage);

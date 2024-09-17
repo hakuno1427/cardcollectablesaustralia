@@ -33,10 +33,10 @@
 
             <!-- Links shown when user is logged in -->
             <c:if test="${user != null}">
-                <li class="nav-item nav-link" style="user-select: none;">Welcome, administrator ${user.firstName}</a></li>
+                <li class="nav-item"><a href="/admin/" class="nav-link">Welcome, administrator ${user.firstName}</a></li>
                 
                 <c:if test="${auth:hasPermission(role, 'MANAGE_USER')}">
-                	<li class="nav-item"><a href="/admin/catalogue" class="nav-link">Manage User</a></li>
+                	<li class="nav-item"><a href="/admin/users" class="nav-link">User Management</a></li>
                 </c:if>
                 <c:if test="${auth:hasPermission(role, 'VIEW_CARD_CARTALOGUE')}">
                 	<li class="nav-item"><a href="/admin/catalogue" class="nav-link">Catalogue</a></li>

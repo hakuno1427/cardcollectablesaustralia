@@ -197,9 +197,8 @@
 
 </div>
 
-
 		<jsp:directive.include file="footer.jsp" />
 	</div>
-	
+
 </body>
 </html>

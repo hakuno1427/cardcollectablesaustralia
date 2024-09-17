@@ -58,7 +58,7 @@
 		<!-- Top banner -->
 		<div class="container-fluid">
 			<div class="top-banner">
-				<img src="https://i.imgur.com/yIqU2Nl.png" alt="Top-banner"
+				<img src="https://i.imgur.com/fccHfPo.png" alt="Top-banner"
 					style="width: 100%; height: 100%; object-fit: cover;">
 			</div>
 		</div>
@@ -110,7 +110,7 @@
 							<c:forEach items="${bestSellers}" var="bestSellerCard">
 								<div class="col-md-3 col-sm-6 listing-item">
 									<div class="card">
-										
+
 										<a
 											href="view_card?serialNumber=${bestSellerCard.serialNumber}"
 											title="View Card ${bestSellerCard.serialNumber}"> <img
