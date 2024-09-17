@@ -163,7 +163,7 @@
     <h4>Available Listings:</h4>
     <c:forEach items="${card.listings}" var="listing">
         <div class="listing-item">
-            <div><span>Seller:</span> <a href="view_seller?userId=${listing.seller.userId}">
+            <div><span>Seller:</span> <a href="view_seller?sellerId=${listing.seller.userId}">
                 ${listing.seller.firstName} ${listing.seller.lastName}</a></div>
             <div><span>Condition:</span> ${listing.condition}</div>
             <div><span>Price:</span> $${listing.price}</div>
@@ -197,7 +197,6 @@
 
 
 </div>
-
 
 		<jsp:directive.include file="footer.jsp" />
 	</div>
