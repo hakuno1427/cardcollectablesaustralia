@@ -220,6 +220,15 @@ public class CardServices {
 	    }
 		
 	}
+	
+	public void listBestSellers() throws ServletException, IOException{
+		List<Card> bestSellers = cardDAO.findBestSellers(4);
+		 System.out.println("Best Sellers Query Executed");
+		 for (Card card : bestSellers) {
+		        System.out.println("Card: " + card.getSerialNumber() + ", Name: " + card.getCardName());
+		    }
+		request.setAttribute("bestSellers", bestSellers);
+	}
 
 	private boolean hasPermission(User user, String permissionName) {
 		if (user == null) {
