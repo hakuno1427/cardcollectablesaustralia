@@ -75,6 +75,8 @@ public class OrderService {
 		// update listing quantity
 		for (OrderItem orderItem : savedOrder.getOrderItems()) {
 			Listing listing = orderItem.getListing();
+			orderItem.setOrderId(savedOrder.getOrderId());
+			orderItemDao.create(orderItem);
 			listing.setQuantity(listing.getQuantity() - orderItem.getQuantity());
 
 			if (listing.getQuantity() > 0) {
@@ -123,10 +125,6 @@ public class OrderService {
 		}
 		order.setOrderItems(orderItems);
 		
-		for (OrderItem orderItem: orderItems) {
-			orderItemDao.create(orderItem);
-		}
-
 		float total = (Float) session.getAttribute("total");
 
 		order.setTotalPrice(total);

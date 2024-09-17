@@ -124,7 +124,6 @@ public class Listing implements Serializable {
 		this.seller = seller;
 	}
 	
-
 	@ManyToOne
 	@JoinColumn(name = "serialNumber", nullable = false)
 	public Card getCard() {

@@ -131,8 +131,7 @@
 										${listing.price}</li>
 								</ul>
 								<div class="card-body text-center">
-									<a type="button" href="#" class="btn btn-primary btn-sm">Buy</a>
-									<a type="button" href="#" class="btn btn-success btn-sm">Add
+									<a type="button" href="add_to_cart?listingId=${listing.listingId}" class="btn btn-success btn-sm">Add
 										to Card</a>
 								</div>
 							</div>
