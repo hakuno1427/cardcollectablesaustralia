@@ -85,4 +85,12 @@ public class UserDAO extends JpaDAO<User> implements GenericDAO<User> {
         String sellerRoleName = Role.SELLER_ROLE;
         return super.findWithNamedQuery("User.findByRole", "roleName", sellerRoleName);
     }
+    
+    public List<User> findByRole(String roleName) {
+        if (roleName.equals("ALL")) {
+            return listAll(); 
+        } else {
+            return super.findWithNamedQuery("User.findByRole", "roleName", roleName);
+        }
+    }
 }
