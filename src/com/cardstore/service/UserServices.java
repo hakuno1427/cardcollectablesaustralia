@@ -250,45 +250,51 @@ public class UserServices {
 		request.setAttribute("message", message);
 		requestDispatcher.forward(request, response);
 	}
-
+	
 	public void listUsers() throws ServletException, IOException {
-		User user = (User) request.getSession().getAttribute("user");
+	    User user = (User) request.getSession().getAttribute("user");
 
-		if (!this.hasPermission(user, MANAGE_USER_PERMISSION)) {
-			response.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have permission to access this page.");
-			return;
-		}
+	    if (!this.hasPermission(user, MANAGE_USER_PERMISSION)) {
+	        response.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have permission to access this page.");
+	        return;
+	    }
 
-		int page = 1;
-		int pageSize = 25;
+	    int page = 1;
+	    int pageSize = 25;
 
-		if (request.getParameter("page") != null) {
-			page = Integer.parseInt(request.getParameter("page"));
-		}
+	    if (request.getParameter("page") != null) {
+	        page = Integer.parseInt(request.getParameter("page"));
+	    }
+	    
+	    String roleFilter = request.getParameter("roleFilter");
+	    int start = (page - 1) * pageSize;
+	    
+	    List<User> listUsers = (roleFilter != null) ? userDAO.findByRole(roleFilter) : userDAO.listPaged(start, pageSize);
+	       
+	    
+	    long totalUsers = listUsers.size();
+	    
+	    int totalPages = (int) Math.ceil((double) totalUsers / pageSize);
+	    int pageRange = 10;
+	    int startPage = Math.max(1, page - pageRange / 2);
+	    int endPage = Math.min(totalPages, startPage + pageRange - 1);
 
-		int start = (page - 1) * pageSize;
-		List<User> listUsers = userDAO.listPaged(start, pageSize);
-		long totalUsers = userDAO.count();
-		int totalPages = (int) Math.ceil((double) totalUsers / pageSize);
-		int pageRange = 10;
-		int startPage = Math.max(1, page - pageRange / 2);
-		int endPage = Math.min(totalPages, startPage + pageRange - 1);
+	    if (endPage - startPage < pageRange) {
+	        startPage = Math.max(1, endPage - pageRange + 1);
+	    }
 
-		if (endPage - startPage < pageRange) {
-			startPage = Math.max(1, endPage - pageRange + 1);
-		}
+	    request.setAttribute("listUsers", listUsers);
+	    request.setAttribute("currentPage", page);
+	    request.setAttribute("totalPages", totalPages);
+	    request.setAttribute("startPage", startPage);
+	    request.setAttribute("endPage", endPage);
+	    request.setAttribute("roleFilter", roleFilter);
 
-		request.setAttribute("listUsers", listUsers);
-		request.setAttribute("currentPage", page);
-		request.setAttribute("totalPages", totalPages);
-		request.setAttribute("startPage", startPage);
-		request.setAttribute("endPage", endPage);
-
-		String listPage = "users.jsp";
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(listPage);
-		requestDispatcher.forward(request, response);
+	    String listPage = "users.jsp";
+	    RequestDispatcher requestDispatcher = request.getRequestDispatcher(listPage);
+	    requestDispatcher.forward(request, response);
 	}
-
+	
 	public void showAdminUpdateUserForm() throws ServletException, IOException {
 		User user = (User) request.getSession().getAttribute("user");
 

@@ -24,6 +24,22 @@
 			</div>
 		</c:if>
 		
+
+        <!-- Filter by Role -->
+        <div class="row">
+            <div class="col-md-4 offset-md-4 text-center">
+                <form method="get" action="users">
+				    <select name="roleFilter">
+				        <option value="ALL">All Users</option>
+				        <option <c:if test="${roleFilter eq 'admin'}"> selected </c:if> value="admin">Admin</option>
+				        <option <c:if test="${roleFilter eq 'buyer'}"> selected </c:if> value="buyer">Buyer</option>
+				        <option <c:if test="${roleFilter eq 'seller'}"> selected </c:if>value="seller">Seller</option>
+				    </select>
+				    <button type="submit" class="btn btn-primary mt-2">Filter</button>
+				</form>
+            </div>
+        </div>
+
         <div class="row">&nbsp;</div>
         
         <div class="row">
