@@ -205,7 +205,50 @@ public class CardServices {
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(resultPage);
 		requestDispatcher.forward(request, response);
 	}
+		
+	public void searchCatalogue() throws ServletException, IOException {
+	    String keyword = request.getParameter("keyword");
+	    int page = 1;
+	    int pageSize = 10;
 
+	    if (request.getParameter("page") != null) {
+	        page = Integer.parseInt(request.getParameter("page"));
+	    }
+	    int start = (page - 1) * pageSize;
+
+	    List<Card> result = null;
+	    int totalPages = 0; 
+
+	    if (keyword == null || keyword.trim().isEmpty()) {
+	        result = cardDAO.listPaged(start, pageSize); 
+	        long totalCards = cardDAO.count();
+	        totalPages = (int) Math.ceil((double) totalCards / pageSize);
+	        
+	    } else {
+	        result = cardDAO.searchPaged(keyword, start, pageSize); 
+	        long totalResults = cardDAO.countSearchResults(keyword); 
+	        totalPages = (int) Math.ceil((double) totalResults / pageSize);     
+	    }
+	    
+	    int pageRange = 10;
+		int startPage = Math.max(1, page - pageRange / 2);
+		int endPage = Math.min(totalPages, startPage + pageRange - 1);
+		if (endPage - startPage < pageRange) {
+			startPage = Math.max(1, endPage - pageRange + 1);
+		}
+	    request.setAttribute("result", result);  
+	    request.setAttribute("keyword", keyword);
+	    request.setAttribute("currentPage", page);
+	    request.setAttribute("totalPages", totalPages);
+		request.setAttribute("startPage", startPage);
+		request.setAttribute("endPage", endPage);
+
+	    String resultPage = "/admin/card_result.jsp"; 
+	    RequestDispatcher requestDispatcher = request.getRequestDispatcher(resultPage);
+	    requestDispatcher.forward(request, response);
+	}
+
+	
 	public void viewCardDetail() throws ServletException, IOException {
 		String serialNumber = request.getParameter("serialNumber");
 		Card card = cardDAO.get(serialNumber);
