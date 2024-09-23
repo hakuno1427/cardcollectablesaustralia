@@ -19,7 +19,6 @@
     </button>
 
     <div class="collapse navbar-collapse" id="topNavbar">
-
         <ul class="navbar-nav">
             <!-- Links shown when user is not logged in -->
             <c:if test="${user == null}">
