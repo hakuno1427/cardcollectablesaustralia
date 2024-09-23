@@ -270,6 +270,7 @@ public class UserServices {
 	    int start = (page - 1) * pageSize;
 	    
 	    List<User> listUsers = (roleFilter != null) ? userDAO.findByRole(roleFilter) : userDAO.listPaged(start, pageSize);
+
 	    
 	    long totalUsers = listUsers.size();
 	    
@@ -287,6 +288,9 @@ public class UserServices {
 	    request.setAttribute("totalPages", totalPages);
 	    request.setAttribute("startPage", startPage);
 	    request.setAttribute("endPage", endPage);
+
+	    request.setAttribute("roleFilter", roleFilter);
+
 
 	    String listPage = "users.jsp";
 	    RequestDispatcher requestDispatcher = request.getRequestDispatcher(listPage);

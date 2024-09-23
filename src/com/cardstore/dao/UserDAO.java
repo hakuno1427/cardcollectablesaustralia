@@ -1,5 +1,6 @@
 package com.cardstore.dao;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,11 +87,36 @@ public class UserDAO extends JpaDAO<User> implements GenericDAO<User> {
         return super.findWithNamedQuery("User.findByRole", "roleName", sellerRoleName);
     }
     
+
+    public List<User> findBuyers() {
+        String buyerRoleName = Role.BUYER_ROLE;
+        return super.findWithNamedQuery("User.findByRole", "roleName", buyerRoleName);
+    }
+
+    public List<User> findAdmins() {
+        String adminRoleName = Role.ADMIN_ROLE;
+        return super.findWithNamedQuery("User.findByRole", "roleName", adminRoleName);
+    }
+
+    public List<User> findByRole(String roleName) {
+        if (roleName.equals("ALL")) {
+            return listAll(); 
+        } else if (roleName.equals(Role.SELLER_ROLE)) {
+            return findSellers();
+        } else if (roleName.equals(Role.BUYER_ROLE)) {
+            return findBuyers();
+        } else if (roleName.equals(Role.ADMIN_ROLE)) {
+            return findAdmins();
+        } else {
+            System.out.println("Warning: Unknown role: " + roleName);
+            return Collections.emptyList();
+
     public List<User> findByRole(String roleName) {
         if (roleName.equals("ALL")) {
             return listAll(); 
         } else {
             return super.findWithNamedQuery("User.findByRole", "roleName", roleName);
+
         }
     }
 }
