@@ -28,7 +28,7 @@
                 
                 <!-- Search Form -->
                 <div class="d-flex justify-content-center">
-                    <form action="searchCatalogue" method="get" class="form-inline">
+                    <form action="searchCatalogue" method="get" class="form-inline" style="margin-bottom: 20px;">
                         <input type="search" name="keyword" class="form-control mr-sm-2 mt-1" placeholder="Enter keyword here..." value="${param.keyword}" />
                         <input type="submit" value="Search" class="btn btn-outline-success mt-1" />
                     </form>
