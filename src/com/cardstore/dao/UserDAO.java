@@ -110,13 +110,8 @@ public class UserDAO extends JpaDAO<User> implements GenericDAO<User> {
         } else {
             System.out.println("Warning: Unknown role: " + roleName);
             return Collections.emptyList();
-
-    public List<User> findByRole(String roleName) {
-        if (roleName.equals("ALL")) {
-            return listAll(); 
-        } else {
-            return super.findWithNamedQuery("User.findByRole", "roleName", roleName);
-
         }
     }
+
 }
+       
