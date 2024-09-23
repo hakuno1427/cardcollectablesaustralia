@@ -32,12 +32,6 @@
                 <div class="d-flex justify-content-center">
 	                <form action="searchCatalogue" method="get" class="form-inline">
 
-                
-                <p>Search by card name to quickly find specific cards in the catalogue.</p>
-                <!-- Search Form -->
-                <div class="d-flex justify-content-center">
-	                <form action="catalogue" method="get" class="form-inline">
-
 	                    <input type="search" name="keyword" class="form-control mr-sm-2 mt-1" placeholder="Enter keyword here..." />
 	                    <input type="submit" value="Search" class="btn btn-outline-success mt-1" />
 	                </form>
