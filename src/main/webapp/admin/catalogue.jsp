@@ -26,17 +26,24 @@
                 <h2>Card Catalogue</h2>
                 <p>You can manage the card catalogue here.</p>
                 <hr class="my-4">
+
+                <p>Search by card name to quickly find specific cards in the catalogue.</p>
+                <!-- Search Form -->
+                <div class="d-flex justify-content-center">
+	                <form action="searchCatalogue" method="get" class="form-inline">
+
                 
                 <p>Search by card name to quickly find specific cards in the catalogue.</p>
                 <!-- Search Form -->
                 <div class="d-flex justify-content-center">
 	                <form action="catalogue" method="get" class="form-inline">
+
 	                    <input type="search" name="keyword" class="form-control mr-sm-2 mt-1" placeholder="Enter keyword here..." />
 	                    <input type="submit" value="Search" class="btn btn-outline-success mt-1" />
 	                </form>
                 </div>
                 <hr class="my-4"> 
-                               
+
                 <div>
                 	<p>To add a new card information to the catalogue: </p>
                     <a href="card_add" class="btn btn-primary">Add Card</a>
