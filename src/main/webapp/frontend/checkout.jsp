@@ -76,7 +76,7 @@
 				
 				<div class="card">
 					<div class="card-header">
-						<div class="text-center"><h3>Billing Address</h3></div>		
+						<div class="text-center"><h3>Shipping Address</h3></div>		
 					</div>
 				</div>
 				<div class="card-body">

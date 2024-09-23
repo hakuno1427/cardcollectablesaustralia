@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
+import com.paypal.api.payments.ShippingAddress;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,12 +37,14 @@ public class Order implements Serializable {
 	private Integer sellerId;
 
 	private double totalPrice;
+	private double shippingFee;
+	private double subtotal;
 	private String status;
 	private LocalDate orderDate;
 	private String shippingAddress;
 	private String billingAddress;
 	private String trackingNumber;
-
+	
 	@Transient
 	private List<OrderItem> orderItems;
 
@@ -48,14 +52,15 @@ public class Order implements Serializable {
 
 	}
 
-	public Order(Integer orderId, Integer buyerId, Integer sellerId, List<OrderItem> orderItems, double totalPrice, String status,
-			LocalDate orderDate, String shippingAddress, String billingAddress, String trackingNumber) {
+	public Order(Integer orderId, Integer buyerId, Integer sellerId, double totalPrice, double shippingFee, double subtotal,
+			String status, LocalDate orderDate, String shippingAddress, String billingAddress, String trackingNumber) {
 		super();
 		this.orderId = orderId;
 		this.buyerId = buyerId;
 		this.sellerId = sellerId;
-		this.orderItems = orderItems;
 		this.totalPrice = totalPrice;
+		this.shippingFee = shippingFee;
+		this.subtotal = subtotal;
 		this.status = status;
 		this.orderDate = orderDate;
 		this.shippingAddress = shippingAddress;
@@ -153,6 +158,22 @@ public class Order implements Serializable {
 
 	public void setTrackingNumber(String trackingNumber) {
 		this.trackingNumber = trackingNumber;
+	}
+	
+	public double getShippingFee() {
+		return shippingFee;
+	}
+	
+	public void setShippingFee(double shippingFee) {
+		this.shippingFee = shippingFee;
+	}
+	
+	public double getSubTotal() {
+		return subtotal;
+	}
+	
+	public void setSubTotal(double subtotal) {
+		this.subtotal = subtotal;
 	}
 
 	@Override

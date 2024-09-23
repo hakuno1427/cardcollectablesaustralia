@@ -77,4 +77,9 @@ public class PaymentService implements Serializable {
 				&& Objects.equals(serviceName, other.serviceName);
 	}
 
+	public void reviewPayment() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
