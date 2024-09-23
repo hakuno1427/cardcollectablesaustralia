@@ -8,7 +8,7 @@
 
 <div class="row">
     <a href="${pageContext.request.contextPath}/">
-        <img src="https://i.imgur.com/OQVteNg.png" class="img-fluid" />
+        <img src="https://i.imgur.com/JwkctkT.png" class="img-fluid" />
     </a>
 </div>
 
