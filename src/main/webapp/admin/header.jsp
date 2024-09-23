@@ -19,11 +19,7 @@
     </button>
 
     <div class="collapse navbar-collapse" id="topNavbar">
-        <form action="search" method="get" class="form-inline">
-            <input type="search" name="keyword" class="form-control mr-sm-2 mt-1"
-                   placeholder="keyword" />
-            <input type="submit" value="Search" class="btn btn-outline-success mt-1" />
-        </form>
+
         <ul class="navbar-nav">
             <!-- Links shown when user is not logged in -->
             <c:if test="${user == null}">
