@@ -76,7 +76,7 @@
 			<div class="row align-items-center">
 				<div class="col-md-2 text-center">
 					<img
-						src="https://images.pexels.com/photos/2838511/pexels-photo-2838511.jpeg"
+						src="https://cdn-icons-png.flaticon.com/512/4645/4645949.png"
 						alt="Seller Image" class="seller-img">
 				</div>
 				<div class="col-md-8 text-center">
