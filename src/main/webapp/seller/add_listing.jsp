@@ -6,6 +6,40 @@
 <jsp:include page="../frontend/page_head.jsp">
 	<jsp:param name="pageTitle" value="Add Listing" />
 </jsp:include>
+<style>
+#cardDropdown {
+	max-height: 200px;
+	overflow-y: auto;
+	border: 1px solid #ccc;
+}
+
+.item {
+	padding: 5px;
+}
+
+#inputBox{
+	width: 100%;
+}
+
+#dropdown {
+	width: 100%;
+	border: 1px solid #ccc;
+	display: none; /* Initially hidden */
+	background: white;
+	max-height: 150px;
+	overflow-y: auto;
+	z-index: 1000;
+}
+
+#dropdown div {
+	padding: 10px;
+	cursor: pointer;
+}
+
+#dropdown div:hover {
+	background: #f0f0f0;
+}
+</style>
 <body>
 	<div class="container">
 		<jsp:directive.include file="../frontend/header.jsp" />
@@ -14,14 +48,15 @@
 		<div class="row">
 			<div class="col text-center">
 				<h2>Add New Listing</h2>
+				<p>Add you new listing here.</p>
+				<hr>
 			</div>
 		</div>
-		<div class="row">&nbsp;</div>
 
 		<form action="listings" method="post"
 			style="max-width: 800px; margin: 0 auto;">
 			<%-- <jsp:directive.include file="../common/listing_form.jsp" /> --%>
-			<div class="row mt-5">
+			<div class="row mt-3">
 				<div class="col-md-4" id="cardImageDiv" style="display: none;">
 					<!-- Image Section with Inline CSS -->
 					<img id="cardImage" alt="Placeholder Image"
@@ -30,24 +65,22 @@
 				<div class="col-md-12" id="listingDataDiv">
 					<div class="form-group">
 						<input type="hidden" name="action" value="insert" /> 
-						<label for="name">Serial Number</label>
+						<label
+							for="name">Serial Number</label>
 						<div class="row">
 							<div class="col-sm-10">
-								<select id="serialNumber" name="serialNumber"
-									class="form-control" required>
-									<c:forEach var="card" items="${cards}">
-										<option value="${card.serialNumber}">
-											${card.serialNumber} - ${card.cardName}</option>
-									</c:forEach>
-								</select>
+								<input type="text" class="form-control" id="inputBox"
+									placeholder="Click to see cards" readonly>
+								<div id="dropdown"></div>
 							</div>
 							<div class="col-sm-2 text-right">
-								<input type="button" onclick="fetchCardDetails()"
+								<input type="button" id="getCardDataBtn"
 									class="btn btn-primary" value="Select" />
 							</div>
 						</div>
 					</div>
 					<div id="cardDetailsDiv" style="display: none;">
+						<input type="hidden" name="serialNumber" id="serialNumberInput"  />
 						<div class="form-group">
 							<label for="cardName">CardName</label> <input type="text"
 								id="cardName" name="cardName" class="form-control" readonly />
@@ -102,8 +135,9 @@
 		<jsp:directive.include file="../frontend/footer.jsp" />
 	</div>
 	<script>
-		function fetchCardDetails() {
-			var cardId = document.getElementById("serialNumber").value;
+		function fetchCardDetails(serialNumber) {
+			/* var cardId = document.getElementById("serialNumber").value; */
+			var cardId = serialNumber;
 			var cardDetailsDiv = document.getElementById("cardDetailsDiv");
 			var imageDiv = document.getElementById("cardImageDiv");
 			var listingDataDiv = document.getElementById("listingDataDiv");
@@ -149,6 +183,96 @@
 			};
 			xhr.send();
 		}
+		
+		const inputBox = document.getElementById('inputBox');
+        const dropdown = document.getElementById('dropdown');
+        const getCardDataBtn = document.getElementById('getCardDataBtn');
+        const serialNumberInput = document.getElementById("serialNumberInput");
+		
+		let offset = 0;
+        const limit = 10; // Number of items to load on each scroll
+        let loading = false;
+        
+        let selectedSerialNumber = null;
+        
+        function loadItems() {
+        	console.log("I am in loadItems")
+        	if (loading) return; // Prevent multiple requests
+            loading = true;
+            
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'loadCards?offset=' + offset + '&limit=' + limit, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const data = JSON.parse(xhr.responseText);
+                    if (data.length > 0) {
+                        appendDropdownItems(data);
+                        offset += data.length; // Update offset
+                    } else {
+                        dropdown.removeEventListener('scroll', onScroll); // No more data
+                    }
+                    loading = false; // Reset loading status
+                }
+            };
+            xhr.send();
+        }
+        
+        
+        // Append items to the dropdown
+        function appendDropdownItems(data) {
+            data.forEach(item => {
+                const div = document.createElement('div');
+                div.textContent = item.serialNumber + ' - ' + item.cardName;// Format
+                div.setAttribute('data-serial-number', item.serialNumber); 
+                
+                div.addEventListener('click', () => {
+                	selectedSerialNumber = item.serialNumber;
+                	serialNumberInput.value = selectedSerialNumber;
+                    inputBox.value = div.textContent; // Set input value to selected item
+                    dropdown.style.display = 'none';
+                });
+                dropdown.appendChild(div);
+            });
+        }
+        
+     // Handle scroll event for lazy loading
+        function onScroll() {
+            if (dropdown.scrollTop + dropdown.clientHeight >= dropdown.scrollHeight) {
+            	loadItems(); // Fetch more data when scrolled to the bottom
+            }
+        }
+
+        // Show dropdown on input box click
+        inputBox.addEventListener('click', () => {
+            if (dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+            } else {
+                dropdown.innerHTML = ''; // Clear previous items
+                loadItems(); // Fetch initial data when dropdown is shown
+                dropdown.style.display = 'block';
+                dropdown.addEventListener('scroll', onScroll); // Add scroll listener
+            }
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!inputBox.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.style.display = 'none';
+                dropdown.innerHTML = ''; // Clear items when closed
+                offset = 0; // Reset offset
+            }
+        });
+        
+     // Button click event to get the selected serial number
+        getCardDataBtn.addEventListener('click', () => {
+            if (selectedSerialNumber) {
+            	fetchCardDetails(selectedSerialNumber);
+            } else {
+                alert("No card selected."); // Inform the user if no selection has been made
+            }
+        });
+        
 	</script>
+
 </body>
 </html>

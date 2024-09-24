@@ -60,8 +60,15 @@
 		<div class="row">
 			<div class="col text-center">
 				<h2>Seller Profile</h2>
-				<p>Explore the seller's profile to discover their range of cards
+				<c:choose>
+					<c:when test="${not empty seller.description}">
+						<p>${seller.description}</p>
+					</c:when>
+					<c:otherwise>
+						<p>Explore the seller's profile to discover their range of cards
 					and more about their offerings.</p>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 		<hr />

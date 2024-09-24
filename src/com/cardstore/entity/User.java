@@ -151,6 +151,14 @@ public class User implements Serializable {
 		return this.enabled;
 	}
 	
+	@Column(name = "description", nullable = true, length = 2000)
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	@Override
 	public int hashCode() {

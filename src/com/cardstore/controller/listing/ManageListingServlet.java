@@ -174,11 +174,9 @@ public class ManageListingServlet extends HttpServlet {
                 resp.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have permission to access this page.");
                 return;
             }
-            List<Card> cards = cardDAO.listAll();
-            String registerForm = "seller/add_listing.jsp";
+            String addListingForm = "seller/add_listing.jsp";
             req.setAttribute("action", "Add");
-            req.setAttribute("cards", cards);
-            RequestDispatcher dispatcher = req.getRequestDispatcher(registerForm);
+            RequestDispatcher dispatcher = req.getRequestDispatcher(addListingForm);
             dispatcher.forward(req, resp);
         }
     }
@@ -186,11 +184,24 @@ public class ManageListingServlet extends HttpServlet {
     private void showListings(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         HttpSession session = req.getSession(false);
-
+        
         if(session != null){
+        	int page = 1;
+            int pageSize = 10;
+            
+            if (req.getParameter("page") != null) {
+                page = Integer.parseInt(req.getParameter("page"));
+            }
+    		
+            int start = (page - 1) * pageSize;
             User user = (User) session.getAttribute("user");
-            List<Listing> sellerListing = listingDAO.listSellerListing(user.getUserId());
+            long totalListing = listingDAO.listingCountBySeller(user.getUserId());
+            int totalPages = (int) Math.ceil((double) totalListing / pageSize);
+            List<Listing> sellerListing = listingDAO.listSellerListing(user.getUserId(), start, pageSize);
+            
             req.setAttribute("listOfListings", sellerListing);
+            req.setAttribute("currentPage", page);
+            req.setAttribute("totalPages", totalPages);
             RequestDispatcher dispatcher = req.getRequestDispatcher("seller/my_listing.jsp");
             dispatcher.forward(req, resp);
         }else{
