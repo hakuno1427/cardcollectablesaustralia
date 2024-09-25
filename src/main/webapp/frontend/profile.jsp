@@ -36,12 +36,12 @@
 				<div class="col">${user.phone}</div>
 			</div>
 				
-			<c:if test="${not empty user.description}">
+			<!-- <c:if test="${not empty user.description}">
 			<div class="row">
 				<div class="col"><b>Description</b></div>
 				<div class="col">${user.description}</div>
 			</div>
-			</c:if>
+			</c:if> -->
 			<div class="row">&nbsp;</div>
 			
 			<div class="row">

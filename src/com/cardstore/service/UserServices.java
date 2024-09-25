@@ -74,10 +74,10 @@ public class UserServices {
 		if (password != null && !password.equals("")) {
 			user.setPassword(password);
 		}
-		user.setPhone(Integer.parseInt(phone));
+		/* user.setPhone(Integer.parseInt(phone));
 		if(description!=null && !description.equals("")) {
 			user.setDescription(description);
-		}
+		}*/
 	}
 
 	public void doLogin() throws ServletException, IOException {
