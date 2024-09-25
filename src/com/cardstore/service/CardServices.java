@@ -218,7 +218,6 @@ public class CardServices {
 	    } else {
 	        response.sendError(HttpServletResponse.SC_NOT_FOUND, "Card not found");
 	    }
-		
 	}
 	
 	public void listBestSellers() throws ServletException, IOException{

@@ -11,8 +11,8 @@
 	<jsp:param name="pageTitle" value="Contact Us" />
 </jsp:include>
 <body>
-	<div class="container">
 		<jsp:include page="header.jsp" />
+	<div class="container">
 
 		<div class="row">&nbsp;</div>
 		<div class="row">
@@ -27,7 +27,8 @@
 		</div>
 		<div class="row">&nbsp;</div>
 
-		<jsp:include page="footer.jsp" />
+		
 	</div>
+	<jsp:include page="footer.jsp" />
 </body>
 </html>

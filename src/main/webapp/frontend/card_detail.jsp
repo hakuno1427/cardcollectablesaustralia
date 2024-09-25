@@ -52,7 +52,6 @@
 	color: #555;
 	margin: 10px 0;
 	width: 100%;
-	border-bottom: 1px solid #ccc; /* 添加分隔线 */
 	margin-bottom: 10px;
 	padding-bottom: 10px;
 }
@@ -63,7 +62,7 @@
 	font-size: 1.3em;
 	color: #d35400;
 	width: 100%;
-	border-bottom: 1px solid #ccc; /* 添加分隔线 */
+	border-top: 1px solid #ccc;
 	margin-bottom: 10px;
 	padding-bottom: 10px;
 }
@@ -138,20 +137,23 @@
 </style>
 
 <body>
-	<div class="container">
 		<jsp:directive.include file="header.jsp" />
+	<div class="container">
 
 		<div class="card-detail">
 	<div>
 		<img class="card-img" src="${card.imageUrl}" alt="${card.cardName}">
 	</div>
 	<div class="card-info">
-		<h2>${card.cardName}</h2>
+	<div class="card-name mb-5">
+	<h2>${card.cardName}</h2>
+	</div>
+		
 		<div class="card-description">
 			<p><strong>Game:</strong> ${card.game}</p>
 			<p><strong>Description:</strong> ${card.description}</p>
 		</div>
-		<div class="market-price">Market Price: $${card.marketprice}</div>
+		<div class="market-price mt-5">Market Price: $${card.marketprice}</div>
 	</div>
 </div>
 
@@ -198,8 +200,9 @@
 </div>
 
 
-		<jsp:directive.include file="footer.jsp" />
+		
 	</div>
+	<jsp:directive.include file="footer.jsp" />
 	
 </body>
 </html>

@@ -11,8 +11,8 @@
 	<jsp:param name="pageTitle" value="Privacy Policy" />
 </jsp:include>
 <body>
-    <div class="container">
         <jsp:directive.include file="header.jsp" />
+    <div class="container">
 
         <div class="row">&nbsp;</div>
         <div class="row">
@@ -51,7 +51,8 @@
         </div>
         <div class="row">&nbsp;</div>
 
-        <jsp:directive.include file="footer.jsp" />
+        
     </div>
+    <jsp:directive.include file="footer.jsp" />
 </body>
 </html>

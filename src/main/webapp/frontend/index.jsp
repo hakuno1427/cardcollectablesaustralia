@@ -24,9 +24,22 @@
 	overflow: hidden;
 }
 
-/* New listings container */
-.new-listings-container {
-	margin: 0 20px;
+/* New listings and best sellers container styles */
+.new-listings-section, .best-sellers-section {
+	margin-bottom: 40px;
+	padding: 20px;
+	background-color: #e9ebed;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.new-listings-section h2, .best-sellers-section h2 {
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 700;
+	color: #2aa08a;
+	text-transform: uppercase;
+	margin-bottom: 20px;
 }
 
 /* Card styles */
@@ -34,9 +47,61 @@
 	margin-bottom: 15px;
 }
 
+.card {
+	border: 1px solid #ddd;
+	border-radius: 10px; /
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	transition: transform 0.3s ease;
+}
+
+.card:hover {
+	transform: translateY(-5px);
+}
+
 .card-img-top {
 	max-width: 100%;
 	height: auto;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.card-body {
+	font-family: 'Montserrat', sans-serif;
+}
+
+.card-body a {
+	text-decoration: none;
+	font-weight: 700;
+	color: #333;
+}
+
+.card-body a:hover {
+	color: #007bff;
+	text-decoration: none;
+}
+
+.card-body b {
+	font-weight: 700;
+	color: #18BC9C;
+}
+
+.card-body .card-name {
+	text-align: center;
+}
+
+.card-body .card-name b:hover {
+	color: #2aa08a;
+}
+
+.card-body .market-price b {
+	color: #555;
+	font-size: 14px;
+}
+
+.card-body .price {
+	color: #555;
+	font-size: 16px;
+	font-weight: bold;
 }
 
 /* Ad banner */
@@ -54,17 +119,21 @@
 
 
 <body>
-	<div class="page-container">
-		<!-- Top banner -->
-		<div class="container-fluid">
-			<div class="top-banner">
-				<img src="https://i.imgur.com/yIqU2Nl.png" alt="Top-banner"
-					style="width: 100%; height: 100%; object-fit: cover;">
-			</div>
-		</div>
 
-		<!-- Header Section -->
-		<jsp:directive.include file="header.jsp" />
+
+	<!-- Top Banner Section -->
+	<div class="container-fluid">
+		<div class="top-banner">
+			<img src="https://i.imgur.com/fccHfPo.png" alt="Top-banner"
+				style="width: 100%; height: 100%; object-fit: cover;">
+		</div>
+	</div>
+
+	<!-- Navbar Section -->
+	<jsp:directive.include file="header.jsp" />
+
+
+	<div class="page-container">
 
 		<div class="container-fluid">
 			<div class="row">
@@ -83,29 +152,32 @@
 											class="card-img-top img-fluid" src="${listing.card.imageUrl}"
 											alt="${listing.card.cardName}">
 										</a>
+
 										<div class="card-body">
-											<a href="view_card?serialNumber=${listing.card.serialNumber}"
-												title="View Card ${listing.card.serialNumber}"> <b>${listing.card.cardName}</b>
-											</a>
-											<div>
-												<b>Market Price: $${(listing.card.marketprice !=-1) ?
-													listing.card.marketprice : "N/A" }</b>
+											<div class="card-name mb-3">
+												<a
+													href="view_card?serialNumber=${listing.card.serialNumber}"
+													title="View Card ${listing.card.serialNumber}"> <b>${listing.card.cardName}</b>
+												</a>
 											</div>
-											<div>
-												<b>Price: $${listing.price}</b>
-											</div>
+
+											<div class="market-price mb-1">Market Price:
+												$${(listing.card.marketprice !=-1) ?
+												listing.card.marketprice : "N/A"}</div>
+											<div class="price mb-3">Price: $${listing.price}</div>
 										</div>
 									</div>
 								</div>
 							</c:forEach>
 						</div>
+
 					</div>
 
 					<!-- Best Sellers Section -->
 					<div class="best-sellers-section">
 						<h2>Best Sellers:</h2>
 
-  <!--   CAN'T WORK, REPLACED WITH NEW LISTINGS FOR TESTING LAYOUT
+						<!--   CAN'T WORK, REPLACED WITH NEW LISTINGS FOR TESTING LAYOUT
 						<div class="row">
 							<c:forEach items="${bestSellers}" var="bestSellerCard">
 								<div class="col-md-3 col-sm-6 listing-item">
@@ -145,45 +217,56 @@
 											class="card-img-top img-fluid" src="${listing.card.imageUrl}"
 											alt="${listing.card.cardName}">
 										</a>
+
 										<div class="card-body">
-											<a href="view_card?serialNumber=${listing.card.serialNumber}"
-												title="View Card ${listing.card.serialNumber}"> <b>${listing.card.cardName}</b>
-											</a>
-											<div>
-												<b>Market Price: $${(listing.card.marketprice !=-1) ?
-													listing.card.marketprice : "N/A" }</b>
+											<div class="card-name mb-3">
+												<a
+													href="view_card?serialNumber=${listing.card.serialNumber}"
+													title="View Card ${listing.card.serialNumber}"> <b>${listing.card.cardName}</b>
+												</a>
 											</div>
-											<div>
-												<b>Price: $${listing.price}</b>
-											</div>
+
+											<div class="market-price mb-1">Market Price:
+												$${(listing.card.marketprice !=-1) ?
+												listing.card.marketprice : "N/A"}</div>
+											<div class="price mb-3">Price: $${listing.price}</div>
 										</div>
 									</div>
 								</div>
 							</c:forEach>
 						</div>
 
+
 					</div>
-					</div>
+				</div>
 
 
-					<!-- Right Side: Ad Banners -->
-					<div class="col-lg-3 col-md-12">
-						<!-- First Ad Banner -->
+				<!-- Right Side: Ad Banners -->
+				<div class="col-lg-3 col-md-12">
+					<!-- First Ad Banner -->
+					<a href="https://github.com/hakuno1427/cardcollectablesaustralia"
+						target="_blank">
 						<div class="ad-banner">
 							<img src="https://i.imgur.com/vJGXodh.png" alt="First Ad"
 								style="width: 100%; height: auto;">
 						</div>
-						<!-- Second Ad Banner -->
+					</a>
+					<!-- Second Ad Banner -->
+					<a href="https://github.com/hakuno1427/cardcollectablesaustralia"
+						target="_blank">
 						<div class="ad-banner">
 							<img src="https://i.imgur.com/xWzzMZD.png" alt="Second Ad"
 								style="width: 100%; height: auto;">
 						</div>
-					</div>
+					</a>
 				</div>
-			</div>
 
-			<!-- Footer Section -->
-			<jsp:directive.include file="footer.jsp" />
+			</div>
 		</div>
+
+
+	</div>
+	<!-- Footer Section -->
+	<jsp:directive.include file="footer.jsp" />
 </body>
 </html>

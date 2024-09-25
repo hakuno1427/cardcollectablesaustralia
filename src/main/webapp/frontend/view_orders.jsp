@@ -58,14 +58,15 @@
 
 .carousel-item img {
 	max-width: 100%;
-    max-height: 180px;
+	max-height: 180px;
 	object-fit: contain;
 	border-radius: 5px;
 	margin-bottom: 10px;
 }
+
 .carousel-item p {
-    margin: 0;
-    padding-top: 10px;
+	margin: 0;
+	padding-top: 10px;
 }
 
 .carousel-controls {
@@ -98,8 +99,10 @@
 </style>
 
 <body>
+
+	<jsp:directive.include file="header.jsp" />
+
 	<div class="container">
-		<jsp:directive.include file="header.jsp" />
 
 		<h1>My Orders</h1>
 
@@ -112,25 +115,32 @@
 				<c:forEach var="order" items="${orders}">
 					<div class="order-card">
 
-<!-- Order items carousel (image and name) -->
-<div class="order-items-carousel" id="carousel-${item.orderItemId}">
-    <c:forEach var="item" items="${order.orderItems}" varStatus="status">
-        <div class="carousel-item" style="display: ${status.index == 0 ? 'block' : 'none'};">
-            <a href="view_card?serialNumber=${item.listing.card.serialNumber}">
-                <img class="item-image" src="${item.listing.card.imageUrl}" alt="${item.listing.card.cardName}" loading="lazy" style="cursor: pointer;" />
-            </a>
-            <p>
-                <a href="view_card?serialNumber=${item.listing.card.serialNumber}">
-                    <strong><c:out value="${item.listing.card.cardName}" /></strong>
-                </a>
-            </p>
-        </div>
-    </c:forEach>
-    <div class="carousel-controls">
-        <button onclick="prevItem(${item.orderItemId})">&lt;</button>
-        <button onclick="nextItem(${item.orderItemId})">&gt;</button>
-    </div>
-</div>
+						<!-- Order items carousel (image and name) -->
+						<div class="order-items-carousel"
+							id="carousel-${item.orderItemId}">
+							<c:forEach var="item" items="${order.orderItems}"
+								varStatus="status">
+								<div class="carousel-item"
+									style="display: ${status.index == 0 ? 'block' : 'none'};">
+									<a
+										href="view_card?serialNumber=${item.listing.card.serialNumber}">
+										<img class="item-image" src="${item.listing.card.imageUrl}"
+										alt="${item.listing.card.cardName}" loading="lazy"
+										style="cursor: pointer;" />
+									</a>
+									<p>
+										<a
+											href="view_card?serialNumber=${item.listing.card.serialNumber}">
+											<strong><c:out value="${item.listing.card.cardName}" /></strong>
+										</a>
+									</p>
+								</div>
+							</c:forEach>
+							<div class="carousel-controls">
+								<button onclick="prevItem(${item.orderItemId})">&lt;</button>
+								<button onclick="nextItem(${item.orderItemId})">&gt;</button>
+							</div>
+						</div>
 
 
 
@@ -173,8 +183,9 @@
 			</div>
 		</c:if>
 
-		<jsp:directive.include file="footer.jsp" />
+		
 	</div>
+	<jsp:directive.include file="footer.jsp" />
 
 	<script>
 	function nextItem(orderItemId) {
@@ -207,5 +218,6 @@
 
 
     </script>
+    
 </body>
 </html>
