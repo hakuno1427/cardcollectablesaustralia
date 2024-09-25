@@ -63,6 +63,8 @@ public class UserServices {
 		String lastname = request.getParameter("lastname");
 		String password = request.getParameter("password");
 		String phone = request.getParameter("phone");
+		String description = request.getParameter("description");
+		
 
 		if (email != null && !email.equals("")) {
 			user.setEmail(email);
@@ -74,10 +76,10 @@ public class UserServices {
 		if (password != null && !password.equals("")) {
 			user.setPassword(password);
 		}
-		/* user.setPhone(Integer.parseInt(phone));
+		user.setPhone(Integer.parseInt(phone));
 		if(description!=null && !description.equals("")) {
 			user.setDescription(description);
-		}*/
+		}
 	}
 
 	public void doLogin() throws ServletException, IOException {
