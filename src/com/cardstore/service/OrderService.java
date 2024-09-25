@@ -15,6 +15,8 @@ import com.cardstore.entity.Listing;
 import com.cardstore.entity.Order;
 import com.cardstore.entity.OrderItem;
 import com.cardstore.entity.User;
+import com.paypal.api.payments.Payment;
+import com.paypal.api.payments.ShippingAddress;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -42,14 +44,16 @@ public class OrderService {
 	public void showCheckoutForm() throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		ShoppingCart shoppingCart = (ShoppingCart) session.getAttribute("cart");
+		
+		float subTotal = shoppingCart.getTotalAmount();
 
 		float shippingFee = shoppingCart.getTotalQuantity() < 20 ? 8.0f : 0;
 
-		float total = shoppingCart.getTotalAmount() + shippingFee;
+		float total = subTotal + shippingFee;
 
 		session.setAttribute("total", total);
+		session.setAttribute("subTotal", subTotal);
 		session.setAttribute("shippingFee", shippingFee);
-
 		String checkOutPage = "frontend/checkout.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(checkOutPage);
 		dispatcher.forward(request, response);
@@ -58,15 +62,9 @@ public class OrderService {
 	public void placeOrder() throws ServletException, IOException {
 		Order order = readOrderInfo();
 
-		saveOrder(order);
-
-		String message = "Thank you. Your order has been received. " + "The seller will contact you within a few days.";
-		request.setAttribute("message", message);
-		request.setAttribute("pageTitle", "Order Completed");
-
-		String messagePage = "frontend/message.jsp";
-		RequestDispatcher dispatcher = request.getRequestDispatcher(messagePage);
-		dispatcher.forward(request, response);
+		PaymentService paymentServices = new PaymentService(request, response);
+		request.getSession().setAttribute("order4Paypal", order);
+		paymentServices.authorizePayment(order);
 	}
 
 	private Integer saveOrder(Order order) {
@@ -82,7 +80,7 @@ public class OrderService {
 			if (listing.getQuantity() > 0) {
 				listingDao.update(listing);
 			} else
-				listingDao.delete(listing);
+				listingDao.delete(listing.getListingId());
 		}
 		
 		messageService.sendAdminMessage(order.getSellerId(), "Order Notification", "Someone bought from you. Please check your pending order page to see detail");
@@ -98,6 +96,19 @@ public class OrderService {
 
 		String shippingAddress = String.format("%s\n%s\n%s %s", request.getParameter("streetAddress"),
 				request.getParameter("city"), request.getParameter("state"), request.getParameter("zipcode"));
+		
+		ShippingAddress paypalShippingAddress = new ShippingAddress();
+		String recipientName = user.getFirstName() + " " + user.getLastName();
+		paypalShippingAddress.setRecipientName(recipientName)
+					   .setPhone(""+user.getPhone())
+					   .setLine1(request.getParameter("streetAddress"))
+					   .setLine2("")
+					   .setCity(request.getParameter("city"))
+					   .setState(request.getParameter("state"))
+					   .setCountryCode("AU")
+					   .setPostalCode(request.getParameter("zipcode"));
+		
+		request.getSession().setAttribute("paypalShippingAddress4Paypal", paypalShippingAddress);
 
 		Order order = new Order();
 		order.setBillingAddress(shippingAddress);
@@ -126,8 +137,12 @@ public class OrderService {
 		order.setOrderItems(orderItems);
 		
 		float total = (Float) session.getAttribute("total");
+		float subTotal = (Float) session.getAttribute("subTotal");
 
+		
 		order.setTotalPrice(total);
+		order.setSubTotal(subTotal);
+		order.setShippingFee((Float) session.getAttribute("shippingFee"));
 		order.setOrderDate(LocalDate.now());
 		order.setStatus(Order.STATUS_SHIPMENT_PENDING);
 
@@ -171,5 +186,19 @@ public class OrderService {
 		request.setAttribute("orders", userOrders);
 		request.setAttribute("totalEarning", totalEarning);
 		request.getRequestDispatcher("/frontend/view_seller_orders.jsp").forward(request, response);
+	}
+
+	public void createOrderPaypal() throws ServletException, IOException {
+		Order order = (Order) request.getSession().getAttribute("order4Paypal");
+
+		saveOrder(order);
+
+		String message = "Thank you. Your order has been received. " + "The seller will contact you within a few days.";
+		request.setAttribute("message", message);
+		request.setAttribute("pageTitle", "Order Completed");
+
+		String messagePage = "frontend/message.jsp";
+		RequestDispatcher dispatcher = request.getRequestDispatcher(messagePage);
+		dispatcher.forward(request, response);
 	}
 }
