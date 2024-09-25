@@ -72,5 +72,14 @@ public class CardDAO extends JpaDAO<Card> implements GenericDAO<Card> {
 	public long count() {
 		return super.countWithNamedQuery("Card.countAll");
 	}
+	
+	public List<Card> fetchCardsWithLazyLoading(int offset, int limit){
+		EntityManager entityManager = getEntityManager();
+		String jpql = "SELECT c FROM Card c";
+        TypedQuery<Card> query = entityManager.createQuery(jpql, Card.class);
+        query.setFirstResult(offset);
+        query.setMaxResults(limit);
+        return query.getResultList();
+	}
 
 }
