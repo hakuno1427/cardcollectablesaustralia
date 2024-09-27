@@ -53,7 +53,7 @@
 				<input type="password" name="confirmPassword" class="form-control" maxlength="16" oninput="checkPasswordMatch(this)" />
 			</div>
 		</div>	
-		<div class="form-group row">
+		 <div class="form-group row">
 			<label class="col-sm-4 col-form-label">Description</label>
 			<div class="col-sm-8">
 				<textarea name="description" class="form-control">${user.description}</textarea>

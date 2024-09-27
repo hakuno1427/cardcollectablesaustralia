@@ -44,6 +44,7 @@ public class User implements Serializable {
 	private String email;
 	private String password;
 	private Role role;
+	private String description;
 	private byte enabled = ENABLED_STATUS;
 	
 
@@ -53,13 +54,14 @@ public class User implements Serializable {
 	public User() {
 	}
 
-	public User(String firstName, String lastName, Integer phone, String email, String password) {
+	public User(String firstName, String lastName, Integer phone, String email, String password, String description) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phone = phone;
 		this.email = email;
 		this.password = password;
+		this.description = description;
 	}
 
 	@Id
@@ -151,14 +153,14 @@ public class User implements Serializable {
 		return this.enabled;
 	}
 	
-	@Column(name = "description", nullable = true, length = 2000)
+	 @Column(name = "description", nullable = true, length = 2000)
 	public String getDescription() {
 		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
+	} 
 
 	@Override
 	public int hashCode() {
