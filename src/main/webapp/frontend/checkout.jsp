@@ -6,9 +6,10 @@
 	<jsp:include page="page_head.jsp">
 		<jsp:param name="pageTitle" value="Checkout" />
 	</jsp:include>
-<body>
-<div class="container">
+<body class="d-flex flex-column min-vh-100">
 	<jsp:directive.include file="header.jsp" />
+<div class="container flex-grow-1">
+
 	
 	<div class="row">&nbsp;</div>
 	
@@ -116,7 +117,8 @@
 		</div>			
 	</c:if>
 
-	<jsp:directive.include file="footer.jsp" />
+
 </div>
+	<jsp:directive.include file="footer.jsp" />
 </body>
 </html>

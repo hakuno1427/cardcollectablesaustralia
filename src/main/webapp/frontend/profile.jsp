@@ -4,9 +4,10 @@
 	<jsp:include page="page_head.jsp">
 		<jsp:param name="pageTitle" value="My Profile" />
 	</jsp:include>
-<body>
-<div class="container">
+<body class="d-flex flex-column min-vh-100">
 	<jsp:directive.include file="header.jsp" />
+<div class="container flex-grow-1">
+
 	
 	<div class="row">
 		<div class="col text-center"><h3>My Profile</h3></div>
@@ -52,7 +53,8 @@
 		<div class="col-sm-3"></div>
 	</div>
 	
-	<jsp:directive.include file="footer.jsp" />
+
 </div>
+	<jsp:directive.include file="footer.jsp" />
 </body>
 </html>

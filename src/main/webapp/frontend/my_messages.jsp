@@ -5,12 +5,12 @@
 <jsp:include page="page_head.jsp">
 	<jsp:param name="pageTitle" value="${pageTitle}" />
 </jsp:include>
-<body>
+<body class="d-flex flex-column min-vh-100">
 	<link rel="stylesheet" href="../css/my_messages.css">
     <script src="../js/messages.js"></script>
-    
-    <div class="container">
-    <jsp:directive.include file="header.jsp" />
+        <jsp:directive.include file="header.jsp" />
+    <div class="container flex-grow-1">
+
     <div class="message-row row g-0">
         <!-- User List -->
         <div class="message-col col-md-2">
@@ -66,8 +66,9 @@
             </div>
         </div>
     </div>
-    <jsp:directive.include file="footer.jsp" />
+
 </div>
+    <jsp:directive.include file="footer.jsp" />
 
 </body>
 </html>
