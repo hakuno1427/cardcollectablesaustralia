@@ -26,14 +26,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-/*import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;*/
-
 public class UserServices {
 	public static final String VIEW_PROFILE_PERMISSION = "VIEW_MY_PROFILE";
 	public static final String EDIT_PROFILE_PERMISSION = "EDIT_MY_PROFILE";

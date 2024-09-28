@@ -37,5 +37,4 @@ public class RegisterAdminServlet extends HttpServlet {
 		UserServices userServices = new UserServices(request, response);
 		userServices.adminRegister(roleDAO.findByName(Role.ADMIN_ROLE));
 	}
-
 }
