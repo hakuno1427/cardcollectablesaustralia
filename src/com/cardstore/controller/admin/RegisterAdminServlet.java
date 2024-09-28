@@ -1,6 +1,9 @@
 package com.cardstore.controller.admin;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import com.cardstore.dao.RoleDAO;
 import com.cardstore.entity.Role;
@@ -11,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 
 /**
  * @author Sera Jeong 12211242 Created Date: 24/08/2024
@@ -29,7 +33,9 @@ public class RegisterAdminServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		UserServices userServices = new UserServices(request, response);
 		userServices.adminRegister(roleDAO.findByName(Role.ADMIN_ROLE));
 	}
+
 }

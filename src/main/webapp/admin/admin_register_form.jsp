@@ -9,6 +9,17 @@
 <jsp:include page="page_head.jsp">
     <jsp:param name="pageTitle" value="Register Admin" />
 </jsp:include>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+	<script>
+		function onSubmit() {
+			if (grecaptcha.getResponse().length == 0) {
+				alert('Check reCaptcha please.');
+				return false;
+			}
+			
+			return true;
+		}
+</script>
 <body>
     <div class="container">
         <jsp:directive.include file="header.jsp" />
@@ -59,6 +70,8 @@
                     <input type="text" name="phone" class="form-control" required minlength="9" maxlength="15" />
                 </div>
             </div>
+            
+            <div class="g-recaptcha" data-sitekey="6LcsvlEqAAAAAMUGIftR639gE1xVleygOQv9O-bi"></div>
             <div class="row">&nbsp;</div>
             <div class="row">
                 <div class="col text-center">
