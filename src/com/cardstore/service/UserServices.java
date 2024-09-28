@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import com.cardstore.dao.UserDAO;
 import com.cardstore.entity.Card;
@@ -23,6 +24,7 @@ public class UserServices {
 	public static final String MANAGE_USER_PERMISSION = "MANAGE_USER";
 
 	private UserDAO userDAO;
+	private EmailService emailService;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 
@@ -30,6 +32,7 @@ public class UserServices {
 		super();
 		this.request = request;
 		this.response = response;
+		this.emailService = new EmailService();
 		this.userDAO = new UserDAO();
 	}
 
@@ -44,8 +47,12 @@ public class UserServices {
 
 			User newUser = new User();
 			newUser.setRole(role);
-
 			updateUserFieldsFromForm(newUser);
+			
+			String verificationToken = UUID.randomUUID().toString();
+			newUser.setVerificationToken(verificationToken);
+			
+			emailService.sendVerificationEmail(email, verificationToken);
 			userDAO.create(newUser);
 
 			message = "You have registered successfully! Thank you.<br/>" + "<a href='login'>Click here</a> to login";
@@ -358,11 +365,30 @@ public class UserServices {
 			return;
 		}
 
-		selectedUser.setEnabled(User.DISABLED_STATUS);
+		selectedUser.setEnabled(User.NO_VALUE);
 		userDAO.update(selectedUser);
 
 		String message = "You have successfully banned this user";
 		request.setAttribute("message", message);
 		listUsers();
+	}
+	
+	public void verifyUser(String token) throws ServletException, IOException {
+		User user = userDAO.getUserByVerificationToken(token);
+		
+		if (user == null) {
+			String message = "Verification token is not valid";
+			request.setAttribute("message", message);
+			showLogin();
+			return;
+		}
+		
+		user.setVerified(User.YES_VALUE);
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("user", user);
+		session.setAttribute("role", user.getRole());
+
+		showMyProfile();
 	}
 }
