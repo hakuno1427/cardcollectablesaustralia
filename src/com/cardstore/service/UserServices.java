@@ -80,6 +80,10 @@ public class UserServices {
 		if(description!=null && !description.equals("")) {
 			user.setDescription(description);
 		}
+		else 
+		{
+			user.setDescription("");		
+		}
 	}
 
 	public void doLogin() throws ServletException, IOException {
