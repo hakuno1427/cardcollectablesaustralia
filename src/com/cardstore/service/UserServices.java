@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -33,6 +34,7 @@ public class UserServices {
 
     public static final String SECRET_KEY = "6LcsvlEqAAAAAD0zko-lQa7zO95GQzvo-OTl35Nl";
 	private UserDAO userDAO;
+	private EmailService emailService;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 
@@ -40,6 +42,7 @@ public class UserServices {
 		super();
 		this.request = request;
 		this.response = response;
+		this.emailService = new EmailService();
 		this.userDAO = new UserDAO();
 	}
 
@@ -51,27 +54,42 @@ public class UserServices {
 		String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
 		System.out.println("gRecaptchaResponse : [" + gRecaptchaResponse);
 		JSONObject json = getJSONResponse(gRecaptchaResponse);
-		
+
 		boolean isSuccess = (boolean)json.get("success");
 		request.setAttribute("gRecaptchaResponse", gRecaptchaResponse);
 		request.setAttribute("isSuccess", isSuccess);
 		request.setAttribute("json", json.toString());
-		
+
 		if (!isSuccess) {
 			message = "Could not register. Our website suspects spam or bot. Please try again.";
-		} else {	
+		} else {
 			if (existUser != null) {
 				message = "Could not register. The email " + email + " is already registered by another user.";
 			} else {
-	
+
 				User newUser = new User();
 				newUser.setRole(role);
-	
+
 				updateUserFieldsFromForm(newUser);
 				userDAO.create(newUser);
-	
+
 				message = "You have registered successfully! Thank you.<br/>" + "<a href='login'>Click here</a> to login";
 			}
+		if (existUser != null) {
+			message = "Could not register. The email " + email + " is already registered by another user.";
+		} else {
+
+			User newUser = new User();
+			newUser.setRole(role);
+			updateUserFieldsFromForm(newUser);
+
+			String verificationToken = UUID.randomUUID().toString();
+			newUser.setVerificationToken(verificationToken);
+
+			emailService.sendVerificationEmail(email, verificationToken);
+			userDAO.create(newUser);
+
+			message = "You have registered successfully! Thank you.<br/>" + "<a href='login'>Click here</a> to login";
 		}
 
 		String messagePage = "frontend/message.jsp";
@@ -79,34 +97,34 @@ public class UserServices {
 		request.setAttribute("message", message);
 		requestDispatcher.forward(request, response);
 	}
-	
+
 	private JSONObject getJSONResponse(String gRecaptchaResponse) {
 		String url = "https://www.google.com/recaptcha/api/siteverify";
-		
+
 		String response = getResponse(url, SECRET_KEY, gRecaptchaResponse);
 		JSONObject json = getJSONObject(response);
-				
+
 		return json;
 	}
-	
+
 	private JSONObject getJSONObject(String jsonString) {
 		JSONObject json = new JSONObject();
-		
+
 		try {
 			JSONParser parser = new JSONParser();
 			json = (JSONObject)parser.parse(jsonString);
 			System.out.println("json: " + json.toJSONString());
-			
+
 		} catch (Exception e) {
-			
+
 		}
-		
+
 		return json;
 	}
-	
+
 	private String getResponse(String url, String secretKey, String gRecaptchaResponse) {
 		String response = "";
-		
+
 		try {
 			URL urlObject = new URL(url);
 			HttpsURLConnection connection = (HttpsURLConnection) urlObject.openConnection();
@@ -114,24 +132,24 @@ public class UserServices {
 			connection.setDoOutput(true);
 			String param = "secret=" + secretKey + "&response=" + gRecaptchaResponse;
 
-			System.out.println("param: " + param);	
+			System.out.println("param: " + param);
 			DataOutputStream stream = new DataOutputStream(connection.getOutputStream());
 			stream.writeBytes(param);
 			stream.flush();
 			stream.close();
-			
+
 			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			String inputLine;
-	
+
 			while ((inputLine = reader.readLine()) != null) {
 				response += inputLine;
 			}
 			reader.close();
-			
+
 		} catch (Exception e) {
-			
+
 		}
-		
+
 		return response;
 	}
 
@@ -322,29 +340,29 @@ public class UserServices {
 		String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
 		System.out.println("gRecaptchaResponse : [" + gRecaptchaResponse);
 		JSONObject json = getJSONResponse(gRecaptchaResponse);
-		
+
 		boolean isSuccess = (boolean)json.get("success");
 		request.setAttribute("gRecaptchaResponse", gRecaptchaResponse);
 		request.setAttribute("isSuccess", isSuccess);
 		request.setAttribute("json", json.toString());
-		
+
 		if (!isSuccess) {
 			message = "Could not register. Our website suspects spam or bot. Please try again.";
-		} else {			
+		} else {
 			if (existUser != null) {
 				message = "Could not register. The email " + email + " is already registered by another user.";
 			} else {
-	
+
 				User newUser = new User();
 				newUser.setRole(role);
-	
+
 				updateUserFieldsFromForm(newUser);
 				userDAO.create(newUser);
-	
+
 				message = "You have registered successfully! Thank you.<br/>" + "<a href='login'>Click here</a> to login.";
 			}
 		}
-		
+
 		String messagePage = "/admin/message.jsp";
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(messagePage);
 		request.setAttribute("message", message);
@@ -449,11 +467,30 @@ public class UserServices {
 			return;
 		}
 
-		selectedUser.setEnabled(User.DISABLED_STATUS);
+		selectedUser.setEnabled(User.NO_VALUE);
 		userDAO.update(selectedUser);
 
 		String message = "You have successfully banned this user";
 		request.setAttribute("message", message);
 		listUsers();
+	}
+
+	public void verifyUser(String token) throws ServletException, IOException {
+		User user = userDAO.getUserByVerificationToken(token);
+
+		if (user == null) {
+			String message = "Verification token is not valid";
+			request.setAttribute("message", message);
+			showLogin();
+			return;
+		}
+
+		user.setVerified(User.YES_VALUE);
+
+		HttpSession session = request.getSession();
+		session.setAttribute("user", user);
+		session.setAttribute("role", user.getRole());
+
+		showMyProfile();
 	}
 }
