@@ -15,7 +15,6 @@
 				<h4>${message}</h4>
 			</div>
 		</div>
-
 		<jsp:directive.include file="footer.jsp" />
 	</div>
 </body>
