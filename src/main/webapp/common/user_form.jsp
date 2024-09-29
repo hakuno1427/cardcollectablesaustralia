@@ -1,4 +1,3 @@
-
 <div class="form-group row">
 	<label class="col-sm-4 col-form-label">E-mail:</label>
 	<div class="col-sm-8">
@@ -43,6 +42,7 @@
 			value="${customer.phone}" required minlength="9" maxlength="15" />
 	</div>
 </div>
+<div class="g-recaptcha" data-sitekey="6LcsvlEqAAAAAMUGIftR639gE1xVleygOQv9O-bi"></div>
 <div class="row">&nbsp;</div>
 <div class="row">
 	<div class="col text-center">

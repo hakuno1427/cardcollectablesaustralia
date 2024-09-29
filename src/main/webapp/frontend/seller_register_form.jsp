@@ -6,6 +6,17 @@
 <jsp:include page="page_head.jsp">
 	<jsp:param name="pageTitle" value="Register as a Seller" />
 </jsp:include>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+	<script>
+		function onSubmit() {
+			if (grecaptcha.getResponse().length == 0) {
+				alert('Check reCaptcha please.');
+				return false;
+			}
+			
+			return true;
+		}
+</script>
 <body>
 	<div class="container">
 		<jsp:directive.include file="header.jsp" />
