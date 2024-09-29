@@ -114,7 +114,7 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	@Column(name = "password", nullable = false, length = 45)
+	@Column(name = "password", nullable = false, length = 80)
 	public String getPassword() {
 		return password;
 	}
