@@ -11,14 +11,13 @@
 </jsp:include>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 	<script>
-		function onSubmit() {
-			if (grecaptcha.getResponse().length == 0) {
-				alert('Check reCaptcha please.');
-				return false;
-			}
-			
-			return true;
-		}
+    function onSubmit(event) {
+        // If reCAPTCHA is not validated
+        if (grecaptcha.getResponse().length === 0) {
+            alert('Check reCaptcha please.');
+            event.preventDefault(); // Prevent submission
+        }
+    }
 </script>
 <body>
     <div class="container">
@@ -33,7 +32,7 @@
         </div>
         <div class="row">&nbsp;</div>
 
-        <form action="register_save" method="post" style="max-width: 800px; margin: 0 auto;">
+        <form action="register_save" method="post" style="max-width: 800px; margin: 0 auto;" onsubmit="onSubmit(event)">
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">E-mail:</label>
                 <div class="col-sm-8">
