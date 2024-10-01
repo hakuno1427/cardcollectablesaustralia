@@ -16,6 +16,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.mindrot.jbcrypt.BCrypt;
 
+import com.cardstore.dao.RoleDAO;
 import com.cardstore.dao.UserDAO;
 import com.cardstore.entity.Card;
 import com.cardstore.entity.Permission;
@@ -223,7 +224,6 @@ public class UserServices {
 		}
 
 		return;
-		
 	}
 
 	public void showLogin() throws ServletException, IOException {
@@ -242,26 +242,43 @@ public class UserServices {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 
-		User user = userDAO.checkLogin(email, password);
+		User user = userDAO.findByEmail(email);
 
 		if (user == null) {
 			String message = "Login failed. Please check your email and password.";
 			request.setAttribute("message", message);
-			showAdminLogin(); 
+			showAdminLogin();
+			return;
+		}
+		
+		String hashedPassword = user.getPassword();
+		
+		if (!checkPassword(password, hashedPassword)) {
+			String message = "Your password is incorrect";
+			request.setAttribute("message", message);
+			showAdminLogin();
+			return;
+		}
+		
+		if (user.getVerified() == User.NO_VALUE) {
+			String message = "Your account has not been verified. Please check your email and click the verify link";
+			request.setAttribute("message", message);
+			showAdminLogin();
+			return;
+		}
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("user", user);
+		session.setAttribute("role", user.getRole());
+
+		Object objRedirectURL = session.getAttribute("redirectURL");
+
+		if (objRedirectURL != null) {
+			String redirectURL = (String) objRedirectURL;
+			session.removeAttribute("redirectURL");
+			response.sendRedirect(redirectURL);
 		} else {
-			HttpSession session = request.getSession();
-			session.setAttribute("user", user);
-			session.setAttribute("role", user.getRole());
-
-			Object objRedirectURL = session.getAttribute("redirectURL");
-
-			if (objRedirectURL != null) {
-				String redirectURL = (String) objRedirectURL;
-				session.removeAttribute("redirectURL");
-				response.sendRedirect(redirectURL);
-			} else {
-				showAdminProfile();
-			}
+			showAdminProfile();
 		}
 	}
 
@@ -360,14 +377,17 @@ public class UserServices {
 			if (existUser != null) {
 				message = "Could not register. The email " + email + " is already registered by another user.";
 			} else {
-
 				User newUser = new User();
 				newUser.setRole(role);
-
 				updateUserFieldsFromForm(newUser);
+
+				String verificationToken = UUID.randomUUID().toString();
+				newUser.setVerificationToken(verificationToken);
+
+				emailService.sendVerificationEmail(email, verificationToken);
 				userDAO.create(newUser);
 
-				message = "You have registered successfully! Thank you.<br/>" + "<a href='login'>Click here</a> to login.";
+				message = "You have registered successfully! <br/> Please check your email for verification link. Thank you.<br/>" + "<a href='login'>Click here</a> to login";
 			}
 		}
 

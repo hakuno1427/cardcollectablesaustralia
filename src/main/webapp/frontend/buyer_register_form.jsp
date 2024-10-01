@@ -8,14 +8,13 @@
 </jsp:include>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 	<script>
-		function onSubmit() {
-			if (grecaptcha.getResponse().length == 0) {
-				alert('Check reCaptcha please.');
-				return false;
-			}
-			
-			return true;
-		}
+    function onSubmit(event) {
+        // If reCAPTCHA is not validated
+        if (grecaptcha.getResponse().length === 0) {
+            alert('Check reCaptcha please.');
+            event.preventDefault(); // Prevent submission
+        }
+    }
 </script>
 <body>
 	<div class="container">
@@ -30,7 +29,7 @@
 		<div class="row">&nbsp;</div>
 
 		<form action="register_buyer" method="post"
-			style="max-width: 800px; margin: 0 auto;">
+			style="max-width: 800px; margin: 0 auto;" onsubmit="onSubmit(event)">
 			<jsp:directive.include file="../common/user_form.jsp" />
 		</form>
 		
