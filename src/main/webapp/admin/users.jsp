@@ -6,7 +6,7 @@
     <jsp:param name="pageTitle" value="User Management" />
 </jsp:include>
 <body>
-        <jsp:directive.include file="header.jsp" />
+		<jsp:directive.include file="header.jsp" />
     <div class="container">
 
 

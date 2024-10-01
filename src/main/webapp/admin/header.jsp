@@ -1,7 +1,3 @@
-<!--
-	@author Sera Jeong 12211242 Created Date: 24/08/2024
--->
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
@@ -89,17 +85,17 @@
 
 <!-- header -->
 <div class="container-fluid">
-	<nav class="navbar navbar-expand-lg bg-light navbar-light">
+	<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
 		<!-- Brand -->
-		<a class="navbar-brand" href="${pageContext.request.contextPath}/">
+		<a class="navbar-brand" href="${pageContext.request.contextPath}/admin">
 			<img class="rounded-circle img-fluid logo-img"
 			src="https://i.imgur.com/JwkctkT.png" /> Card Collectables Australia
 			Admin
 		</a>
 
 		<!-- Toggler -->
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#topNavbar">
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+			data-bs-target="#topNavbar">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
@@ -120,13 +116,13 @@
 						<div class="dropdown-menu"
 							aria-labelledby="navbarDropdownMenuLink">
 							<c:if test="${auth:hasPermission(role, 'MANAGE_USER')}">
-								<a class="dropdown-item" href="/admin/users">User Management</a>
+								<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/users">User Management</a>
 							</c:if>
 							<c:if test="${auth:hasPermission(role, 'VIEW_CARD_CARTALOGUE')}">
-								<a class="dropdown-item" href="/admin/catalogue">Catalogue</a>
+								<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/catalogue">Catalogue</a>
 							</c:if>
 							<c:if test="${auth:hasPermission(role, 'MANAGE_REVIEW')}">
-								<a class="dropdown-item" href="/admin/review_manage">Review
+								<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/review_manage">Review
 									Management</a>
 							</c:if>
 							<a class="dropdown-item" href="logout">Logout</a>
@@ -135,16 +131,4 @@
 			</ul>
 		</div>
 	</nav>
-</div>
-
-<div>&nbsp;</div>
-<div class="row justify-content-center">
-	<c:forEach var="category" items="${listCategory}" varStatus="status">
-		<a href="view_category?id=${category.categoryId}"> <font size="+1"><b><c:out
-						value="${category.name}" /></b></font>
-		</a>
-		<c:if test="${not status.last}">
-            &nbsp; | &nbsp;
-        </c:if>
-	</c:forEach>
 </div>

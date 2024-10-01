@@ -18,7 +18,7 @@
 
 
         <!-- Admin Home Section -->
-        <div class="row text-center">
+        <div class="row text-center mt-5">
             <div class="col">
                 <h2>Admin Home</h2>
                 
@@ -54,7 +54,7 @@
                             <hr class="my-4">
                             <c:if test="${auth:hasPermission(role, 'MANAGE_USER')}">
                             	<p>To manage users:</p> 
-	                            <a href="/admin/users" class="btn btn-info">User Management</a>
+	                            <a href="${pageContext.request.contextPath}/admin/users" class="btn btn-info">User Management</a>
 	                            <p></p>
 	                            <p></p>
 	                            <p></p>
@@ -64,7 +64,7 @@
                             
                            	<c:if test="${auth:hasPermission(role, 'MANAGE_CARD_CARTALOGUE')}">
                             	<p>To manage the card catalogue:</p> 
-	                            <a href="/admin/catalogue" class="btn btn-info">Catalogue</a>
+	                            <a href="${pageContext.request.contextPath}/admin/catalogue" class="btn btn-info">Catalogue</a>
 	                            <p></p>
 	                            <p></p>
 	                            <p></p>
@@ -74,7 +74,7 @@
                             
                             <c:if test="${auth:hasPermission(role, 'MANAGE_REVIEW')}">
                             	<p>To monitor customer reviews:</p> 
-	                            <a href="/admin/review_manage" class="btn btn-info">Review Management</a>
+	                            <a href="${pageContext.request.contextPath}/admin/review_manage" class="btn btn-info">Review Management</a>
 	                            <hr class="my-4">
 	                            <a href="logout" class="btn btn-danger">Logout</a>
                             </c:if>
