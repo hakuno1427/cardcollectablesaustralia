@@ -85,7 +85,7 @@
 
 <!-- header -->
 <div class="container-fluid">
-	<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+	<nav class="navbar navbar-expand-xl bg-dark navbar-dark">
 		<!-- Brand -->
 		<a class="navbar-brand" href="${pageContext.request.contextPath}/admin">
 			<img class="rounded-circle img-fluid logo-img"
@@ -103,30 +103,36 @@
 			<ul class="navbar-nav ms-auto">
 				<c:if test="${user == null}">
 					<li class="nav-item"><a href="login" class="nav-link">Login</a></li>
-					<li class="nav-item"><a href="register" class="nav-link">Register
-							Admin</a></li>
+					<li class="nav-item"><a href="register" class="nav-link">Register Admin</a></li>
 				</c:if>
 
 				<c:if test="${user != null}">
-					<li class="nav-item dropdown"><a
-						class="dropdown-toggle nav-link" aria-expanded="false"
-						data-bs-toggle="dropdown" href="#"> <i
-							class="bi bi-person-circle"></i> Welcome, ${user.firstName}
-					</a>
+				
+									<!-- Dropdown menu -->
+					<li class="nav-item dropdown">
+						<a class="dropdown-toggle nav-link" aria-expanded="false"
+							data-bs-toggle="dropdown" href="#"> 
+							<i class="bi bi-person-circle"></i> Welcome, ${user.firstName}
+						</a>
 						<div class="dropdown-menu"
 							aria-labelledby="navbarDropdownMenuLink">
-							<c:if test="${auth:hasPermission(role, 'MANAGE_USER')}">
-								<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/users">User Management</a>
-							</c:if>
-							<c:if test="${auth:hasPermission(role, 'VIEW_CARD_CARTALOGUE')}">
-								<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/catalogue">Catalogue</a>
-							</c:if>
-							<c:if test="${auth:hasPermission(role, 'MANAGE_REVIEW')}">
-								<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/review_manage">Review
-									Management</a>
-							</c:if>
 							<a class="dropdown-item" href="logout">Logout</a>
-						</div></li>
+						</div>
+					</li>
+				
+					<c:if test="${auth:hasPermission(role, 'MANAGE_USER')}">
+						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/admin/users">User Management</a></li>
+					</c:if>
+
+					<c:if test="${auth:hasPermission(role, 'VIEW_CARD_CARTALOGUE')}">
+						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/admin/catalogue">Catalogue</a></li>
+					</c:if>
+
+					<c:if test="${auth:hasPermission(role, 'MANAGE_REVIEW')}">
+						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/admin/review_manage">Review Management</a></li>
+					</c:if>
+
+
 				</c:if>
 			</ul>
 		</div>
