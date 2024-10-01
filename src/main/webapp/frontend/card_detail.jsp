@@ -109,6 +109,17 @@
 	background-color: #218838;
 }
 
+.seller-link {
+    color: #000;
+    text-decoration: none;
+    transition: color 0.3s, text-decoration 0.3s;
+}
+
+.seller-link:hover {
+    color: #18BC9C; 
+    text-decoration: underline; 
+}
+
 .pagination {
     display: flex;
     justify-content: center;
@@ -175,7 +186,7 @@
             <div class="card-body">
                 <div class="row align-items-center text-center">
                     <div class="col-md-3">
-                        <a href="view_seller?sellerId=${listing.seller.userId}" class="text-dark font-weight-bold">
+                        <a href="view_seller?sellerId=${listing.seller.userId}" class="seller-link">
                             ${listing.seller.firstName} ${listing.seller.lastName}
                         </a>
                     </div>

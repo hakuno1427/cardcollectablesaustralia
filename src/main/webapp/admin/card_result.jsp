@@ -17,8 +17,9 @@
     </script>
 </head>
 <body>
-    <div class="container">
         <jsp:directive.include file="header.jsp" />
+    <div class="container">
+
 
         <div class="row">&nbsp;</div>
         <div class="row">
@@ -110,9 +111,11 @@
 
                 <div class="row">&nbsp;</div>
 
-                <jsp:directive.include file="footer.jsp" />
+
             </div>
+
         </div>
     </div>
+                                <jsp:directive.include file="footer.jsp" />
 </body>
 </html>

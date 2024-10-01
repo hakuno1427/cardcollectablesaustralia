@@ -41,8 +41,9 @@
 }
 </style>
 <body>
-	<div class="container">
 		<jsp:directive.include file="../frontend/header.jsp" />
+	<div class="container">
+
 
 		<div class="row">&nbsp;</div>
 		<div class="row">
@@ -132,8 +133,9 @@
 
 		</form>
 
-		<jsp:directive.include file="../frontend/footer.jsp" />
+
 	</div>
+			<jsp:directive.include file="../frontend/footer.jsp" />
 	<script>
 		function fetchCardDetails(serialNumber) {
 			/* var cardId = document.getElementById("serialNumber").value; */

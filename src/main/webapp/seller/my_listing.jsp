@@ -8,9 +8,10 @@
 	<jsp:param name="pageTitle" value="CCA - My Listings" />
 </jsp:include>
 <body>
-	<div class="container">
 		<!-- Header Section -->
 		<jsp:directive.include file="../frontend/header.jsp" />
+	<div class="container">
+
 
 		<!-- New Listings Section -->
 		<div class="row text-center">
@@ -95,8 +96,9 @@
 			</div>
 		</div>
 
-		<!-- Footer Section -->
-		<jsp:directive.include file="../frontend/footer.jsp" />
+
 	</div>
+			<!-- Footer Section -->
+		<jsp:directive.include file="../frontend/footer.jsp" />
 </body>
 </html>

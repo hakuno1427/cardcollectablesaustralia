@@ -148,12 +148,14 @@
 									<a class="dropdown-item" href="proceed_orders">Pending
 										Orders</a>
 								</c:if>
+								<a href="my_messages" class="dropdown-item">Messages</a>
 								<c:if test="${auth:hasPermission(role, 'REVIEW_SELLER')}">
 									<a class="dropdown-item" href="review_seller">Seller
 										Reviews</a>
 								</c:if>
 								<a class="dropdown-item" href="logout">Logout</a>
 							</div></li>
+							
 
 						<c:if test="${auth:hasPermission(role, 'MANAGE_MY_ORDERS')}">
 							<li class="nav-item"><a href="cart" class="nav-link"><i

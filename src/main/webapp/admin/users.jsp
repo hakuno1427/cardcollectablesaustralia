@@ -6,8 +6,9 @@
     <jsp:param name="pageTitle" value="User Management" />
 </jsp:include>
 <body>
-    <div class="container">
         <jsp:directive.include file="header.jsp" />
+    <div class="container">
+
 
         <div class="row">&nbsp;</div>
         <div class="row">
@@ -147,8 +148,9 @@
 
         <div class="row">&nbsp;</div>
 
-        <jsp:directive.include file="footer.jsp" />
+
     </div>
+            <jsp:directive.include file="footer.jsp" />
 </body>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

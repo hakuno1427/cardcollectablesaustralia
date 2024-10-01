@@ -7,8 +7,9 @@
 	<jsp:param name="pageTitle" value="Edit Listing" />
 </jsp:include>
 <body>
-	<div class="container">
 		<jsp:directive.include file="../frontend/header.jsp" />
+	<div class="container">
+
 
 		<div class="row">&nbsp;</div>
 		<div class="row">
@@ -97,8 +98,9 @@
 
 		</form>
 
-		<jsp:directive.include file="../frontend/footer.jsp" />
+
 	</div>
+			<jsp:directive.include file="../frontend/footer.jsp" />
 
 </body>
 </html>

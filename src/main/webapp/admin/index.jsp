@@ -6,13 +6,16 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="en">
-<jsp:include page="page_head.jsp">
-    <jsp:param name="pageTitle" value="Admin Home" />
-</jsp:include>
+<head>
+    <jsp:include page="page_head.jsp">
+        <jsp:param name="pageTitle" value="Admin Home" />
+    </jsp:include>
+</head>
 <body>
-    <div class="container">
         <!-- Header Section -->
         <jsp:directive.include file="header.jsp" />
+    <div class="container">
+
 
         <!-- Admin Home Section -->
         <div class="row text-center">
@@ -21,7 +24,7 @@
                 
                 <!-- Main page before login -->
                 <c:if test="${user == null}">
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center mt-4">
                         <div class="col-md-8 col-sm-12">
                             <p>If you would like to use administration functions, please log in.</p> 
                             <a href="login" class="btn btn-primary">Login</a>
@@ -31,10 +34,20 @@
                         </div>
                     </div>
                 </c:if>
+                
+                <!-- Show message if user is not an admin -->
+                <c:if test="${user != null && user.role.name != 'ADMIN'}">
+                    <div class="row justify-content-center mt-4">
+                        <div class="col-md-8 col-sm-12">
+                            <p class="text-danger">Please Login with an Admin Account</p>
+                            <a href="logout" class="btn btn-danger">Logout</a>
+                        </div>
+                    </div>
+                </c:if>
 
                 <!-- Main page after login -->
-                <c:if test="${user != null}">
-                    <div class="row justify-content-center">
+                <c:if test="${user != null && user.role.name == 'ADMIN'}">
+                    <div class="row justify-content-center mt-4">
                         <div class="col-md-8 col-sm-12">
                             <p>Welcome, administrator ${user.firstName}!</p>
                             <p>To utilise administration functions, please click the respective buttons below.</p>
@@ -71,8 +84,9 @@
             </div>
         </div>
 
-        <!-- Footer Section -->
-        <jsp:directive.include file="footer.jsp" />
+
     </div>
+            <!-- Footer Section -->
+        <jsp:directive.include file="footer.jsp" />
 </body>
 </html>
