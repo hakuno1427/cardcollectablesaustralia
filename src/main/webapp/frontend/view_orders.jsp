@@ -43,7 +43,7 @@
 	position: relative;
 	overflow: hidden;
 	max-width: 180px;
-	height: 220px;
+	height: 300px;
 }
 
 .carousel-item {
