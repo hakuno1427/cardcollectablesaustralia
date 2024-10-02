@@ -73,6 +73,16 @@ public class UserDAO extends JpaDAO<User> implements GenericDAO<User> {
 
 		return null;
 	}
+	
+	public User getUserByVerificationToken(String verificationToken) {
+		List<User> result = super.findWithNamedQuery("User.findByVerificationToken", "verificationToken", verificationToken);
+
+		if (!result.isEmpty()) {
+			return result.get(0);
+		}
+
+		return null;
+	}
 
 	public List<User> listPaged(int start, int pageSize) {
 		EntityManager entityManager = getEntityManager();

@@ -27,15 +27,16 @@ import jakarta.persistence.Table;
 @NamedQueries({ @NamedQuery(name = "User.findAll", query = "SELECT u from User u ORDER BY u.firstName"),
 		@NamedQuery(name = "User.countAll", query = "SELECT Count(*) FROM User u"),
 		@NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
-		@NamedQuery(name = "User.checkLogin", query = "SELECT u FROM User u WHERE u.email = :email AND u.password = :pass"),
+		@NamedQuery(name = "User.checkLogin", query = "SELECT u FROM User u WHERE u.email = :email AND u.password = :pass AND u.verified = 1"),
 		@NamedQuery(name ="User.findByUserId", query = "SELECT u FROM User u WHERE u.userId = :userId"),
-	    @NamedQuery(name = "User.findByRole", query = "SELECT u FROM User u WHERE u.role.name = :roleName")})
+	    @NamedQuery(name = "User.findByRole", query = "SELECT u FROM User u WHERE u.role.name = :roleName"),
+	    @NamedQuery(name = "User.findByVerificationToken", query = "SELECT u FROM User u WHERE u.verificationToken = :verificationToken")})
 
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	public static final byte ENABLED_STATUS = 1;
-	public static final byte DISABLED_STATUS = 0;
+	public static final byte YES_VALUE = 1;
+	public static final byte NO_VALUE = 0;
 
 	private Integer userId;
 	private String firstName;
@@ -45,7 +46,9 @@ public class User implements Serializable {
 	private String password;
 	private Role role;
 	private String description;
-	private byte enabled = ENABLED_STATUS;
+	private String verificationToken;
+	private byte verified = NO_VALUE;
+	private byte enabled = YES_VALUE;
 	
 
 	@OneToMany(mappedBy = "listing")
@@ -111,7 +114,7 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	@Column(name = "password", nullable = false, length = 45)
+	@Column(name = "password", nullable = false, length = 80)
 	public String getPassword() {
 		return password;
 	}
@@ -137,12 +140,7 @@ public class User implements Serializable {
 	public void setListings(Set<Listing> listings) {
 		this.listings = listings;
 	}
-
-	@Override
-	public String toString() {
-		return "User [firstName=" + firstName + ", lastName=" + lastName + ", phone=" + phone + ", email=" + email
-				+ ", password=" + password + ", role=" + role + "]";
-	}
+	
 
 	public void setEnabled(byte enabled) {
 		this.enabled = enabled;
@@ -160,11 +158,35 @@ public class User implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
-	} 
+	}
+	
+	 @Column(name = "verificationToken", nullable = true, length = 2000)
+	public String getVerificationToken() {
+		return verificationToken;
+	}
+
+	public void setVerificationToken(String verificationToken) {
+		this.verificationToken = verificationToken;
+	}
+
+	public byte getVerified() {
+		return verified;
+	}
+
+	@Column(name = "verified", nullable = true)
+	public void setVerified(byte verified) {
+		this.verified = verified;
+	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(email, firstName, lastName, password, phone);
+	}
+
+	@Override
+	public String toString() {
+		return "User [firstName=" + firstName + ", lastName=" + lastName + ", phone=" + phone + ", email=" + email
+				+ ", password=" + password + ", role=" + role + "]";
 	}
 
 	@Override

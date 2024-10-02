@@ -11,6 +11,17 @@
 	<jsp:param name="pageTitle" value="Register Admin" />
 </jsp:include>
 
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+	<script>
+    function onSubmit(event) {
+        // If reCAPTCHA is not validated
+        if (grecaptcha.getResponse().length === 0) {
+            alert('Check reCaptcha please.');
+            event.preventDefault(); // Prevent submission
+        }
+    }
+</script>
+
 <body>
 		<jsp:directive.include file="header.jsp" />
 	<div class="container">
@@ -26,61 +37,54 @@
 		</div>
 		<div class="row">&nbsp;</div>
 
-		<form action="register_save" method="post"
-			style="max-width: 800px; margin: 0 auto;">
-			<div class="form-group row">
-				<label class="col-sm-4 col-form-label">E-mail:</label>
-				<div class="col-sm-8">
-					<input type="email" name="email" class="form-control" required
-						minlength="5" maxlength="64" pattern="[a-zA-Z0-9._%+-]+@cca.com"
-						title="Email must end with @ccam.com" />
-				</div>
-			</div>
-			<div class="form-group row">
-				<label class="col-sm-4 col-form-label">First Name:</label>
-				<div class="col-sm-8">
-					<input type="text" name="firstname" class="form-control" required
-						minlength="2" maxlength="30" />
-				</div>
-			</div>
-			<div class="form-group row">
-				<label class="col-sm-4 col-form-label">Last Name:</label>
-				<div class="col-sm-8">
-					<input type="text" name="lastname" class="form-control" required
-						minlength="2" maxlength="30" />
-				</div>
-			</div>
-			<div class="form-group row">
-				<label class="col-sm-4 col-form-label">Password:</label>
-				<div class="col-sm-8">
-					<input type="password" id="password" name="password"
-						class="form-control" required minlength="5" maxlength="16" />
-				</div>
-			</div>
-			<div class="form-group row">
-				<label class="col-sm-4 col-form-label">Confirm Password:</label>
-				<div class="col-sm-8">
-					<input type="password" name="confirmPassword" class="form-control"
-						required minlength="5" maxlength="16"
-						oninput="checkPasswordMatch(this)" />
-				</div>
-			</div>
-			<div class="form-group row">
-				<label class="col-sm-4 col-form-label">Phone Number:</label>
-				<div class="col-sm-8">
-					<input type="text" name="phone" class="form-control" required
-						minlength="9" maxlength="15" />
-				</div>
-			</div>
-			<div class="row">&nbsp;</div>
-			<div class="row">
-				<div class="col text-center">
-					<button type="submit" class="btn btn-primary mr-3">Save</button>
-					<input type="button" value="Cancel" class="btn btn-secondary"
-						onclick="history.go(-1);" />
-				</div>
-			</div>
-		</form>
+
+        <form action="register_save" method="post" style="max-width: 800px; margin: 0 auto;" onsubmit="onSubmit(event)">
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">E-mail:</label>
+                <div class="col-sm-8">
+                    <input type="email" name="email" class="form-control" required minlength="5" maxlength="64" pattern="[a-zA-Z0-9._%+-]+@cca.com" title="Email must end with @ccam.com"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">First Name:</label>
+                <div class="col-sm-8">
+                    <input type="text" name="firstname" class="form-control" required minlength="2" maxlength="30" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Last Name:</label>
+                <div class="col-sm-8">
+                    <input type="text" name="lastname" class="form-control" required minlength="2" maxlength="30" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Password:</label>
+                <div class="col-sm-8">
+                    <input type="password" id="password" name="password" class="form-control" required minlength="5" maxlength="16" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Confirm Password:</label>
+                <div class="col-sm-8">
+                    <input type="password" name="confirmPassword" class="form-control" required minlength="5" maxlength="16" oninput="checkPasswordMatch(this)" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Phone Number:</label>
+                <div class="col-sm-8">
+                    <input type="text" name="phone" class="form-control" required minlength="9" maxlength="15" />
+                </div>
+            </div>
+            
+            <div class="g-recaptcha" data-sitekey="6LcsvlEqAAAAAMUGIftR639gE1xVleygOQv9O-bi"></div>
+            <div class="row">&nbsp;</div>
+            <div class="row">
+                <div class="col text-center">
+                    <button type="submit" class="btn btn-primary mr-3">Save</button>
+                    <input type="button" value="Cancel" class="btn btn-secondary" onclick="history.go(-1);" />
+                </div>
+            </div>
+        </form>
 
 
 	</div>

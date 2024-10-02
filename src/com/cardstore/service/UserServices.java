@@ -1,10 +1,22 @@
 package com.cardstore.service;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
+import javax.net.ssl.HttpsURLConnection;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.mindrot.jbcrypt.BCrypt;
+
+import com.cardstore.dao.RoleDAO;
 import com.cardstore.dao.UserDAO;
 import com.cardstore.entity.Card;
 import com.cardstore.entity.Permission;
@@ -22,7 +34,9 @@ public class UserServices {
 	public static final String EDIT_PROFILE_PERMISSION = "EDIT_MY_PROFILE";
 	public static final String MANAGE_USER_PERMISSION = "MANAGE_USER";
 
+    public static final String SECRET_KEY = "6LcsvlEqAAAAAD0zko-lQa7zO95GQzvo-OTl35Nl";
 	private UserDAO userDAO;
+	private EmailService emailService;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 
@@ -30,6 +44,7 @@ public class UserServices {
 		super();
 		this.request = request;
 		this.response = response;
+		this.emailService = new EmailService();
 		this.userDAO = new UserDAO();
 	}
 
@@ -38,17 +53,34 @@ public class UserServices {
 		User existUser = userDAO.findByEmail(email);
 		String message = "";
 
-		if (existUser != null) {
-			message = "Could not register. The email " + email + " is already registered by another user.";
+		String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+		System.out.println("gRecaptchaResponse : [" + gRecaptchaResponse);
+		JSONObject json = getJSONResponse(gRecaptchaResponse);
+
+		boolean isSuccess = (boolean)json.get("success");
+		request.setAttribute("gRecaptchaResponse", gRecaptchaResponse);
+		request.setAttribute("isSuccess", isSuccess);
+		request.setAttribute("json", json.toString());
+
+		if (!isSuccess) {
+			message = "Could not register. Our website suspects spam or bot. Please try again.";
 		} else {
+			if (existUser != null) {
+				message = "Could not register. The email " + email + " is already registered by another user.";
+			} else {
 
-			User newUser = new User();
-			newUser.setRole(role);
+				User newUser = new User();
+				newUser.setRole(role);
+				updateUserFieldsFromForm(newUser);
 
-			updateUserFieldsFromForm(newUser);
-			userDAO.create(newUser);
+				String verificationToken = UUID.randomUUID().toString();
+				newUser.setVerificationToken(verificationToken);
 
-			message = "You have registered successfully! Thank you.<br/>" + "<a href='login'>Click here</a> to login";
+				emailService.sendVerificationEmail(email, verificationToken);
+				userDAO.create(newUser);
+
+				message = "You have registered successfully! <br/> Please check your email for verification link. Thank you.<br/>" + "<a href='login'>Click here</a> to login";
+			}
 		}
 
 		String messagePage = "frontend/message.jsp";
@@ -57,11 +89,66 @@ public class UserServices {
 		requestDispatcher.forward(request, response);
 	}
 
+	private JSONObject getJSONResponse(String gRecaptchaResponse) {
+		String url = "https://www.google.com/recaptcha/api/siteverify";
+
+		String response = getResponse(url, SECRET_KEY, gRecaptchaResponse);
+		JSONObject json = getJSONObject(response);
+
+		return json;
+	}
+
+	private JSONObject getJSONObject(String jsonString) {
+		JSONObject json = new JSONObject();
+
+		try {
+			JSONParser parser = new JSONParser();
+			json = (JSONObject)parser.parse(jsonString);
+			System.out.println("json: " + json.toJSONString());
+
+		} catch (Exception e) {
+
+		}
+
+		return json;
+	}
+
+	private String getResponse(String url, String secretKey, String gRecaptchaResponse) {
+		String response = "";
+
+		try {
+			URL urlObject = new URL(url);
+			HttpsURLConnection connection = (HttpsURLConnection) urlObject.openConnection();
+			connection.setRequestMethod("POST");
+			connection.setDoOutput(true);
+			String param = "secret=" + secretKey + "&response=" + gRecaptchaResponse;
+
+			System.out.println("param: " + param);
+			DataOutputStream stream = new DataOutputStream(connection.getOutputStream());
+			stream.writeBytes(param);
+			stream.flush();
+			stream.close();
+
+			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			String inputLine;
+
+			while ((inputLine = reader.readLine()) != null) {
+				response += inputLine;
+			}
+			reader.close();
+
+		} catch (Exception e) {
+
+		}
+
+		return response;
+	}
+
 	private void updateUserFieldsFromForm(User user) {
 		String email = request.getParameter("email");
 		String firstname = request.getParameter("firstname");
 		String lastname = request.getParameter("lastname");
-		String password = request.getParameter("password");
+		String password = hashPassword(request.getParameter("password"));
 		String phone = request.getParameter("phone");
 		String description = request.getParameter("description");
 		
@@ -80,13 +167,17 @@ public class UserServices {
 		if(description!=null && !description.equals("")) {
 			user.setDescription(description);
 		}
+		else 
+		{
+			user.setDescription("");		
+		}
 	}
 
 	public void doLogin() throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 
-		User user = userDAO.checkLogin(email, password);
+		User user = userDAO.findByEmail(email);
 
 		if (user == null) {
 			String message = "Login failed. Please check your email and password.";
@@ -94,28 +185,45 @@ public class UserServices {
 			showLogin();
 			return;
 		}
-
-		if (user.getEnabled() == 1) {
-			HttpSession session = request.getSession();
-			session.setAttribute("user", user);
-			session.setAttribute("role", user.getRole());
-
-			Object objRedirectURL = session.getAttribute("redirectURL");
-
-			if (objRedirectURL != null) {
-				String redirectURL = (String) objRedirectURL;
-				session.removeAttribute("redirectURL");
-				response.sendRedirect(redirectURL);
-			} else {
-				showMyProfile();
-			}
-
+		
+		String hashedPassword = user.getPassword();
+		
+		if (!checkPassword(password, hashedPassword)) {
+			String message = "Your password is incorrect";
+			request.setAttribute("message", message);
+			showLogin();
+			return;
+		}
+		
+		if (user.getVerified() == User.NO_VALUE) {
+			String message = "Your account has not been verified. Please check your email and click the verify link";
+			request.setAttribute("message", message);
+			showLogin();
 			return;
 		}
 
-		String message = "Your account has been banned permanently. If you think this is a mistake, you can send an appeal to us";
-		request.setAttribute("message", message);
-		showLogin();
+		if (user.getEnabled() == User.NO_VALUE) {
+			String message = "Your account has been banned permanently. If you think this is a mistake, you can send an appeal to us";
+			request.setAttribute("message", message);
+			showLogin();
+			return;
+		}
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("user", user);
+		session.setAttribute("role", user.getRole());
+
+		Object objRedirectURL = session.getAttribute("redirectURL");
+
+		if (objRedirectURL != null) {
+			String redirectURL = (String) objRedirectURL;
+			session.removeAttribute("redirectURL");
+			response.sendRedirect(redirectURL);
+		} else {
+			showMyProfile();
+		}
+
+		return;
 	}
 
 	public void showLogin() throws ServletException, IOException {
@@ -134,26 +242,43 @@ public class UserServices {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 
-		User user = userDAO.checkLogin(email, password);
+		User user = userDAO.findByEmail(email);
 
 		if (user == null) {
 			String message = "Login failed. Please check your email and password.";
 			request.setAttribute("message", message);
-			showAdminLogin(); 
+			showAdminLogin();
+			return;
+		}
+		
+		String hashedPassword = user.getPassword();
+		
+		if (!checkPassword(password, hashedPassword)) {
+			String message = "Your password is incorrect";
+			request.setAttribute("message", message);
+			showAdminLogin();
+			return;
+		}
+		
+		if (user.getVerified() == User.NO_VALUE) {
+			String message = "Your account has not been verified. Please check your email and click the verify link";
+			request.setAttribute("message", message);
+			showAdminLogin();
+			return;
+		}
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("user", user);
+		session.setAttribute("role", user.getRole());
+
+		Object objRedirectURL = session.getAttribute("redirectURL");
+
+		if (objRedirectURL != null) {
+			String redirectURL = (String) objRedirectURL;
+			session.removeAttribute("redirectURL");
+			response.sendRedirect(redirectURL);
 		} else {
-			HttpSession session = request.getSession();
-			session.setAttribute("user", user);
-			session.setAttribute("role", user.getRole());
-
-			Object objRedirectURL = session.getAttribute("redirectURL");
-
-			if (objRedirectURL != null) {
-				String redirectURL = (String) objRedirectURL;
-				session.removeAttribute("redirectURL");
-				response.sendRedirect(redirectURL);
-			} else {
-				showAdminProfile();
-			}
+			showAdminProfile();
 		}
 	}
 
@@ -237,17 +362,33 @@ public class UserServices {
 		User existUser = userDAO.findByEmail(email);
 		String message = "";
 
-		if (existUser != null) {
-			message = "Could not register. The email " + email + " is already registered by another user.";
+		String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+		System.out.println("gRecaptchaResponse : [" + gRecaptchaResponse);
+		JSONObject json = getJSONResponse(gRecaptchaResponse);
+
+		boolean isSuccess = (boolean)json.get("success");
+		request.setAttribute("gRecaptchaResponse", gRecaptchaResponse);
+		request.setAttribute("isSuccess", isSuccess);
+		request.setAttribute("json", json.toString());
+
+		if (!isSuccess) {
+			message = "Could not register. Our website suspects spam or bot. Please try again.";
 		} else {
+			if (existUser != null) {
+				message = "Could not register. The email " + email + " is already registered by another user.";
+			} else {
+				User newUser = new User();
+				newUser.setRole(role);
+				updateUserFieldsFromForm(newUser);
 
-			User newUser = new User();
-			newUser.setRole(role);
+				String verificationToken = UUID.randomUUID().toString();
+				newUser.setVerificationToken(verificationToken);
 
-			updateUserFieldsFromForm(newUser);
-			userDAO.create(newUser);
+				emailService.sendVerificationEmail(email, verificationToken);
+				userDAO.create(newUser);
 
-			message = "You have registered successfully! Thank you.<br/>" + "<a href='login'>Click here</a> to login";
+				message = "You have registered successfully! <br/> Please check your email for verification link. Thank you.<br/>" + "<a href='login'>Click here</a> to login";
+			}
 		}
 
 		String messagePage = "/admin/message.jsp";
@@ -255,7 +396,7 @@ public class UserServices {
 		request.setAttribute("message", message);
 		requestDispatcher.forward(request, response);
 	}
-	
+
 	public void listUsers() throws ServletException, IOException {
 	    User user = (User) request.getSession().getAttribute("user");
 
@@ -354,11 +495,43 @@ public class UserServices {
 			return;
 		}
 
-		selectedUser.setEnabled(User.DISABLED_STATUS);
+		selectedUser.setEnabled(User.NO_VALUE);
 		userDAO.update(selectedUser);
 
 		String message = "You have successfully banned this user";
 		request.setAttribute("message", message);
 		listUsers();
 	}
+
+	public void verifyUser(String token) throws ServletException, IOException {
+		User user = userDAO.getUserByVerificationToken(token);
+
+		if (user == null) {
+			String message = "Verification token is not valid";
+			request.setAttribute("message", message);
+			showLogin();
+			return;
+		}
+
+		user.setVerified(User.YES_VALUE);
+		userDAO.update(user);
+
+		HttpSession session = request.getSession();
+		session.setAttribute("user", user);
+		session.setAttribute("role", user.getRole());
+
+		showMyProfile();
+	}
+	
+	// Hash a password for storing
+    public static String hashPassword(String password) {
+        // Generate a salt and hash the password with it
+        return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    // Verify a password during login
+    public static boolean checkPassword(String password, String hashedPassword) {
+        // Compare the password entered with the stored hashed password
+        return BCrypt.checkpw(password, hashedPassword);
+    }
 }

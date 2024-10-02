@@ -6,7 +6,19 @@
 <jsp:include page="page_head.jsp">
 	<jsp:param name="pageTitle" value="Register as a Buyer" />
 </jsp:include>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+	<script>
+    function onSubmit(event) {
+        // If reCAPTCHA is not validated
+        if (grecaptcha.getResponse().length === 0) {
+            alert('Check reCaptcha please.');
+            event.preventDefault(); // Prevent submission
+        }
+    }
+</script>
 <body class="d-flex flex-column min-vh-100">
+
 		<jsp:directive.include file="header.jsp" />
 	<div class="container flex-grow-1">
 
@@ -20,7 +32,7 @@
 		<div class="row">&nbsp;</div>
 
 		<form action="register_buyer" method="post"
-			style="max-width: 800px; margin: 0 auto;">
+			style="max-width: 800px; margin: 0 auto;" onsubmit="onSubmit(event)">
 			<jsp:directive.include file="../common/user_form.jsp" />
 		</form>
 		
