@@ -9,7 +9,15 @@
 </jsp:include>
 
 <style>
+body {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	margin: 0;
+}
+
 .container {
+	flex-grow: 1;
 	margin-top: 20px;
 	width: 80%;
 	margin: 0 auto;
@@ -43,7 +51,7 @@
 	position: relative;
 	overflow: hidden;
 	max-width: 180px;
-	height: 220px;
+	height: 300px;
 }
 
 .carousel-item {
@@ -58,14 +66,15 @@
 
 .carousel-item img {
 	max-width: 100%;
-    max-height: 180px;
+	max-height: 180px;
 	object-fit: contain;
 	border-radius: 5px;
 	margin-bottom: 10px;
 }
+
 .carousel-item p {
-    margin: 0;
-    padding-top: 10px;
+	margin: 0;
+	padding-top: 10px;
 }
 
 .carousel-controls {
@@ -98,13 +107,16 @@
 </style>
 
 <body class="d-flex flex-column min-vh-100">
-		<jsp:directive.include file="header.jsp" />
+	<jsp:directive.include file="header.jsp" />
 	<div class="container flex-grow-1">
 
 
 		<h1>My Sold Orders</h1>
-		<h2>Total Earning: <c:out value="${totalEarning}" /></h2>
-		
+		<h2>
+			Total Earning:
+			<c:out value="${totalEarning}" />
+		</h2>
+
 
 		<c:if test="${empty orders}">
 			<p class="no-orders">You have no orders.</p>
@@ -115,25 +127,32 @@
 				<c:forEach var="order" items="${orders}">
 					<div class="order-card">
 
-<!-- Order items carousel (image and name) -->
-<div class="order-items-carousel" id="carousel-${item.orderItemId}">
-    <c:forEach var="item" items="${order.orderItems}" varStatus="status">
-        <div class="carousel-item" style="display: ${status.index == 0 ? 'block' : 'none'};">
-            <a href="view_card?serialNumber=${item.listing.card.serialNumber}">
-                <img class="item-image" src="${item.listing.card.imageUrl}" alt="${item.listing.card.cardName}" loading="lazy" style="cursor: pointer;" />
-            </a>
-            <p>
-                <a href="view_card?serialNumber=${item.listing.card.serialNumber}">
-                    <strong><c:out value="${item.listing.card.cardName}" /></strong>
-                </a>
-            </p>
-        </div>
-    </c:forEach>
-    <div class="carousel-controls">
-        <button onclick="prevItem(${item.orderItemId})">&lt;</button>
-        <button onclick="nextItem(${item.orderItemId})">&gt;</button>
-    </div>
-</div>
+						<!-- Order items carousel (image and name) -->
+						<div class="order-items-carousel"
+							id="carousel-${item.orderItemId}">
+							<c:forEach var="item" items="${order.orderItems}"
+								varStatus="status">
+								<div class="carousel-item"
+									style="display: ${status.index == 0 ? 'block' : 'none'};">
+									<a
+										href="view_card?serialNumber=${item.listing.card.serialNumber}">
+										<img class="item-image" src="${item.listing.card.imageUrl}"
+										alt="${item.listing.card.cardName}" loading="lazy"
+										style="cursor: pointer;" />
+									</a>
+									<p>
+										<a
+											href="view_card?serialNumber=${item.listing.card.serialNumber}">
+											<strong><c:out value="${item.listing.card.cardName}" /></strong>
+										</a>
+									</p>
+								</div>
+							</c:forEach>
+							<div class="carousel-controls">
+								<button onclick="prevItem(${item.orderItemId})">&lt;</button>
+								<button onclick="nextItem(${item.orderItemId})">&gt;</button>
+							</div>
+						</div>
 						<!-- Order details (status, price, shipping, etc.) -->
 						<div class="order-details">
 							<div class="order-header">
@@ -141,7 +160,7 @@
 									Order Number:
 									<c:out value="${order.orderId}" />
 								</h3>
-								<span>Date: <c:out value="${order.orderDate}" /></span>								
+								<span>Date: <c:out value="${order.orderDate}" /></span>
 							</div>
 
 							<div class="order-details-info">
@@ -164,51 +183,60 @@
 									<c:out value="${order.billingAddress}" />
 								</div>
 							</div>
-							
+
 							<c:if test="${order.status == 'shipment pending' }">
 								<div class="container mt-5">
-								    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-								      Ship Order
-								    </button>
-								  </div>
-								
-								  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-								  <div class="modal-dialog" role="document">
-								    <div class="modal-content">
-								      <div class="modal-header">
-								        <h5 class="modal-title" id="exampleModalLabel">Ship Order</h5>
-								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								          <span aria-hidden="true">&times;</span>
-								        </button>
-								      </div>
-								      <form id="ship_order ${order.orderId}" action="ship_order" method="POST">
-								        <div class="modal-body">
-								        	<input type="hidden" name="orderId" value="${order.orderId }">
-						                	<input type="text" name="trackingNumber" class="form-control" placeholder="Tracking number">
-								          	<textarea class="form-control" name="message" rows="4"" required>Hello buyer, we have shipped your order</textarea>
-								        </div>
-								        <div class="modal-footer">
-								          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-								          <button type="submit" class="btn btn-primary">Submit</button>
-								        </div>
-								      </form>
-								    </div>
-								  </div>
-								</div>				
+									<button type="button" class="btn btn-primary"
+										data-toggle="modal" data-target="#exampleModal">Ship
+										Order</button>
+								</div>
+
+								<div class="modal fade" id="exampleModal" tabindex="-1"
+									role="dialog" aria-labelledby="exampleModalLabel"
+									aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLabel">Ship
+													Order</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<form id="ship_order ${order.orderId}" action="ship_order"
+												method="POST">
+												<div class="modal-body">
+													<input type="hidden" name="orderId"
+														value="${order.orderId }"> <input type="text"
+														name="trackingNumber" class="form-control"
+														placeholder="Tracking number">
+													<textarea class="form-control" name="message" rows="4"
+														" required>Hello buyer, we have shipped your order</textarea>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-dismiss="modal">Close</button>
+													<button type="submit" class="btn btn-primary">Submit</button>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
 							</c:if>
-							<c:if test="${order.status == 'shipped' || order.status =='complete' }">
-								<span>Tracking number: <c:out value="${order.trackingNumber}" /></span>
+							<c:if
+								test="${order.status == 'shipped' || order.status =='complete' }">
+								<span>Tracking number: <c:out
+										value="${order.trackingNumber}" /></span>
 							</c:if>
-							
-							
-					</div>
+
+
+						</div>
 				</c:forEach>
 			</div>
 		</c:if>
-
-
 	</div>
-			<jsp:directive.include file="footer.jsp" />
+
 
 	<script>
 	function nextItem(orderItemId) {
@@ -241,5 +269,6 @@
 
 
     </script>
+	<jsp:directive.include file="footer.jsp" />
 </body>
 </html>

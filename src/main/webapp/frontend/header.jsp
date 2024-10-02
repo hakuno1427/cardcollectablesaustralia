@@ -145,7 +145,7 @@
 									<a class="dropdown-item" href="listings">My Listing</a>
 								</c:if>
 								<c:if test="${auth:hasPermission(role, 'PROCEED_ORDER')}">
-									<a class="dropdown-item" href="proceed_orders">Pending
+									<a class="dropdown-item" href="view_seller_orders">Pending
 										Orders</a>
 								</c:if>
 								<a href="my_messages" class="dropdown-item">Messages</a>
