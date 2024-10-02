@@ -52,7 +52,6 @@
 	color: #555;
 	margin: 10px 0;
 	width: 100%;
-	border-bottom: 1px solid #ccc; /* 添加分隔线 */
 	margin-bottom: 10px;
 	padding-bottom: 10px;
 }
@@ -63,7 +62,7 @@
 	font-size: 1.3em;
 	color: #d35400;
 	width: 100%;
-	border-bottom: 1px solid #ccc; /* 添加分隔线 */
+	border-top: 1px solid #ccc;
 	margin-bottom: 10px;
 	padding-bottom: 10px;
 }
@@ -110,6 +109,17 @@
 	background-color: #218838;
 }
 
+.seller-link {
+    color: #000;
+    text-decoration: none;
+    transition: color 0.3s, text-decoration 0.3s;
+}
+
+.seller-link:hover {
+    color: #18BC9C; 
+    text-decoration: underline; 
+}
+
 .pagination {
     display: flex;
     justify-content: center;
@@ -137,21 +147,24 @@
 
 </style>
 
-<body>
-	<div class="container">
+<body class="d-flex flex-column min-vh-100">
 		<jsp:directive.include file="header.jsp" />
+	<div class="container flex-grow-1">
 
 		<div class="card-detail">
 	<div>
 		<img class="card-img" src="${card.imageUrl}" alt="${card.cardName}">
 	</div>
 	<div class="card-info">
-		<h2>${card.cardName}</h2>
+	<div class="card-name mb-5">
+	<h2>${card.cardName}</h2>
+	</div>
+		
 		<div class="card-description">
 			<p><strong>Game:</strong> ${card.game}</p>
 			<p><strong>Description:</strong> ${card.description}</p>
 		</div>
-		<div class="market-price">Market Price: $${card.marketprice}</div>
+		<div class="market-price mt-5">Market Price: $${card.marketprice}</div>
 	</div>
 </div>
 
@@ -173,7 +186,7 @@
             <div class="card-body">
                 <div class="row align-items-center text-center">
                     <div class="col-md-3">
-                        <a href="view_seller?sellerId=${listing.seller.userId}" class="text-dark font-weight-bold">
+                        <a href="view_seller?sellerId=${listing.seller.userId}" class="seller-link">
                             ${listing.seller.firstName} ${listing.seller.lastName}
                         </a>
                     </div>
@@ -197,8 +210,10 @@
 
 </div>
 
-		<jsp:directive.include file="footer.jsp" />
-	</div>
 
+		
+	</div>
+	<jsp:directive.include file="footer.jsp" />
+	
 </body>
 </html>

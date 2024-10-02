@@ -6,6 +6,7 @@
 <jsp:include page="page_head.jsp">
 	<jsp:param name="pageTitle" value="Register as a Seller" />
 </jsp:include>
+
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 	<script>
     function onSubmit(event) {
@@ -16,9 +17,11 @@
         }
     }
 </script>
-<body>
-	<div class="container">
-		<jsp:directive.include file="header.jsp" />
+<body class="d-flex flex-column min-vh-100">
+<jsp:directive.include file="header.jsp" />
+	<div class="container flex-grow-1">
+
+
 
 		<div class="row">&nbsp;</div>
 		<div class="row">
@@ -39,8 +42,9 @@
 			</div>
 		</div>
 
-		<jsp:directive.include file="footer.jsp" />
+
 	</div>
+			<jsp:directive.include file="footer.jsp" />
 </body>
 <script type="text/javascript" src="js/user_form.js"></script>
 </html>

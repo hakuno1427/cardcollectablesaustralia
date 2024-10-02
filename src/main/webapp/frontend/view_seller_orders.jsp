@@ -97,9 +97,10 @@
 }
 </style>
 
-<body>
-	<div class="container">
+<body class="d-flex flex-column min-vh-100">
 		<jsp:directive.include file="header.jsp" />
+	<div class="container flex-grow-1">
+
 
 		<h1>My Sold Orders</h1>
 		<h2>Total Earning: <c:out value="${totalEarning}" /></h2>
@@ -205,8 +206,9 @@
 			</div>
 		</c:if>
 
-		<jsp:directive.include file="footer.jsp" />
+
 	</div>
+			<jsp:directive.include file="footer.jsp" />
 
 	<script>
 	function nextItem(orderItemId) {

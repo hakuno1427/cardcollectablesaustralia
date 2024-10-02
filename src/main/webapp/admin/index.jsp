@@ -6,22 +6,25 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="en">
-<jsp:include page="page_head.jsp">
-    <jsp:param name="pageTitle" value="Admin Home" />
-</jsp:include>
+<head>
+    <jsp:include page="page_head.jsp">
+        <jsp:param name="pageTitle" value="Admin Home" />
+    </jsp:include>
+</head>
 <body>
-    <div class="container">
         <!-- Header Section -->
         <jsp:directive.include file="header.jsp" />
+    <div class="container">
+
 
         <!-- Admin Home Section -->
-        <div class="row text-center">
+        <div class="row text-center mt-5">
             <div class="col">
                 <h2>Admin Home</h2>
                 
                 <!-- Main page before login -->
                 <c:if test="${user == null}">
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center mt-4">
                         <div class="col-md-8 col-sm-12">
                             <p>If you would like to use administration functions, please log in.</p> 
                             <a href="login" class="btn btn-primary">Login</a>
@@ -31,17 +34,27 @@
                         </div>
                     </div>
                 </c:if>
+                
+                <!-- Show message if user is not an admin -->
+                <c:if test="${user != null && user.role.name != 'ADMIN'}">
+                    <div class="row justify-content-center mt-4">
+                        <div class="col-md-8 col-sm-12">
+                            <p class="text-danger">Please Login with an Admin Account</p>
+                            <a href="logout" class="btn btn-danger">Logout</a>
+                        </div>
+                    </div>
+                </c:if>
 
                 <!-- Main page after login -->
-                <c:if test="${user != null}">
-                    <div class="row justify-content-center">
+                <c:if test="${user != null && user.role.name == 'ADMIN'}">
+                    <div class="row justify-content-center mt-4">
                         <div class="col-md-8 col-sm-12">
                             <p>Welcome, administrator ${user.firstName}!</p>
                             <p>To utilise administration functions, please click the respective buttons below.</p>
                             <hr class="my-4">
                             <c:if test="${auth:hasPermission(role, 'MANAGE_USER')}">
                             	<p>To manage users:</p> 
-	                            <a href="/admin/users" class="btn btn-info">User Management</a>
+	                            <a href="${pageContext.request.contextPath}/admin/users" class="btn btn-info">User Management</a>
 	                            <p></p>
 	                            <p></p>
 	                            <p></p>
@@ -51,7 +64,7 @@
                             
                            	<c:if test="${auth:hasPermission(role, 'MANAGE_CARD_CARTALOGUE')}">
                             	<p>To manage the card catalogue:</p> 
-	                            <a href="/admin/catalogue" class="btn btn-info">Catalogue</a>
+	                            <a href="${pageContext.request.contextPath}/admin/catalogue" class="btn btn-info">Catalogue</a>
 	                            <p></p>
 	                            <p></p>
 	                            <p></p>
@@ -61,7 +74,7 @@
                             
                             <c:if test="${auth:hasPermission(role, 'MANAGE_REVIEW')}">
                             	<p>To monitor customer reviews:</p> 
-	                            <a href="/admin/review_manage" class="btn btn-info">Review Management</a>
+	                            <a href="${pageContext.request.contextPath}/admin/review_manage" class="btn btn-info">Review Management</a>
 	                            <hr class="my-4">
 	                            <a href="logout" class="btn btn-danger">Logout</a>
                             </c:if>
@@ -71,8 +84,9 @@
             </div>
         </div>
 
-        <!-- Footer Section -->
-        <jsp:directive.include file="footer.jsp" />
+
     </div>
+            <!-- Footer Section -->
+        <jsp:directive.include file="footer.jsp" />
 </body>
 </html>

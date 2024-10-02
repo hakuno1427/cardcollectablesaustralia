@@ -2,13 +2,15 @@
 	@author Sera Jeong 12211242 Created Date: 24/08/2024
 -->
 
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html>
 <jsp:include page="page_head.jsp">
-    <jsp:param name="pageTitle" value="Register Admin" />
+	<jsp:param name="pageTitle" value="Register Admin" />
 </jsp:include>
+
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 	<script>
     function onSubmit(event) {
@@ -19,18 +21,22 @@
         }
     }
 </script>
-<body>
-    <div class="container">
-        <jsp:directive.include file="header.jsp" />
 
-        <div class="row">&nbsp;</div>
-        <div class="row">
-            <div class="col text-center">
-                <h2>Register New Admin Account</h2>
-                <p>Please use your company email (@cca.com) for your email address when you register.</p>
-            </div>
-        </div>
-        <div class="row">&nbsp;</div>
+<body>
+		<jsp:directive.include file="header.jsp" />
+	<div class="container">
+
+
+		<div class="row">&nbsp;</div>
+		<div class="row">
+			<div class="col text-center">
+				<h2>Register New Admin Account</h2>
+				<p>Please use your company email (@cca.com) for your email
+					address when you register.</p>
+			</div>
+		</div>
+		<div class="row">&nbsp;</div>
+
 
         <form action="register_save" method="post" style="max-width: 800px; margin: 0 auto;" onsubmit="onSubmit(event)">
             <div class="form-group row">
@@ -80,8 +86,9 @@
             </div>
         </form>
 
-        <jsp:directive.include file="footer.jsp" />
-    </div>
+
+	</div>
+			<jsp:directive.include file="footer.jsp" />
 </body>
 <script type="text/javascript" src="js/user_form.js"></script>
 </html>

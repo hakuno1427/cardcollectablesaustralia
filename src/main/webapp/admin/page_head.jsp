@@ -14,4 +14,26 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
+	<style>
+html, body {
+	height: 100%;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+}
+
+.container {
+	flex: 1;
+}
+
+footer {
+	position: relative;
+	width: 100%;
+	background-color: #f8f9fa;
+	padding: 1rem;
+	text-align: center;
+}
+</style>
 </head>
