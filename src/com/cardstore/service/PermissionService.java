@@ -4,7 +4,6 @@ import java.util.Set;
 
 import com.cardstore.entity.Permission;
 import com.cardstore.entity.Role;
-import com.cardstore.entity.User;
 
 public class PermissionService {
 	// Method to check if the user has the required permission

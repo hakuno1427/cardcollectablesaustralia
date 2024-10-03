@@ -2,6 +2,7 @@ package com.cardstore.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import com.cardstore.entity.Order;
 import com.cardstore.entity.OrderItem;
 import com.cardstore.entity.User;
 import com.paypal.api.payments.Amount;
+import com.paypal.api.payments.Currency;
 import com.paypal.api.payments.Details;
 import com.paypal.api.payments.Item;
 import com.paypal.api.payments.ItemList;
@@ -20,6 +22,10 @@ import com.paypal.api.payments.Payer;
 import com.paypal.api.payments.PayerInfo;
 import com.paypal.api.payments.Payment;
 import com.paypal.api.payments.PaymentExecution;
+import com.paypal.api.payments.Payout;
+import com.paypal.api.payments.PayoutBatch;
+import com.paypal.api.payments.PayoutItem;
+import com.paypal.api.payments.PayoutSenderBatchHeader;
 import com.paypal.api.payments.RedirectUrls;
 import com.paypal.api.payments.ShippingAddress;
 import com.paypal.api.payments.Transaction;
@@ -223,6 +229,26 @@ public class PaymentService {
 		
 	}
 	
-	
-	
+	public void sendPayout(String receiverEmail, double amount, String message) throws Exception {
+	    APIContext apiContext = new APIContext(PaypalConfig.getClientId(), PaypalConfig.getClientSecret(), PaypalConfig.getMode());
+
+	    // Create a payout item
+	    PayoutItem payoutItem = new PayoutItem()
+	            .setRecipientType("EMAIL")
+	            .setAmount(new Currency().setValue(String.format("%.2f",amount)).setCurrency("AUD"))
+	            .setReceiver(receiverEmail)
+	            .setNote(message)
+	            .setSenderItemId("item_" + System.currentTimeMillis());
+
+	    // Create payout
+	    Payout payout = new Payout()
+	            .setSenderBatchHeader(new PayoutSenderBatchHeader()
+	                    .setSenderBatchId("batch_" + System.currentTimeMillis())
+	                    .setEmailSubject("You have a payment"))
+	            .setItems(Arrays.asList(payoutItem));
+
+	    // Send payout
+	    PayoutBatch payoutBatch = payout.create(apiContext, null);
+	    System.out.println("Payout Batch ID: " + payoutBatch.getBatchHeader().getPayoutBatchId());
+	}
 }

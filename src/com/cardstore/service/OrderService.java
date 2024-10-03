@@ -11,6 +11,7 @@ import com.cardstore.controller.cart.ShoppingCart;
 import com.cardstore.dao.ListingDAO;
 import com.cardstore.dao.OrderDAO;
 import com.cardstore.dao.OrderItemDAO;
+import com.cardstore.dao.UserDAO;
 import com.cardstore.entity.Listing;
 import com.cardstore.entity.Order;
 import com.cardstore.entity.OrderItem;
@@ -31,6 +32,8 @@ public class OrderService {
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private MessageService messageService;
+	private PaymentService paymentService;
+	private UserDAO userDAO;
 
 	public OrderService(HttpServletRequest request, HttpServletResponse response) {
 		this.request = request;
@@ -39,6 +42,8 @@ public class OrderService {
 		this.listingDao = new ListingDAO();
 		this.orderItemDao = new OrderItemDAO();
 		this.messageService = new MessageService(request, response);
+		this.userDAO = new UserDAO();
+		this.paymentService = new PaymentService(request, response);
 	}
 
 	public void showCheckoutForm() throws ServletException, IOException {
@@ -200,5 +205,65 @@ public class OrderService {
 		String messagePage = "frontend/message.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(messagePage);
 		dispatcher.forward(request, response);
+	}
+	
+	public void markOrderAsDone(Order order) throws Exception {
+		UserDAO userDAO = new UserDAO();
+		
+		User seller = userDAO.get(order.getSellerId());
+		
+		if (!PaypalConfig.getMode().equals("sandbox"))
+		paymentService.sendPayout(seller.getEmail(), order.getTotalPrice(), "Payment for CCA order " + order.getOrderId());
+		
+		messageService.sendAdminMessage(seller.getUserId(), "Payment", String.format("We have paid you %.2f$ for order %d", order.getTotalPrice(), order.getOrderId()));
+		order.setStatus(Order.STATUS_COMPLETE);
+		orderDao.update(order);
+	}
+
+	public void confirmDelivery() throws Exception {
+		Order completeOrder = orderDao.get(request.getParameter("orderId"));
+		markOrderAsDone(completeOrder);
+		
+		HttpSession session = request.getSession();
+		User loggedInUser = (User) session.getAttribute("user");
+
+		if (loggedInUser == null) {
+			response.sendRedirect("login");
+			return;
+		}
+
+		int buyerId = loggedInUser.getUserId();
+		List<Order> userOrders = orderDao.findOrdersByBuyer(buyerId);
+
+		for (Order order : userOrders) {
+			List<OrderItem> orderItems = orderItemDao.findWithNamedQuery("OrderItem.findByOrderId", "orderId",
+					order.getOrderId());
+			order.setOrderItems(orderItems);
+
+		}
+
+		request.setAttribute("orders", userOrders);
+	}
+	
+	public void showOrders() throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		User loggedInUser = (User) session.getAttribute("user");
+
+		if (loggedInUser == null) {
+			response.sendRedirect("login");
+			return;
+		}
+
+		int buyerId = loggedInUser.getUserId();
+		List<Order> userOrders = orderDao.findOrdersByBuyer(buyerId);
+
+		for (Order order : userOrders) {
+			List<OrderItem> orderItems = orderItemDao.findWithNamedQuery("OrderItem.findByOrderId", "orderId",
+					order.getOrderId());
+			order.setOrderItems(orderItems);
+		}
+
+		request.setAttribute("orders", userOrders);
+		request.getRequestDispatcher("/frontend/view_orders.jsp").forward(request, response);
 	}
 }
