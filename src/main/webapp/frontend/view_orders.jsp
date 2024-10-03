@@ -165,6 +165,12 @@
 									<c:out value="${order.billingAddress}" />
 								</div>
 							</div>
+							<c:if test="${order.status  == 'shipped' }">
+								<form action="confirm_delivery" method="post">
+							        <input type="hidden" name="orderId" value="${order.orderId }"/>
+							        <button type="submit">Confirm Delivery</button>
+							    </form>
+							</c:if>
 						</div>
 
 					</div>
