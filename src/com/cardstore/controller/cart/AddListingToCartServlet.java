@@ -35,8 +35,16 @@ public class AddListingToCartServlet extends HttpServlet {
 
 		ListingDAO listingDAO = new ListingDAO();
 		Listing listing = listingDAO.get(listingId);
+		
+		int availableQuantity = listing.getQuantity();
+	    int currentQuantityInCart = shoppingCart.getItems().getOrDefault(listing, 0);
+	    
+	    if (currentQuantityInCart < availableQuantity) {
+	        shoppingCart.addItem(listing);
+	    } else {
+	        request.getSession().setAttribute("errorMessage", "You cannot add more than the available quantity.");
+	    }
 
-		shoppingCart.addItem(listing);
 
 		String cartPage = request.getContextPath().concat("/cart");
 		response.sendRedirect(cartPage);

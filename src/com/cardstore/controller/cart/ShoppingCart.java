@@ -11,12 +11,23 @@ public class ShoppingCart {
 	private Map<Listing, Integer> cart = new HashMap<>();
 
 	public void addItem(Listing listing) {
+		
+		int availableQuantity = listing.getQuantity();
+		
 		if (cart.containsKey(listing)) {
-			Integer quantity = cart.get(listing) + 1;
-			cart.put(listing, quantity);
-		} else {
-			cart.put(listing, 1);
-		}
+	        int currentQuantityInCart = cart.get(listing);
+	        int newQuantity = currentQuantityInCart + 1;
+
+	        if (newQuantity > availableQuantity) {
+	            cart.put(listing, availableQuantity);
+	        } else {
+	            cart.put(listing, newQuantity);
+	        }
+	    } else {
+	        if (availableQuantity > 0) {
+	            cart.put(listing, 1);
+	        }
+	    }
 	}
 
 	public void removeItem(Listing listing) {
@@ -57,8 +68,14 @@ public class ShoppingCart {
 
 		for (int i = 0; i < listingIds.length; i++) {
 			Listing key = listingDAO.get(listingIds[i]);
-			Integer value = quantities[i];
-			cart.put(key, value);
+	        int availableQuantity = key.getQuantity();
+	        int requestedQuantity = quantities[i];
+
+	        if (requestedQuantity > availableQuantity) {
+	            cart.put(key, availableQuantity);
+	        } else {
+	            cart.put(key, requestedQuantity);
+	        }
 		}
 	}
 
