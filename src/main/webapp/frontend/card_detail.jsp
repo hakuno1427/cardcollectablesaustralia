@@ -110,110 +110,115 @@
 }
 
 .seller-link {
-    color: #000;
-    text-decoration: none;
-    transition: color 0.3s, text-decoration 0.3s;
+	color: #000;
+	text-decoration: none;
+	transition: color 0.3s, text-decoration 0.3s;
 }
 
 .seller-link:hover {
-    color: #18BC9C; 
-    text-decoration: underline; 
+	color: #18BC9C;
+	text-decoration: underline;
 }
 
 .pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
 }
 
 .pagination button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    margin: 0 4px;
-    border-radius: 4px;
-    cursor: pointer;
+	background-color: #007bff;
+	color: white;
+	border: none;
+	padding: 8px 16px;
+	margin: 0 4px;
+	border-radius: 4px;
+	cursor: pointer;
 }
 
 .pagination button:hover {
-    background-color: #0056b3;
+	background-color: #0056b3;
 }
 
 .pagination button:disabled {
-    background-color: #ddd;
-    cursor: not-allowed;
+	background-color: #ddd;
+	cursor: not-allowed;
 }
-
 </style>
 
 <body class="d-flex flex-column min-vh-100">
-		<jsp:directive.include file="header.jsp" />
+	<jsp:directive.include file="header.jsp" />
 	<div class="container flex-grow-1">
 
 		<div class="card-detail">
-	<div>
-		<img class="card-img" src="${card.imageUrl}" alt="${card.cardName}">
-	</div>
-	<div class="card-info">
-	<div class="card-name mb-5">
-	<h2>${card.cardName}</h2>
-	</div>
-		
-		<div class="card-description">
-			<p><strong>Game:</strong> ${card.game}</p>
-			<p><strong>Description:</strong> ${card.description}</p>
+			<div>
+				<img class="card-img" src="${card.imageUrl}" alt="${card.cardName}">
+			</div>
+			<div class="card-info">
+				<div class="card-name mb-5">
+					<h2>${card.cardName}</h2>
+				</div>
+
+				<div class="card-description">
+					<p>
+						<strong>Game:</strong> ${card.game}
+					</p>
+					<p>
+						<strong>Description:</strong> ${card.description}
+					</p>
+				</div>
+
+				<div class="market-price mt-5">Market Price:
+					$${(card.marketprice !=-1) ? card.marketprice : "N/A"}</div>
+			</div>
 		</div>
-		<div class="market-price mt-5">Market Price: $${card.marketprice}</div>
+
+		<div class="listings-info">
+			<h4>Available Listings:</h4>
+
+			<!-- Listings Table Header -->
+			<div
+				class="row bg-light font-weight-bold py-2 align-items-center text-center m-0 mb-3">
+				<div class="col-md-3">Seller</div>
+				<div class="col-md-2">Condition</div>
+				<div class="col-md-2">Price</div>
+				<div class="col-md-2">Quantity</div>
+				<div class="col-md-3"></div>
+			</div>
+
+			<!-- Listings Data with Card Effect -->
+			<c:forEach items="${card.listings}" var="listing">
+				<div class="card mb-3 shadow-sm border-0">
+					<div class="card-body">
+						<div class="row align-items-center text-center">
+							<div class="col-md-3">
+								<a href="view_seller?sellerId=${listing.seller.userId}"
+									class="seller-link"> ${listing.seller.firstName}
+									${listing.seller.lastName} </a>
+							</div>
+							<div class="col-md-2">${listing.condition}</div>
+							<div class="col-md-2 text-success">$${listing.price}</div>
+							<div class="col-md-2">${listing.quantity}</div>
+							<div class="col-md-3 text-right">
+								<a href="add_to_cart?listingId=${listing.listingId}"
+									class="btn btn-success">Add to Cart</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</c:forEach>
+		</div>
+
+
+
+
+
 	</div>
-</div>
-
-<div class="listings-info">
-    <h4>Available Listings:</h4>
-    
-    <!-- Listings Table Header -->
-    <div class="row bg-light font-weight-bold py-2 align-items-center text-center m-0 mb-3">
-        <div class="col-md-3">Seller</div>
-        <div class="col-md-2">Condition</div>
-        <div class="col-md-2">Price</div>
-        <div class="col-md-2">Quantity</div>
-        <div class="col-md-3"></div>
-    </div>
-
-    <!-- Listings Data with Card Effect -->
-    <c:forEach items="${card.listings}" var="listing">
-        <div class="card mb-3 shadow-sm border-0">
-            <div class="card-body">
-                <div class="row align-items-center text-center">
-                    <div class="col-md-3">
-                        <a href="view_seller?sellerId=${listing.seller.userId}" class="seller-link">
-                            ${listing.seller.firstName} ${listing.seller.lastName}
-                        </a>
-                    </div>
-                    <div class="col-md-2">
-                        ${listing.condition}
-                    </div>
-                    <div class="col-md-2 text-success">$${listing.price}</div>
-                    <div class="col-md-2">${listing.quantity}</div>
-                    <div class="col-md-3 text-right">
-                        <a href="add_to_cart?listingId=${listing.listingId}" class="btn btn-success">Add to Cart</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </c:forEach>
-</div>
 
 
 
-
-
-</div>
-
-
-		
 	</div>
 	<jsp:directive.include file="footer.jsp" />
-	
+
 </body>
 </html>

@@ -56,7 +56,7 @@
 					<div class="form-group">
 						<label for="marketprice">Market Price</label> <input type="text"
 							id="marketprice" name="marketprice" class="form-control"
-							value="<c:out value='${listing.card.marketprice}' />" readonly />
+							value="<c:out value='${(listing.card.marketprice !=-1) ? listing.card.marketprice : "N/A" }' />" readonly />
 					</div>
 
 

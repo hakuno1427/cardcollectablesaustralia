@@ -48,7 +48,7 @@
 										<td>${listing.card.cardName}</td>
 										<td>${listing.condition}</td>
 										<td>${listing.quantity}</td>
-										<td>${listing.card.marketprice}</td>
+										<td>$${(listing.card.marketprice !=-1) ? listing.card.marketprice : "N/A" }</td>
 										<td>${listing.price}</td>
 										<td>
 											<div class="btn-group" role="group">
