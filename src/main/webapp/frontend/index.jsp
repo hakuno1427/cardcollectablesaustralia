@@ -25,7 +25,7 @@
 }
 
 /* New listings and best sellers container styles */
-.new-listings-section, .best-sellers-section {
+.new-listings-section, .recommend-cards-section {
 	margin-bottom: 40px;
 	padding: 20px;
 	background-color: #e9ebed;
@@ -34,7 +34,7 @@
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.new-listings-section h2, .best-sellers-section h2 {
+.new-listings-section h2, .recommend-cards-section h2 {
 	font-family: 'Montserrat', sans-serif;
 	font-weight: 700;
 	color: #2aa08a;
@@ -104,6 +104,10 @@
 	font-weight: bold;
 }
 
+.game {
+	font-size: smaller;
+}
+
 /* Ad banner */
 .ad-banner {
 	width: 100%;
@@ -139,9 +143,12 @@
 			<div class="row">
 				<!-- Left Side: New Listings and Best sellers section -->
 				<div class="col-lg-9 col-md-12">
+
 					<!-- New Listings Section -->
 					<div class="new-listings-section">
 						<h2>LATEST LISTINGS:</h2>
+						<p class="text-muted font-weight-normal font-italic mt-1 mb-4">Discover these new card
+							listings.</p>
 						<div class="row">
 							<c:forEach items="${listNewListings}" var="listing">
 								<div class="col-md-3 col-sm-6 listing-item">
@@ -173,33 +180,39 @@
 
 					</div>
 
-					<!-- Best Sellers Section -->
-					<div class="best-sellers-section">
-						<h2>Best Sellers:</h2>
+					<!-- recommended cards  Section -->
+					<div class="recommend-cards-section">
+						<h2>RECOMMENDED CARDS:</h2>
+						<p class="text-muted font-weight-normal font-italic mt-1 mb-4">
+        Explore our recommended cards.
+    </p>
 
 						<div class="row">
-							<c:forEach items="${listNewListings}" var="listing">
+							<c:forEach items="${cardWithLowestPrice}" var="entry">
 								<div class="col-md-3 col-sm-6 listing-item">
 									<div class="card">
 										<!-- Card Image Section -->
-										<a href="view_card?serialNumber=${listing.card.serialNumber}"
-											title="View Card ${listing.card.serialNumber}"> <img
-											class="card-img-top img-fluid" src="${listing.card.imageUrl}"
-											alt="${listing.card.cardName}">
+										<a href="view_card?serialNumber=${entry.key.serialNumber}"
+											title="View Card ${entry.key.serialNumber}"> <img
+											class="card-img-top img-fluid" src="${entry.key.imageUrl}"
+											alt="${entry.key.cardName}">
 										</a>
 
 										<div class="card-body">
 											<div class="card-name mb-3">
-												<a
-													href="view_card?serialNumber=${listing.card.serialNumber}"
-													title="View Card ${listing.card.serialNumber}"> <b>${listing.card.cardName}</b>
+												<a href="view_card?serialNumber=${entry.key.serialNumber}"
+													title="View Card ${entry.key.serialNumber}"> <b>${entry.key.cardName}</b>
 												</a>
 											</div>
 
 											<div class="market-price mb-1">Market Price:
-												$${(listing.card.marketprice !=-1) ?
-												listing.card.marketprice : "N/A"}</div>
-											<div class="price mb-3">Price: $${listing.price}</div>
+												$${(entry.key.marketprice != -1) ? entry.key.marketprice :
+												"N/A"}</div>
+
+											<span
+												class="game mb-1 text-muted font-weight-normal font-italic d-block">
+												Game: ${entry.key.game} </span>
+											<div class="price mb-3">Lowest Price: $${entry.value}</div>
 										</div>
 									</div>
 								</div>
