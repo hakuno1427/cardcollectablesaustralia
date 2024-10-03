@@ -10,7 +10,7 @@
     <jsp:param name="pageTitle" value="Update Review" />
 </jsp:include>
 <body class="d-flex flex-column min-vh-100">
-        <jsp:directive.include file="header.jsp" />
+        <jsp:directive.include file="header_without_searchbar.jsp" />
     <div class="container flex-grow-1">
 
 

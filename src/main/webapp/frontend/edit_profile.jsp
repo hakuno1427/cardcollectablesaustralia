@@ -37,7 +37,7 @@
 
 <body class="d-flex flex-column min-vh-100">
 	<!-- Header Section -->
-	<jsp:directive.include file="header.jsp" />
+	<jsp:directive.include file="header_without_searchbar.jsp" />
 
 	<div class="container-fluid flex-grow-1">
 		<h3 class="text-dark mb-4">Edit My Profile</h3>
