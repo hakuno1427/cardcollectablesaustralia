@@ -97,8 +97,9 @@
 						</div>
 						<div class="form-group">
 							<label for="marketprice">Market Price</label> <input type="text"
-								id="marketprice" name="marketprice" class="form-control"
+								id="marketprice" class="form-control"
 								readonly />
+								<input type="hidden" id="actualMarketPrice" name="marketprice" />
 						</div>
 					</div>
 
@@ -164,13 +165,17 @@
 						var cardDescEle = document
 								.getElementById("description");
 						var cardMarketPriceEle = document
-								.getElementById("marketprice")
+								.getElementById("marketprice");
+						var actualMarketPriceEle = document.getElementById("actualMarketPrice");
 
 						cardNameEle.value = card.cardName || "";
 						cardImageEle.src = card.imageUrl || "";
 						cardGameEle.value = card.game || "";
 						cardDescEle.value = card.description || "";
-						cardMarketPriceEle.value = card.marketprice || "";
+						
+						// display N/A if market price is -1
+		                cardMarketPriceEle.value = card.marketprice == -1 ? "N/A" : card.marketprice;
+		                actualMarketPriceEle.value = card.marketprice;
 
 						listingDataDiv.classList.remove("col-md-12");
 						listingDataDiv.classList.add("col-md-8");

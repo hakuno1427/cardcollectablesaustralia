@@ -141,7 +141,7 @@
 				<div class="col-lg-9 col-md-12">
 					<!-- New Listings Section -->
 					<div class="new-listings-section">
-						<h2>New Listings:</h2>
+						<h2>LATEST LISTINGS:</h2>
 						<div class="row">
 							<c:forEach items="${listNewListings}" var="listing">
 								<div class="col-md-3 col-sm-6 listing-item">
