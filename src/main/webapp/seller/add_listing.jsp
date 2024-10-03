@@ -41,7 +41,7 @@
 }
 </style>
 <body>
-		<jsp:directive.include file="../frontend/header.jsp" />
+		<jsp:directive.include file="../frontend/header_without_searchbar.jsp" />
 	<div class="container">
 
 

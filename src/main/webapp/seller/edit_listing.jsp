@@ -7,7 +7,7 @@
 	<jsp:param name="pageTitle" value="Edit Listing" />
 </jsp:include>
 <body>
-		<jsp:directive.include file="../frontend/header.jsp" />
+		<jsp:directive.include file="../frontend/header_without_searchbar.jsp" />
 	<div class="container">
 
 
