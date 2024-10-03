@@ -1,5 +1,6 @@
 package com.cardstore.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.cardstore.entity.Card;
@@ -67,6 +68,48 @@ public class CardDAO extends JpaDAO<Card> implements GenericDAO<Card> {
 	    query.setParameter("keyword", keyword);
 	    return query.getSingleResult();
 	}
+	
+	public List<Card> getCardsWithListings(int limit) {
+	    EntityManager entityManager = getEntityManager();
+	    List<Card> cards = new ArrayList<>();
+
+	    try {
+	        String jpql = "SELECT DISTINCT c FROM Card c JOIN c.listings l WHERE l.quantity > 0 ORDER BY FUNCTION('RAND')";
+	        TypedQuery<Card> query = entityManager.createQuery(jpql, Card.class);
+	        query.setMaxResults(limit); 
+
+	        cards = query.getResultList();
+	        
+	    } catch (Exception e) {
+	        throw new RuntimeException("Unable to retrieve cards with listings", e);
+	    } finally {
+	        if (entityManager != null && entityManager.isOpen()) {
+	            entityManager.close();
+	        }
+	    }
+	    return cards;
+	}
+	
+	public double getLowestPriceForCard(String serialNumber) {
+	    EntityManager entityManager = getEntityManager();
+	    double lowestPrice = 0.0;
+
+	    try {
+	        String jpql = "SELECT MIN(l.price) FROM Listing l WHERE l.card.serialNumber = :serialNumber AND l.quantity > 0";
+	        TypedQuery<Double> query = entityManager.createQuery(jpql, Double.class);
+	        query.setParameter("serialNumber", serialNumber);
+	        lowestPrice = query.getSingleResult();
+
+	    } catch (Exception e) {
+	        throw new RuntimeException("Unable to retrieve the lowest price for card", e);
+	    } finally {
+	        if (entityManager != null && entityManager.isOpen()) {
+	            entityManager.close();
+	        }
+	    }
+	    return lowestPrice;
+	}
+
 	
 	@Override
 	public long count() {
