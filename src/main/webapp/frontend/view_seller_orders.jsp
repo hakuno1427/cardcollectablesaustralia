@@ -147,11 +147,11 @@ body {
 		<c:set var="transactionCount" value="0" />
 		<c:forEach var="order" items="${orders}">
 			<c:if test="${order.status == 'complete'}">
-				<c:set var="totalEarning"
-					value="${totalEarning + (order.totalPrice - 8)}" />
+				<c:set var="totalEarning" value="${totalEarning + order.subtotal}" />
 				<c:set var="transactionCount" value="${transactionCount + 1}" />
 			</c:if>
 		</c:forEach>
+
 
 		<h2 class="total-earning-message">
 			Total Earning:
@@ -162,8 +162,6 @@ body {
 			Number of transactions:
 			<c:out value="${transactionCount}" />
 		</div>
-
-		<div class="text-muted font-italic">Shipping Price: $8.00</div>
 
 
 		<c:if test="${empty orders}">
