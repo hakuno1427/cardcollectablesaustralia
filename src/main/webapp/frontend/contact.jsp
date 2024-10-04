@@ -11,7 +11,7 @@
 	<jsp:param name="pageTitle" value="Contact Us" />
 </jsp:include>
 <body class="d-flex flex-column min-vh-100">
-		<jsp:include page="header.jsp" />
+		<jsp:include page="header_without_searchbar.jsp" />
 	<div class="container flex-grow-1">
 
 

@@ -8,7 +8,7 @@
 <body class="d-flex flex-column min-vh-100">
 	<link rel="stylesheet" href="../css/my_messages.css">
     <script src="../js/messages.js"></script>
-        <jsp:directive.include file="header.jsp" />
+        <jsp:directive.include file="header_without_searchbar.jsp" />
     <div class="container flex-grow-1">
 
     <div class="message-row row g-0">
