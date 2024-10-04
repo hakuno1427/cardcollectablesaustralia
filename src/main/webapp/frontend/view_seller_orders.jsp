@@ -116,6 +116,22 @@ body {
 	text-align: center;
 	margin-top: 50px;
 }
+
+.status-shipped {
+	color: #18BC9C;
+}
+
+.status-pending {
+	color: #f39c12;
+}
+
+.status-complete {
+	color: #3498db;
+}
+
+.status-other {
+	color: #e74c3c;
+}
 </style>
 
 <body class="d-flex flex-column min-vh-100">
@@ -198,7 +214,11 @@ body {
 							<div class="order-details-info">
 								<div>
 									<span>Status:</span> <span
-										class="${order.status == 'Shipped' ? 'status-shipped' : order.status == 'Pending' ? 'status-pending' : 'status-other'}">
+										class="${
+    order.status == 'shipped' ? 'status-shipped' : 
+    order.status == 'shipment pending' ? 'status-pending' : 
+    order.status == 'complete' ? 'status-complete' : 
+    'status-other'}">
 										<c:out value="${order.status}" />
 									</span>
 								</div>
