@@ -146,7 +146,7 @@ public class OrderService {
 
 		
 		order.setTotalPrice(total);
-		order.setSubTotal(subTotal);
+		order.setSubtotal(subTotal);
 		order.setShippingFee((Float) session.getAttribute("shippingFee"));
 		order.setOrderDate(LocalDate.now());
 		order.setStatus(Order.STATUS_SHIPMENT_PENDING);

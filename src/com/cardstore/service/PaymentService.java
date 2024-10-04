@@ -174,7 +174,7 @@ public class PaymentService {
 		Details details = new Details();
 		details.setShipping(String.format("%.2f", order.getShippingFee()));
 		details.setTax(String.format("%.2f", 0.0));
-		details.setSubtotal(String.format("%.2f", order.getSubTotal()));
+		details.setSubtotal(String.format("%.2f", order.getSubtotal()));
 		
 		Amount amount =  new Amount();
 		amount.setCurrency("AUD");
