@@ -155,8 +155,10 @@ body {
 
 		<h2 class="total-earning-message">
 			Total Earning:
-			<c:out value="${totalEarning}" />
+			<fmt:formatNumber value="${totalEarning}" type="number"
+				minFractionDigits="2" maxFractionDigits="2" />
 		</h2>
+
 
 		<div class="text-muted font-italic">
 			Number of transactions:
