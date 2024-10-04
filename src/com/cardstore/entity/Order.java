@@ -167,12 +167,20 @@ public class Order implements Serializable {
 	public void setShippingFee(double shippingFee) {
 		this.shippingFee = shippingFee;
 	}
-	
+
 	public double getSubTotal() {
 		return subtotal;
 	}
 	
 	public void setSubTotal(double subtotal) {
+		this.subtotal = subtotal;
+	}
+	
+	public double getSubtotal() {
+		return subtotal;
+	}
+	
+	public void setSubtotal(double subtotal) {
 		this.subtotal = subtotal;
 	}
 
