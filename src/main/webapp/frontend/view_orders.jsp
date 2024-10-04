@@ -14,6 +14,12 @@
 	width: 80%;
 	margin: 0 auto;
 }
+.orders-header {
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 700;
+	color: #18BC9C;
+	margin-bottom: 20px;
+}
 
 .orders-section {
 	margin-top: 30px;
@@ -58,14 +64,15 @@
 
 .carousel-item img {
 	max-width: 100%;
-    max-height: 180px;
+	max-height: 180px;
 	object-fit: contain;
 	border-radius: 5px;
 	margin-bottom: 10px;
 }
+
 .carousel-item p {
-    margin: 0;
-    padding-top: 10px;
+	margin: 0;
+	padding-top: 10px;
 }
 
 .carousel-controls {
@@ -95,14 +102,40 @@
 	text-align: center;
 	margin-top: 50px;
 }
+
+/* Confirm Delivery button style */
+.btn-confirm-delivery {
+	color: #fff;
+	background-color: #18BC9C;
+	border-color: #f8f9fa;
+	padding: 1rem 1.75rem;
+	font-size: 1.25rem;
+	border-width: 2px;
+	border-radius: 0.375rem;
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+		border-color 0.15s ease-in-out;
+	margin-top: 1rem;
+}
+
+.btn-confirm-delivery:hover {
+	background-color: #f8f9fa;
+	color: #18BC9C;
+	border-color: #f8f9fa;
+}
+
+.btn-confirm-delivery:active {
+	background-color: #f8f9fa;
+	border-color: #f8f9fa;
+}
 </style>
 
 <body class="d-flex flex-column min-vh-100">
-		<jsp:directive.include file="header.jsp" />
+	<jsp:directive.include file="header.jsp" />
 	<div class="container flex-grow-1">
 
-
-		<h1>My Orders</h1>
+				<div class="mb-5">
+			<h1 class="orders-header">My Orders</h1>
+		</div>
 
 		<c:if test="${empty orders}">
 			<p class="no-orders">You have no orders.</p>
@@ -113,25 +146,32 @@
 				<c:forEach var="order" items="${orders}">
 					<div class="order-card">
 
-<!-- Order items carousel (image and name) -->
-<div class="order-items-carousel" id="carousel-${item.orderItemId}">
-    <c:forEach var="item" items="${order.orderItems}" varStatus="status">
-        <div class="carousel-item" style="display: ${status.index == 0 ? 'block' : 'none'};">
-            <a href="view_card?serialNumber=${item.listing.card.serialNumber}">
-                <img class="item-image" src="${item.listing.card.imageUrl}" alt="${item.listing.card.cardName}" loading="lazy" style="cursor: pointer;" />
-            </a>
-            <p>
-                <a href="view_card?serialNumber=${item.listing.card.serialNumber}">
-                    <strong><c:out value="${item.listing.card.cardName}" /></strong>
-                </a>
-            </p>
-        </div>
-    </c:forEach>
-    <div class="carousel-controls">
-        <button onclick="prevItem(${item.orderItemId})">&lt;</button>
-        <button onclick="nextItem(${item.orderItemId})">&gt;</button>
-    </div>
-</div>
+						<!-- Order items carousel (image and name) -->
+						<div class="order-items-carousel"
+							id="carousel-${item.orderItemId}">
+							<c:forEach var="item" items="${order.orderItems}"
+								varStatus="status">
+								<div class="carousel-item"
+									style="display: ${status.index == 0 ? 'block' : 'none'};">
+									<a
+										href="view_card?serialNumber=${item.listing.card.serialNumber}">
+										<img class="item-image" src="${item.listing.card.imageUrl}"
+										alt="${item.listing.card.cardName}" loading="lazy"
+										style="cursor: pointer;" />
+									</a>
+									<p>
+										<a
+											href="view_card?serialNumber=${item.listing.card.serialNumber}">
+											<strong><c:out value="${item.listing.card.cardName}" /></strong>
+										</a>
+									</p>
+								</div>
+							</c:forEach>
+							<div class="carousel-controls">
+								<button onclick="prevItem(${item.orderItemId})">&lt;</button>
+								<button onclick="nextItem(${item.orderItemId})">&gt;</button>
+							</div>
+						</div>
 
 
 
@@ -165,11 +205,18 @@
 									<c:out value="${order.billingAddress}" />
 								</div>
 							</div>
-							<c:if test="${order.status  == 'shipped' }">
-								<form action="confirm_delivery" method="post">
-							        <input type="hidden" name="orderId" value="${order.orderId }"/>
-							        <button type="submit">Confirm Delivery</button>
-							    </form>
+							<c:if test="${order.status == 'shipped'}">
+								<div class="row">
+									<div class="col text-end">
+										<form action="confirm_delivery" method="post">
+											<input type="hidden" name="orderId" value="${order.orderId }" />
+											<button type="submit" class="btn-confirm-delivery">Confirm
+												Delivery</button>
+										</form>
+									</div>
+								</div>
+
+
 							</c:if>
 						</div>
 
@@ -180,7 +227,7 @@
 
 
 	</div>
-			<jsp:directive.include file="footer.jsp" />
+	<jsp:directive.include file="footer.jsp" />
 
 	<script>
 	function nextItem(orderItemId) {

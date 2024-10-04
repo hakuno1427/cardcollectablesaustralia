@@ -16,6 +16,18 @@ body {
 	margin: 0;
 }
 
+.orders-header {
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 700;
+	color: #18BC9C;
+	margin-bottom: 20px;
+}
+
+.total-earning-message {
+	color: #0d6957;
+	font-weight: bold;
+}
+
 .container {
 	flex-grow: 1;
 	margin-top: 20px;
@@ -110,12 +122,32 @@ body {
 	<jsp:directive.include file="header.jsp" />
 	<div class="container flex-grow-1">
 
+		<div class="mb-5">
+			<h1 class="orders-header">My Sold Orders</h1>
+		</div>
 
-		<h1>My Sold Orders</h1>
-		<h2>
+
+		<c:set var="totalEarning" value="0" />
+		<c:set var="transactionCount" value="0" />
+		<c:forEach var="order" items="${orders}">
+			<c:if test="${order.status == 'complete'}">
+				<c:set var="totalEarning"
+					value="${totalEarning + (order.totalPrice - 8)}" />
+				<c:set var="transactionCount" value="${transactionCount + 1}" />
+			</c:if>
+		</c:forEach>
+
+		<h2 class="total-earning-message">
 			Total Earning:
 			<c:out value="${totalEarning}" />
 		</h2>
+
+		<div class="text-muted font-italic">
+			Number of transactions:
+			<c:out value="${transactionCount}" />
+		</div>
+
+		<div class="text-muted font-italic">Shipping Price: $8.00</div>
 
 
 		<c:if test="${empty orders}">
@@ -232,12 +264,15 @@ body {
 
 
 						</div>
+					</div>
 				</c:forEach>
 			</div>
 		</c:if>
 	</div>
 
 
+
+	<jsp:directive.include file="footer.jsp" />
 	<script>
 	function nextItem(orderItemId) {
 	    console.log(`Next item for orderItemId: ${orderItemId}`);
@@ -269,6 +304,5 @@ body {
 
 
     </script>
-	<jsp:directive.include file="footer.jsp" />
 </body>
 </html>
